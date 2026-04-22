@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Physics — Science of Clouds</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #0a1628;
+    --sky-mid: #0d2244;
+    --sky-light: #1a3a6e;
+    --cloud-white: #e8f4fd;
+    --ice-blue: #7ec8e3;
+    --lightning: #f5c842;
+    --aurora: #4fc3a1;
+    --accent: #ff6b4a;
+    --text: #dde8f5;
+    --text-dim: #7a9bbf;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--sky);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Starfield background */
+  .starfield {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    animation: twinkle var(--d, 3s) ease-in-out infinite var(--delay, 0s);
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--min-op, 0.2); }
+    50% { opacity: var(--max-op, 1); }
+  }
+
+  /* Floating clouds background */
+  .bg-cloud {
+    position: fixed;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(126,200,227,0.06) 0%, transparent 70%);
+    animation: drift linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes drift {
+    from { transform: translateX(-200px); }
+    to { transform: translateX(calc(100vw + 200px)); }
+  }
+
+  /* Header */
+  header {
+    position: relative;
+    z-index: 10;
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(126,200,227,0.15);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .logo-icon {
+    width: 42px;
+    height: 42px;
+  }
+  .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .logo-text span {
+    display: block;
+    font-weight: 400;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--ice-blue);
+    text-transform: uppercase;
+  }
+  nav {
+    display: flex;
+    gap: 2.5rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  nav a { color: inherit; text-decoration: none; transition: color 0.2s; cursor: pointer; }
+  nav a:hover { color: var(--ice-blue); }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    padding: 5rem 3rem 3rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero-text h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-text h1 em {
+    font-style: italic;
+    color: var(--ice-blue);
+    font-family: 'Crimson Pro', serif;
+    font-weight: 300;
+  }
+  .hero-text p {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: var(--text-dim);
+    max-width: 42ch;
+    margin-bottom: 2.5rem;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--ice-blue);
+    color: var(--sky);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.9rem 2rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .hero-cta:hover { background: white; transform: translateY(-2px); }
+
+  /* CHARACTER STAGE */
+  .character-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .scene {
+    position: relative;
+    width: 340px;
+    height: 380px;
+  }
+
+  /* Cloud backdrop */
+  .scene-cloud {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 120px;
+    background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(126,200,227,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(20px);
+  }
+
+  /* The scientist character SVG */
+  .scientist {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+  }
+
+  /* Floating particles around character */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: orbit var(--od, 6s) linear infinite var(--odelay, 0s);
+    opacity: 0;
+  }
+  @keyframes orbit {
+    0% { opacity: 0; transform: rotate(var(--start)) translateX(var(--r)) rotate(calc(-1 * var(--start))); }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { opacity: 0; transform: rotate(calc(var(--start) + 360deg)) translateX(var(--r)) rotate(calc(-1 * (var(--start) + 360deg))); }
+  }
+
+  /* Speech bubble */
+  .speech-bubble {
+    position: absolute;
+    top: 10px;
+    right: -20px;
+    background: rgba(14, 36, 68, 0.95);
+    border: 1px solid rgba(126,200,227,0.4);
+    border-radius: 16px 16px 16px 4px;
+    padding: 1rem 1.2rem;
+    max-width: 180px;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--cloud-white);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+    transition: opacity 0.3s;
+  }
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 12px;
+    width: 14px;
+    height: 14px;
+    background: rgba(14,36,68,0.95);
+    border-right: 1px solid rgba(126,200,227,0.4);
+    border-bottom: 1px solid rgba(126,200,227,0.4);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+  .bubble-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 0.9em;
+    background: var(--ice-blue);
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink 0.7s step-end infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* Mouth animation on the SVG */
+  .mouth-open { animation: talk 0.15s ease-in-out infinite alternate; }
+  @keyframes talk {
+    from { d: path("M 82 78 Q 100 82 118 78"); }
+    to   { d: path("M 82 78 Q 100 90 118 78"); }
+  }
+
+  /* Lesson panel */
+  .lesson-panel {
+    position: relative;
+    z-index: 10;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 3rem 5rem;
+  }
+  .panel-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--aurora);
+    margin-bottom: 1.5rem;
+  }
+  .lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .lesson-card {
+    background: rgba(13, 34, 68, 0.7);
+    border: 1px solid rgba(126,200,227,0.12);
+    border-radius: 4px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .lesson-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(126,200,227,0.06) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .lesson-card:hover {
+    border-color: rgba(126,200,227,0.4);
+    transform: translateY(-4px);
+    background: rgba(13, 34, 68, 0.95);
+  }
+  .lesson-card:hover::before { opacity: 1; }
+  .lesson-card.active {
+    border-color: var(--ice-blue);
+    background: rgba(126,200,227,0.08);
+  }
+  .card-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+  }
+  .card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .card-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+  .card-btn {
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ice-blue);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: gap 0.2s;
+  }
+  .card-btn:hover { gap: 0.7rem; }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-speak {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--ice-blue);
+    color: var(--ice-blue);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-speak:hover { background: var(--ice-blue); color: var(--sky); }
+  .btn-stop {
+    background: transparent;
+    border: 1px solid rgba(255,107,74,0.5);
+    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-stop:hover { background: var(--accent); color: white; }
+
+  /* Speaking indicator */
+  .speaking-indicator {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    height: 20px;
+  }
+  .speaking-indicator.active { display: flex; }
+  .speaking-indicator span {
+    display: block;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--ice-blue);
+    animation: soundwave 0.5s ease-in-out infinite alternate;
+  }
+  .speaking-indicator span:nth-child(1) { height: 6px; animation-delay: 0s; }
+  .speaking-indicator span:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+  .speaking-indicator span:nth-child(3) { height: 10px; animation-delay: 0.2s; }
+  .speaking-indicator span:nth-child(4) { height: 18px; animation-delay: 0.05s; }
+  .speaking-indicator span:nth-child(5) { height: 8px; animation-delay: 0.15s; }
+  @keyframes soundwave {
+    from { transform: scaleY(0.4); opacity: 0.5; }
+    to { transform: scaleY(1); opacity: 1; }
+  }
+
+  /* Eye blink */
+  @keyframes eyeblink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.05); }
+  }
+  .eye-blink { animation: eyeblink 4s ease-in-out infinite; transform-origin: center; }
+
+  /* Lightning flash on speak */
+  @keyframes lightningFlash {
+    0%, 100% { opacity: 0; }
+    10% { opacity: 1; }
+    20% { opacity: 0; }
+    30% { opacity: 0.7; }
+    40% { opacity: 0; }
+  }
+  .lightning-flash {
+    position: absolute;
+    top: -20px;
+    right: 60px;
+    font-size: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .lightning-flash.active {
+    animation: lightningFlash 0.6s ease-out;
+  }
+
+  /* Footer strip */
+  footer {
+    position: relative;
+    z-index: 10;
+    border-top: 1px solid rgba(126,200,227,0.1);
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.5rem; }
+    .hero-text { order: 2; }
+    .character-stage { order: 1; }
+    .scene { width: 280px; height: 300px; }
+    .lessons-grid { grid-template-columns: 1fr; }
+    .lesson-panel { padding: 2rem 1.5rem 3rem; }
+    header { padding: 1.5rem; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Starfield -->
+<div class="starfield" id="starfield"></div>
+
+<!-- Drifting bg clouds -->
+<div class="bg-cloud" style="width:600px;height:300px;top:10%;--dur:60s;animation-duration:60s;animation-delay:-10s;"></div>
+<div class="bg-cloud" style="width:400px;height:200px;top:55%;--dur:80s;animation-duration:80s;animation-delay:-40s;"></div>
+
+<header>
+  <div class="logo">
+    <svg class="logo-icon" viewBox="0 0 42 42" fill="none">
+      <circle cx="21" cy="21" r="20" stroke="#7ec8e3" stroke-width="1.5" opacity="0.4"/>
+      <ellipse cx="21" cy="24" rx="12" ry="7" fill="#7ec8e3" opacity="0.3"/>
+      <ellipse cx="16" cy="22" rx="7" ry="5" fill="#7ec8e3" opacity="0.5"/>
+      <ellipse cx="26" cy="21" rx="8" ry="5.5" fill="white" opacity="0.15"/>
+      <circle cx="28" cy="15" r="3" fill="#f5c842" opacity="0.8"/>
+      <line x1="28" y1="12" x2="28" y2="9" stroke="#f5c842" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="25" y1="13" x2="23" y2="11" stroke="#f5c842" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="30" y1="17" x2="33" y2="17" stroke="#f5c842" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <div class="logo-text">
+      Cloud Physics
+      <span>scienceofcloudphysics.education</span>
+    </div>
+  </div>
+  <nav>
+    <a>Lessons</a>
+    <a>Research</a>
+    <a>मराठी</a>
+    <a>About</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Where do <em>ice crystals</em> come from?</h1>
+    <p>An interactive learning platform for cloud microphysics, secondary ice production, and aerosol–cloud–lightning science. Built by researchers, for everyone curious about the sky.</p>
+    <button class="hero-cta" onclick="startLesson(0)">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <polygon points="3,1 13,7 3,13" fill="currentColor"/>
+      </svg>
+      Start First Lesson
+    </button>
+  </div>
+
+  <!-- CHARACTER STAGE -->
+  <div class="character-stage">
+    <div class="scene">
+      <!-- Glow backdrop -->
+      <div class="scene-cloud"></div>
+
+      <!-- Floating particles -->
+      <div class="particle" style="width:6px;height:6px;background:#7ec8e3;top:50%;left:50%;--start:0deg;--r:110px;--od:7s;--odelay:0s;"></div>
+      <div class="particle" style="width:4px;height:4px;background:#f5c842;top:50%;left:50%;--start:120deg;--r:100px;--od:9s;--odelay:-3s;"></div>
+      <div class="particle" style="width:5px;height:5px;background:#4fc3a1;top:50%;left:50%;--start:240deg;--r:90px;--od:6s;--odelay:-5s;"></div>
+      <div class="particle" style="width:3px;height:3px;background:white;top:50%;left:50%;--start:60deg;--r:120px;--od:11s;--odelay:-2s;"></div>
+      <div class="particle" style="width:4px;height:4px;background:#ff6b4a;top:50%;left:50%;--start:180deg;--r:95px;--od:8s;--odelay:-7s;"></div>
+
+      <!-- Lightning flash -->
+      <div class="lightning-flash" id="lightningFlash">⚡</div>
+
+      <!-- Speech bubble -->
+      <div class="speech-bubble" id="speechBubble">
+        <span id="bubbleText">Hello! I'm Dr. Nimbus. Ready to explore the science of clouds? Click a lesson below!</span><span class="bubble-cursor" id="bubbleCursor"></span>
+      </div>
+
+      <!-- THE SCIENTIST CHARACTER -->
+      <svg class="scientist" id="scientist" viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Lab coat body -->
+        <rect x="52" y="130" width="96" height="110" rx="8" fill="#dde8f5"/>
+        <!-- Coat lapels -->
+        <path d="M 100 130 L 80 150 L 80 240 L 52 240 L 52 130 Z" fill="white"/>
+        <path d="M 100 130 L 120 150 L 120 240 L 148 240 L 148 130 Z" fill="white"/>
+        <!-- Coat center line -->
+        <line x1="100" y1="140" x2="100" y2="240" stroke="#c5d5e8" stroke-width="1" stroke-dasharray="4 3"/>
+        <!-- Pocket left -->
+        <rect x="60" y="175" width="22" height="18" rx="2" fill="#c5d5e8" opacity="0.7"/>
+        <!-- Shirt/tie visible -->
+        <rect x="88" y="130" width="24" height="30" rx="2" fill="#1a3a6e"/>
+        <!-- Tie -->
+        <path d="M 97 132 L 103 132 L 106 155 L 100 160 L 94 155 Z" fill="#f5c842"/>
+        <!-- Shirt collar -->
+        <path d="M 88 133 L 98 145 L 100 130" fill="white"/>
+        <path d="M 112 133 L 102 145 L 100 130" fill="white"/>
+
+        <!-- Arms -->
+        <!-- Left arm (slightly raised, pointing) -->
+        <rect x="30" y="130" width="28" height="16" rx="8" fill="#dde8f5" transform="rotate(-20 44 138)"/>
+        <!-- Left hand -->
+        <ellipse cx="22" cy="148" rx="12" ry="9" fill="#f0c9a0" transform="rotate(-20 22 148)"/>
+        <!-- Right arm -->
+        <rect x="142" y="130" width="28" height="16" rx="8" fill="#dde8f5" transform="rotate(15 156 138)"/>
+        <!-- Right hand holding flask -->
+        <ellipse cx="178" cy="145" rx="10" ry="8" fill="#f0c9a0" transform="rotate(15 178 145)"/>
+        <!-- Flask -->
+        <path d="M 175 128 L 175 140 L 168 155 L 188 155 L 181 140 L 181 128 Z" fill="rgba(126,200,227,0.5)" stroke="#7ec8e3" stroke-width="1.5"/>
+        <rect x="174" y="124" width="8" height="6" rx="1" fill="#7ec8e3" opacity="0.7"/>
+        <!-- Flask liquid -->
+        <ellipse cx="178" cy="150" rx="7" ry="3" fill="#4fc3a1" opacity="0.7"/>
+
+        <!-- Neck -->
+        <rect x="90" y="110" width="20" height="25" rx="4" fill="#f0c9a0"/>
+
+        <!-- HEAD -->
+        <ellipse cx="100" cy="88" rx="40" ry="42" fill="#f0c9a0"/>
+
+        <!-- Hair -->
+        <path d="M 62 80 Q 60 50 100 48 Q 140 50 138 80" fill="#3d2b1f"/>
+        <!-- Hair tuft -->
+        <path d="M 85 50 Q 88 38 100 40 Q 112 38 115 50" fill="#3d2b1f"/>
+        <!-- Side hair wisps (scientist!) -->
+        <path d="M 62 72 Q 52 65 56 55" stroke="#3d2b1f" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <path d="M 138 72 Q 148 65 144 55" stroke="#3d2b1f" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+        <!-- Glasses -->
+        <circle cx="84" cy="88" r="13" fill="none" stroke="#3d2b1f" stroke-width="2.5"/>
+        <circle cx="116" cy="88" r="13" fill="none" stroke="#3d2b1f" stroke-width="2.5"/>
+        <line x1="97" y1="88" x2="103" y2="88" stroke="#3d2b1f" stroke-width="2"/>
+        <line x1="71" y1="86" x2="64" y2="82" stroke="#3d2b1f" stroke-width="2"/>
+        <line x1="129" y1="86" x2="136" y2="82" stroke="#3d2b1f" stroke-width="2"/>
+        <!-- Glass shine -->
+        <circle cx="79" cy="84" r="3" fill="white" opacity="0.4"/>
+        <circle cx="111" cy="84" r="3" fill="white" opacity="0.4"/>
+
+        <!-- Eyes -->
+        <g class="eye-blink">
+          <ellipse cx="84" cy="88" rx="6" ry="7" fill="#2c1810"/>
+          <circle cx="82" cy="86" r="2" fill="white" opacity="0.8"/>
+        </g>
+        <g class="eye-blink">
+          <ellipse cx="116" cy="88" rx="6" ry="7" fill="#2c1810"/>
+          <circle cx="114" cy="86" r="2" fill="white" opacity="0.8"/>
+        </g>
+
+        <!-- Eyebrows (expressive) -->
+        <path d="M 74 76 Q 84 72 94 75" stroke="#3d2b1f" stroke-width="2.5" stroke-linecap="round" fill="none" id="leftBrow"/>
+        <path d="M 106 75 Q 116 72 126 76" stroke="#3d2b1f" stroke-width="2.5" stroke-linecap="round" fill="none" id="rightBrow"/>
+
+        <!-- Nose -->
+        <path d="M 100 95 Q 95 102 98 106 Q 100 108 102 106 Q 105 102 100 95" fill="#e8a87c"/>
+
+        <!-- MOUTH -->
+        <path id="mouthPath" d="M 86 118 Q 100 126 114 118" stroke="#3d2b1f" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+        <!-- Mustache -->
+        <path d="M 88 112 Q 100 116 112 112" stroke="#3d2b1f" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+        <!-- Ears -->
+        <ellipse cx="61" cy="90" rx="8" ry="10" fill="#f0c9a0"/>
+        <ellipse cx="139" cy="90" rx="8" ry="10" fill="#f0c9a0"/>
+        <path d="M 63 85 Q 67 90 63 95" stroke="#e8a87c" stroke-width="1.5" fill="none"/>
+
+        <!-- Name tag -->
+        <rect x="60" y="195" width="55" height="22" rx="3" fill="white" opacity="0.9"/>
+        <text x="87" y="208" text-anchor="middle" font-family="Syne, sans-serif" font-size="6" fill="#0a1628" font-weight="700">DR. NIMBUS</text>
+        <text x="87" y="213" text-anchor="middle" font-family="Crimson Pro, serif" font-size="5" fill="#1a3a6e">Cloud Physicist</text>
+
+        <!-- Shoes -->
+        <ellipse cx="78" cy="245" rx="22" ry="8" fill="#2c1810"/>
+        <ellipse cx="122" cy="245" rx="22" ry="8" fill="#2c1810"/>
+      </svg>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn-speak" id="btnSpeak" onclick="speakCurrent()">
+        <svg width="12" height="12" viewBox="0 0 12 12"><polygon points="2,1 11,6 2,11" fill="currentColor"/></svg>
+        Listen
+      </button>
+      <button class="btn-stop" onclick="stopSpeaking()">■ Stop</button>
+      <div class="speaking-indicator" id="speakingIndicator">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lesson Cards -->
+<section class="lesson-panel">
+  <p class="panel-title">▸ Featured Lessons</p>
+  <div class="lessons-grid" id="lessonsGrid">
+
+    <div class="lesson-card active" id="card-0" onclick="selectLesson(0)">
+      <div class="card-number">Lesson 01</div>
+      <span class="card-icon">❄️</span>
+      <div class="card-title">Secondary Ice Production</div>
+      <div class="card-desc">How does one ice crystal become thousands? Discover the Hallett-Mossop process and other multiplication mechanisms.</div>
+      <button class="card-btn">Explore →</button>
+    </div>
+
+    <div class="lesson-card" id="card-1" onclick="selectLesson(1)">
+      <div class="card-number">Lesson 02</div>
+      <span class="card-icon">💧</span>
+      <div class="card-title">Köhler Theory & CCN</div>
+      <div class="card-desc">Why do aerosols matter for cloud formation? Learn how a tiny particle becomes a cloud droplet through Köhler theory.</div>
+      <button class="card-btn">Explore →</button>
+    </div>
+
+    <div class="lesson-card" id="card-2" onclick="selectLesson(2)">
+      <div class="card-number">Lesson 03</div>
+      <span class="card-icon">⚡</span>
+      <div class="card-title">Aerosols & Lightning</div>
+      <div class="card-desc">More aerosols — more lightning? Discover the non-linear and surprising link between atmospheric particles and thunderstorms.</div>
+      <button class="card-btn">Explore →</button>
+    </div>
+
+    <div class="lesson-card" id="card-3" onclick="selectLesson(3)">
+      <div class="card-number">Lesson 04</div>
+      <span class="card-icon">🌩️</span>
+      <div class="card-title">Deep Convective Clouds</div>
+      <div class="card-desc">Towering cumulonimbus — how do they form, grow, and produce such extreme weather? An exploration of cloud dynamics.</div>
+      <button class="card-btn">Explore →</button>
+    </div>
+
+    <div class="lesson-card" id="card-4" onclick="selectLesson(4)">
+      <div class="card-number">Lesson 05</div>
+      <span class="card-icon">🔬</span>
+      <div class="card-title">Ice Nucleation</div>
+      <div class="card-desc">Not all aerosols are created equal. Learn how mineral dust, soot, and biological particles act as ice nucleating particles.</div>
+      <button class="card-btn">Explore →</button>
+    </div>
+
+    <div class="lesson-card" id="card-5" onclick="selectLesson(5)">
+      <div class="card-number">Lesson 06</div>
+      <span class="card-icon">☁️</span>
+      <div class="card-title">WBF Process</div>
+      <div class="card-desc">The Wegener–Bergeron–Findeisen process — why ice crystals grow at the expense of supercooled droplets. A key to rain formation.</div>
+      <button class="card-btn">Explore →</button>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <span>scienceofcloudphysics.education</span>
+  <span>Built with curiosity — Dr. Deepak Waman, KIT</span>
+  <span>Open Science · Open Access</span>
+</footer>
+
+<script>
+// ---- LESSON DATA ----
+const lessons = [
+  {
+    title: "Secondary Ice Production",
+    bubble: "Secondary ice production is fascinating! When a droplet freezes onto an ice crystal — a process called riming — tiny ice fragments can break off and become new ice nuclei. One crystal can multiply into thousands!",
+    speak: "Secondary ice production is one of the most exciting puzzles in cloud physics. When a supercooled water droplet freezes onto an ice crystal through a process called riming, the rapid freezing can cause tiny splinters to break off. Each splinter becomes a new ice nucleus. Through the Hallett-Mossop mechanism, this happens most efficiently between negative 3 and negative 8 degrees Celsius. A single primary ice crystal can multiply into tens of thousands — a phenomenon called ice multiplication. This is why deep convective clouds can contain far more ice particles than ice nucleating particles alone could explain."
+  },
+  {
+    title: "Köhler Theory",
+    bubble: "A CCN — Cloud Condensation Nucleus — is a tiny aerosol particle on which water vapor condenses. Köhler theory tells us exactly how large a droplet must grow before it can survive and grow spontaneously into a cloud droplet!",
+    speak: "Köhler theory is the elegant mathematical framework describing how water droplets form on aerosol particles. It balances two competing effects. First, the curvature effect — the Kelvin effect — means water molecules evaporate more easily from a curved surface, requiring higher humidity to condense. Second, the solute effect — the Raoult effect — means dissolved salts lower the vapor pressure, making condensation easier. The critical supersaturation where these balance is the activation threshold. Once a droplet crosses this threshold, called the critical radius, it can grow spontaneously. This is why sea salt is such an effective cloud condensation nucleus — it is highly soluble and can activate at very low supersaturations."
+  },
+  {
+    title: "Aerosols and Lightning",
+    bubble: "More aerosols don't always mean more lightning — the relationship is non-linear! At moderate aerosol concentrations, cloud electrification is actually strongest, because you need enough ice and graupel to collide and charge.",
+    speak: "The connection between aerosols and lightning is one of the most intriguing and contested topics in atmospheric science. More aerosol particles mean more cloud condensation nuclei, which means more but smaller droplets. This can invigorate convection, push more liquid water into the mixed-phase region, and enhance collisions between graupel and ice crystals — the essential ingredients for charge separation. However, the relationship is non-linear. At very high aerosol concentrations, the droplets become so small that collision and coalescence is suppressed, reducing the efficiency of charge transfer. Global analyses show a fascinating Simpson's paradox: while the overall correlation between aerosols and lightning appears weak, land and ocean regions tell completely opposite stories."
+  },
+  {
+    title: "Deep Convective Clouds",
+    bubble: "A cumulonimbus can tower 15 kilometers into the sky — taller than Mount Everest! Inside, updrafts can exceed 50 meters per second. These are Earth's most powerful weather engines.",
+    speak: "Deep convective clouds — cumulonimbus — are the atmosphere's most powerful engines. They form when surface heating creates strong buoyancy, lifting air parcels rapidly through the troposphere. Inside, updrafts can reach 50 to 100 meters per second in the most extreme cases. As the rising air cools, water condenses and releases latent heat, accelerating the updraft further in a positive feedback loop. At higher altitudes, the air enters the mixed-phase region where supercooled liquid water and ice coexist. Here, the Wegener-Bergeron-Findeisen process and secondary ice production dramatically increase the ice particle concentration. The anvil-shaped top, called the cirrus outflow, marks where the updraft hits the stable stratosphere and spreads horizontally, sometimes extending hundreds of kilometers downwind."
+  },
+  {
+    title: "Ice Nucleation",
+    bubble: "Not all aerosols can nucleate ice! Mineral dust — especially feldspar — is one of the most effective ice nucleating particles on Earth. Just one gram of dust contains millions of potential ice nuclei!",
+    speak: "Ice nucleation is the process by which ice crystals first form in a supercooled cloud. Pure water can remain liquid down to about negative 38 degrees Celsius. The presence of foreign particles — ice nucleating particles — raises the freezing temperature dramatically. Ice nucleation can occur through several pathways. Immersion freezing occurs when a particle inside a supercooled droplet triggers freezing. Contact freezing occurs when a particle collides with a droplet surface. Deposition nucleation occurs when water vapor deposits directly as ice onto a particle. Mineral dust, particularly potassium feldspar, is among the most active ice nucleating particles found in the atmosphere. Biological particles — bacteria, fungal spores, pollen — can nucleate ice at temperatures as warm as negative 2 degrees Celsius, making them highly efficient despite their lower atmospheric concentrations."
+  },
+  {
+    title: "The WBF Process",
+    bubble: "Here's a beautiful paradox — in a mixed-phase cloud, ice crystals steal water vapor from liquid droplets! Because ice has a lower saturation vapor pressure than liquid water, the crystal grows while the droplet evaporates.",
+    speak: "The Wegener-Bergeron-Findeisen process, or WBF process, is a beautiful thermodynamic mechanism that explains how precipitation forms in mixed-phase clouds. At temperatures between 0 and minus 38 degrees Celsius, supercooled liquid droplets and ice crystals can coexist. The key insight is that the saturation vapor pressure over ice is lower than over liquid water at the same temperature. This means the environment is simultaneously supersaturated with respect to ice and subsaturated with respect to liquid. Water molecules evaporate from the droplets and deposit onto the ice crystals. The droplets shrink while the ice crystals grow. When ice crystals become large enough, they fall as snow or melt into rain. This elegant process, operating entirely through vapor diffusion, is responsible for much of the precipitation that falls over mid-latitude continents."
+  }
+];
+
+let currentLesson = 0;
+let currentUtterance = null;
+let isSpeaking = false;
+let typingTimer = null;
+
+function selectLesson(idx) {
+  // Update card highlight
+  document.querySelectorAll('.lesson-card').forEach((c, i) => {
+    c.classList.toggle('active', i === idx);
+  });
+  currentLesson = idx;
+  // Update bubble text
+  stopSpeaking();
+  typeText(lessons[idx].bubble);
+}
+
+function startLesson(idx) {
+  selectLesson(idx);
+  setTimeout(() => speakCurrent(), 300);
+}
+
+function typeText(text) {
+  const bubbleEl = document.getElementById('bubbleText');
+  const cursor = document.getElementById('bubbleCursor');
+  if (typingTimer) clearInterval(typingTimer);
+  cursor.style.display = 'inline-block';
+  bubbleEl.textContent = '';
+  let i = 0;
+  typingTimer = setInterval(() => {
+    bubbleEl.textContent += text[i];
+    i++;
+    if (i >= text.length) {
+      clearInterval(typingTimer);
+      typingTimer = null;
+    }
+  }, 22);
+}
+
+function speakCurrent() {
+  if (!window.speechSynthesis) {
+    alert("Your browser doesn't support speech synthesis. Try Chrome or Edge.");
+    return;
+  }
+  stopSpeaking();
+  const text = lessons[currentLesson].speak;
+
+  // Flash lightning
+  const lf = document.getElementById('lightningFlash');
+  lf.classList.remove('active');
+  void lf.offsetWidth;
+  lf.classList.add('active');
+
+  currentUtterance = new SpeechSynthesisUtterance(text);
+  currentUtterance.rate = 0.92;
+  currentUtterance.pitch = 1.05;
+  currentUtterance.volume = 1;
+
+  // Try to get a nice voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v =>
+    v.name.includes('Daniel') || v.name.includes('Google UK') ||
+    v.name.includes('Alex') || v.name.includes('Arthur') ||
+    (v.lang === 'en-GB' && !v.name.includes('Female'))
+  );
+  if (preferred) currentUtterance.voice = preferred;
+
+  currentUtterance.onstart = () => {
+    isSpeaking = true;
+    setTalkingState(true);
+  };
+  currentUtterance.onend = currentUtterance.onerror = () => {
+    isSpeaking = false;
+    setTalkingState(false);
+  };
+
+  window.speechSynthesis.speak(currentUtterance);
+  isSpeaking = true;
+  setTalkingState(true);
+}
+
+function stopSpeaking() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  isSpeaking = false;
+  setTalkingState(false);
+}
+
+let talkInterval = null;
+function setTalkingState(talking) {
+  document.getElementById('speakingIndicator').classList.toggle('active', talking);
+
+  const mouth = document.getElementById('mouthPath');
+  const leftBrow = document.getElementById('leftBrow');
+  const rightBrow = document.getElementById('rightBrow');
+
+  if (talking) {
+    leftBrow.setAttribute('d', 'M 74 72 Q 84 67 94 71');
+    rightBrow.setAttribute('d', 'M 106 71 Q 116 67 126 72');
+    let open = false;
+    talkInterval = setInterval(() => {
+      open = !open;
+      if (open) {
+        mouth.setAttribute('d', 'M 86 116 Q 100 128 114 116');
+      } else {
+        mouth.setAttribute('d', 'M 88 118 Q 100 122 112 118');
+      }
+    }, 140);
+  } else {
+    if (talkInterval) { clearInterval(talkInterval); talkInterval = null; }
+    mouth.setAttribute('d', 'M 86 118 Q 100 126 114 118');
+    leftBrow.setAttribute('d', 'M 74 76 Q 84 72 94 75');
+    rightBrow.setAttribute('d', 'M 106 75 Q 116 72 126 76');
+  }
+}
+
+// Generate starfield
+function makeStars() {
+  const sf = document.getElementById('starfield');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%; left:${Math.random()*100}%;
+      --d:${2+Math.random()*4}s; --delay:-${Math.random()*5}s;
+      --min-op:${0.1+Math.random()*0.2}; --max-op:${0.5+Math.random()*0.5};
+    `;
+    sf.appendChild(s);
+  }
+}
+makeStars();
+
+// Load voices (Chrome needs this)
+window.speechSynthesis.onvoiceschanged = () => {};
+
+// Initial bubble type
+typeText(lessons[0].bubble);
+</script>
+</body>
+</html>
