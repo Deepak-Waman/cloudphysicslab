@@ -3,7 +3,7 @@
 An open-access interactive learning platform for cloud microphysics, 
 secondary ice production, and aerosol–cloud–lightning science.
 
-🌐 Live site: https://deepakwaman.github.io/cloudphysicslab
+🌐 Live site: https://deepak-waman.github.io/cloudphysicslab/
 
 ## What is this?
 
