@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -26,234 +25,233 @@
     overflow-x: hidden;
   }
 
-.starfield { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.star {
-position:absolute; border-radius:50%; background:white;
-animation: twinkle var(–d,3s) ease-in-out infinite var(–dl,0s);
-}
-@keyframes twinkle {
-0%,100%{ opacity:var(–lo,.15); } 50%{ opacity:var(–hi,.9); }
-}
+  .starfield { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  .star {
+    position:absolute; border-radius:50%; background:white;
+    animation: twinkle var(--d,3s) ease-in-out infinite var(--dl,0s);
+  }
+  @keyframes twinkle {
+    0%,100%{ opacity:var(--lo,.15); } 50%{ opacity:var(--hi,.9); }
+  }
 
-.bg-glow {
-position:fixed; border-radius:50%; pointer-events:none; z-index:0;
-background:radial-gradient(ellipse, rgba(126,200,227,.05) 0%, transparent 70%);
-animation: drift linear infinite;
-}
-@keyframes drift { from{transform:translateX(-300px);} to{transform:translateX(calc(100vw+300px));} }
+  .bg-glow {
+    position:fixed; border-radius:50%; pointer-events:none; z-index:0;
+    background:radial-gradient(ellipse, rgba(126,200,227,.05) 0%, transparent 70%);
+    animation: drift linear infinite;
+  }
+  @keyframes drift { from{transform:translateX(-300px);} to{transform:translateX(calc(100vw+300px));} }
 
-header {
-position:relative; z-index:10;
-padding:1.8rem 3rem;
-display:flex; align-items:center; justify-content:space-between;
-border-bottom:1px solid rgba(126,200,227,.12);
-}
-.logo { display:flex; align-items:center; gap:.8rem; }
-.logo-icon { width:40px; height:40px; }
-.logo-text {
-font-family:‘Syne’,sans-serif; font-weight:800; font-size:1.05rem;
-letter-spacing:-.02em; line-height:1.2;
-}
-.logo-text span {
-display:block; font-weight:400; font-size:.65rem;
-letter-spacing:.14em; color:var(–ice-blue); text-transform:uppercase;
-}
-nav {
-display:flex; gap:2.5rem;
-font-family:‘Syne’,sans-serif; font-size:.75rem;
-letter-spacing:.08em; text-transform:uppercase; color:var(–text-dim);
-}
-nav a { color:inherit; text-decoration:none; transition:color .2s; cursor:pointer; }
-nav a:hover { color:var(–ice-blue); }
+  header {
+    position:relative; z-index:10;
+    padding:1.8rem 3rem;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid rgba(126,200,227,.12);
+  }
+  .logo { display:flex; align-items:center; gap:.8rem; }
+  .logo-icon { width:40px; height:40px; }
+  .logo-text {
+    font-family:'Syne',sans-serif; font-weight:800; font-size:1.05rem;
+    letter-spacing:-.02em; line-height:1.2;
+  }
+  .logo-text span {
+    display:block; font-weight:400; font-size:.65rem;
+    letter-spacing:.14em; color:var(--ice-blue); text-transform:uppercase;
+  }
+  nav {
+    display:flex; gap:2.5rem;
+    font-family:'Syne',sans-serif; font-size:.75rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--text-dim);
+  }
+  nav a { color:inherit; text-decoration:none; transition:color .2s; cursor:pointer; }
+  nav a:hover { color:var(--ice-blue); }
 
-.hero {
-position:relative; z-index:10;
-display:grid; grid-template-columns:1fr 1fr;
-gap:3rem; padding:4rem 3rem 2rem;
-align-items:center; max-width:1200px; margin:0 auto;
-}
-.hero-text h1 {
-font-family:‘Syne’,sans-serif; font-weight:800;
-font-size:clamp(2.2rem,4.5vw,3.8rem);
-line-height:1.05; letter-spacing:-.03em; margin-bottom:1.4rem;
-}
-.hero-text h1 em {
-font-style:italic; color:var(–ice-blue);
-font-family:‘Crimson Pro’,serif; font-weight:300;
-}
-.hero-text p {
-font-size:1.1rem; line-height:1.8; color:var(–text-dim);
-max-width:44ch; margin-bottom:2.2rem;
-}
-.hero-cta {
-display:inline-flex; align-items:center; gap:.7rem;
-background:var(–ice-blue); color:var(–sky);
-font-family:‘Syne’,sans-serif; font-weight:700;
-font-size:.82rem; letter-spacing:.05em; text-transform:uppercase;
-padding:.85rem 1.9rem; border:none; cursor:pointer;
-transition:background .2s, transform .15s;
-}
-.hero-cta:hover { background:white; transform:translateY(-2px); }
+  .hero {
+    position:relative; z-index:10;
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:3rem; padding:4rem 3rem 2rem;
+    align-items:center; max-width:1200px; margin:0 auto;
+  }
+  .hero-text h1 {
+    font-family:'Syne',sans-serif; font-weight:800;
+    font-size:clamp(2.2rem,4.5vw,3.8rem);
+    line-height:1.05; letter-spacing:-.03em; margin-bottom:1.4rem;
+  }
+  .hero-text h1 em {
+    font-style:italic; color:var(--ice-blue);
+    font-family:'Crimson Pro',serif; font-weight:300;
+  }
+  .hero-text p {
+    font-size:1.1rem; line-height:1.8; color:var(--text-dim);
+    max-width:44ch; margin-bottom:2.2rem;
+  }
+  .hero-cta {
+    display:inline-flex; align-items:center; gap:.7rem;
+    background:var(--ice-blue); color:var(--sky);
+    font-family:'Syne',sans-serif; font-weight:700;
+    font-size:.82rem; letter-spacing:.05em; text-transform:uppercase;
+    padding:.85rem 1.9rem; border:none; cursor:pointer;
+    transition:background .2s, transform .15s;
+  }
+  .hero-cta:hover { background:white; transform:translateY(-2px); }
 
-.character-stage {
-display:flex; flex-direction:column; align-items:center; gap:1.4rem;
-}
-.scene { position:relative; width:340px; height:440px; }
-.scene-glow {
-position:absolute; bottom:0; left:50%; transform:translateX(-50%);
-width:280px; height:100px;
-background:radial-gradient(ellipse 60% 80% at 50% 100%, rgba(126,200,227,.14) 0%, transparent 70%);
-border-radius:50%; filter:blur(18px);
-}
+  .character-stage {
+    display:flex; flex-direction:column; align-items:center; gap:1.4rem;
+  }
+  .scene { position:relative; width:340px; height:440px; }
+  .scene-glow {
+    position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:280px; height:100px;
+    background:radial-gradient(ellipse 60% 80% at 50% 100%, rgba(126,200,227,.14) 0%, transparent 70%);
+    border-radius:50%; filter:blur(18px);
+  }
 
-.kalam-char {
-position:absolute; bottom:20px; left:50%;
-transform:translateX(-50%);
-width:215px;
-animation:float 4.5s ease-in-out infinite;
-filter: drop-shadow(0 14px 28px rgba(0,0,0,.55));
-}
-@keyframes float {
-0%,100%{ transform:translateX(-50%) translateY(0); }
-50%{ transform:translateX(-50%) translateY(-10px); }
-}
+  .kalam-char {
+    position:absolute; bottom:20px; left:50%;
+    transform:translateX(-50%);
+    width:215px;
+    animation:float 4.5s ease-in-out infinite;
+    filter: drop-shadow(0 14px 28px rgba(0,0,0,.55));
+  }
+  @keyframes float {
+    0%,100%{ transform:translateX(-50%) translateY(0); }
+    50%{ transform:translateX(-50%) translateY(-10px); }
+  }
 
-.particle {
-position:absolute; border-radius:50%;
-animation:orbit var(–od,7s) linear infinite var(–odel,0s);
-opacity:0;
-}
-@keyframes orbit {
-0%{ opacity:0; transform:rotate(var(–st)) translateX(var(–r)) rotate(calc(-1*var(–st))); }
-10%{ opacity:.8; } 90%{ opacity:.8; }
-100%{ opacity:0; transform:rotate(calc(var(–st)+360deg)) translateX(var(–r)) rotate(calc(-1*(var(–st)+360deg))); }
-}
+  .particle {
+    position:absolute; border-radius:50%;
+    animation:orbit var(--od,7s) linear infinite var(--odel,0s);
+    opacity:0;
+  }
+  @keyframes orbit {
+    0%{ opacity:0; transform:rotate(var(--st)) translateX(var(--r)) rotate(calc(-1*var(--st))); }
+    10%{ opacity:.8; } 90%{ opacity:.8; }
+    100%{ opacity:0; transform:rotate(calc(var(--st)+360deg)) translateX(var(--r)) rotate(calc(-1*(var(--st)+360deg))); }
+  }
 
-.speech-bubble {
-position:absolute; top:0px; right:-28px;
-background:rgba(10,22,45,.96);
-border:1px solid rgba(126,200,227,.45);
-border-radius:16px 16px 16px 4px;
-padding:1rem 1.15rem;
-max-width:175px;
-font-size:.77rem; line-height:1.55; color:#dde8f5;
-backdrop-filter:blur(12px);
-box-shadow:0 4px 30px rgba(0,0,0,.5);
-}
-.speech-bubble::after {
-content:’’; position:absolute; bottom:-8px; left:12px;
-width:14px; height:14px;
-background:rgba(10,22,45,.96);
-border-right:1px solid rgba(126,200,227,.45);
-border-bottom:1px solid rgba(126,200,227,.45);
-clip-path:polygon(0 0,100% 0,0 100%);
-}
-.bcursor {
-display:inline-block; width:2px; height:.85em;
-background:var(–ice-blue); margin-left:2px;
-vertical-align:middle; animation:blink .65s step-end infinite;
-}
-@keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0;} }
+  .speech-bubble {
+    position:absolute; top:0px; right:-28px;
+    background:rgba(10,22,45,.96);
+    border:1px solid rgba(126,200,227,.45);
+    border-radius:16px 16px 16px 4px;
+    padding:1rem 1.15rem;
+    max-width:175px;
+    font-size:.77rem; line-height:1.55; color:#dde8f5;
+    backdrop-filter:blur(12px);
+    box-shadow:0 4px 30px rgba(0,0,0,.5);
+  }
+  .speech-bubble::after {
+    content:''; position:absolute; bottom:-8px; left:12px;
+    width:14px; height:14px;
+    background:rgba(10,22,45,.96);
+    border-right:1px solid rgba(126,200,227,.45);
+    border-bottom:1px solid rgba(126,200,227,.45);
+    clip-path:polygon(0 0,100% 0,0 100%);
+  }
+  .bcursor {
+    display:inline-block; width:2px; height:.85em;
+    background:var(--ice-blue); margin-left:2px;
+    vertical-align:middle; animation:blink .65s step-end infinite;
+  }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0;} }
 
-.lflash { position:absolute; top:-15px; right:55px; font-size:1.4rem; opacity:0; pointer-events:none; }
-.lflash.go { animation:lgo .7s ease-out forwards; }
-@keyframes lgo { 0%,100%{opacity:0;} 10%{opacity:1;} 20%{opacity:0;} 35%{opacity:.7;} 45%{opacity:0;} }
+  .lflash { position:absolute; top:-15px; right:55px; font-size:1.4rem; opacity:0; pointer-events:none; }
+  .lflash.go { animation:lgo .7s ease-out forwards; }
+  @keyframes lgo { 0%,100%{opacity:0;} 10%{opacity:1;} 20%{opacity:0;} 35%{opacity:.7;} 45%{opacity:0;} }
 
-.speak-bar { display:none; align-items:center; gap:4px; height:20px; }
-.speak-bar.on { display:flex; }
-.speak-bar span {
-display:block; width:3px; border-radius:2px; background:var(–ice-blue);
-animation:sw .45s ease-in-out infinite alternate;
-}
-.speak-bar span:nth-child(1){height:5px;animation-delay:0s;}
-.speak-bar span:nth-child(2){height:13px;animation-delay:.08s;}
-.speak-bar span:nth-child(3){height:9px;animation-delay:.16s;}
-.speak-bar span:nth-child(4){height:17px;animation-delay:.04s;}
-.speak-bar span:nth-child(5){height:7px;animation-delay:.12s;}
-@keyframes sw{ from{transform:scaleY(.4);opacity:.5;} to{transform:scaleY(1);opacity:1;} }
+  .speak-bar { display:none; align-items:center; gap:4px; height:20px; }
+  .speak-bar.on { display:flex; }
+  .speak-bar span {
+    display:block; width:3px; border-radius:2px; background:var(--ice-blue);
+    animation:sw .45s ease-in-out infinite alternate;
+  }
+  .speak-bar span:nth-child(1){height:5px;animation-delay:0s;}
+  .speak-bar span:nth-child(2){height:13px;animation-delay:.08s;}
+  .speak-bar span:nth-child(3){height:9px;animation-delay:.16s;}
+  .speak-bar span:nth-child(4){height:17px;animation-delay:.04s;}
+  .speak-bar span:nth-child(5){height:7px;animation-delay:.12s;}
+  @keyframes sw{ from{transform:scaleY(.4);opacity:.5;} to{transform:scaleY(1);opacity:1;} }
 
-.controls { display:flex; gap:.9rem; align-items:center; flex-wrap:wrap; }
-.btn-listen {
-display:inline-flex; align-items:center; gap:.45rem;
-background:transparent; border:1px solid var(–ice-blue); color:var(–ice-blue);
-font-family:‘Syne’,sans-serif; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
-padding:.55rem 1.1rem; cursor:pointer; transition:all .2s;
-}
-.btn-listen:hover { background:var(–ice-blue); color:var(–sky); }
-.btn-stop {
-background:transparent; border:1px solid rgba(255,107,74,.5); color:var(–accent);
-font-family:‘Syne’,sans-serif; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
-padding:.55rem 1.1rem; cursor:pointer; transition:all .2s;
-}
-.btn-stop:hover { background:var(–accent); color:white; }
-.voice-select {
-background:rgba(13,34,68,.8); border:1px solid rgba(126,200,227,.25);
-color:var(–text); font-family:‘Syne’,sans-serif; font-size:.7rem;
-padding:.45rem .8rem; cursor:pointer; outline:none;
-}
+  .controls { display:flex; gap:.9rem; align-items:center; flex-wrap:wrap; }
+  .btn-listen {
+    display:inline-flex; align-items:center; gap:.45rem;
+    background:transparent; border:1px solid var(--ice-blue); color:var(--ice-blue);
+    font-family:'Syne',sans-serif; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+    padding:.55rem 1.1rem; cursor:pointer; transition:all .2s;
+  }
+  .btn-listen:hover { background:var(--ice-blue); color:var(--sky); }
+  .btn-stop {
+    background:transparent; border:1px solid rgba(255,107,74,.5); color:var(--accent);
+    font-family:'Syne',sans-serif; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+    padding:.55rem 1.1rem; cursor:pointer; transition:all .2s;
+  }
+  .btn-stop:hover { background:var(--accent); color:white; }
+  .voice-select {
+    background:rgba(13,34,68,.8); border:1px solid rgba(126,200,227,.25);
+    color:var(--text); font-family:'Syne',sans-serif; font-size:.7rem;
+    padding:.45rem .8rem; cursor:pointer; outline:none;
+  }
 
-.lesson-panel {
-position:relative; z-index:10;
-max-width:1200px; margin:0 auto;
-padding:1.5rem 3rem 5rem;
-}
-.panel-title {
-font-family:‘Syne’,sans-serif; font-size:.72rem;
-letter-spacing:.15em; text-transform:uppercase;
-color:var(–aurora); margin-bottom:1.4rem;
-}
-.lessons-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
-.lesson-card {
-background:rgba(13,34,68,.65); border:1px solid rgba(126,200,227,.1);
-border-radius:3px; padding:1.4rem; cursor:pointer;
-transition:border-color .2s, transform .2s, background .2s;
-position:relative; overflow:hidden;
-}
-.lesson-card::before {
-content:’’; position:absolute; inset:0;
-background:linear-gradient(135deg,rgba(126,200,227,.07) 0%,transparent 60%);
-opacity:0; transition:opacity .2s;
-}
-.lesson-card:hover { border-color:rgba(126,200,227,.38); transform:translateY(-4px); }
-.lesson-card:hover::before { opacity:1; }
-.lesson-card.active { border-color:var(–ice-blue); background:rgba(126,200,227,.07); }
-.card-num { font-family:‘Syne’,sans-serif; font-size:.62rem; letter-spacing:.1em; color:var(–text-dim); margin-bottom:.7rem; }
-.card-icon { font-size:1.7rem; margin-bottom:.7rem; display:block; }
-.card-title { font-family:‘Syne’,sans-serif; font-weight:700; font-size:.92rem; margin-bottom:.45rem; line-height:1.3; }
-.card-desc { font-size:.83rem; color:var(–text-dim); line-height:1.6; }
-.card-btn {
-margin-top:.9rem; display:inline-flex; align-items:center; gap:.35rem;
-font-family:‘Syne’,sans-serif; font-size:.68rem; letter-spacing:.07em; text-transform:uppercase;
-color:var(–ice-blue); background:none; border:none; cursor:pointer; padding:0;
-transition:gap .2s;
-}
-.card-btn:hover { gap:.6rem; }
+  .lesson-panel {
+    position:relative; z-index:10;
+    max-width:1200px; margin:0 auto;
+    padding:1.5rem 3rem 5rem;
+  }
+  .panel-title {
+    font-family:'Syne',sans-serif; font-size:.72rem;
+    letter-spacing:.15em; text-transform:uppercase;
+    color:var(--aurora); margin-bottom:1.4rem;
+  }
+  .lessons-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
+  .lesson-card {
+    background:rgba(13,34,68,.65); border:1px solid rgba(126,200,227,.1);
+    border-radius:3px; padding:1.4rem; cursor:pointer;
+    transition:border-color .2s, transform .2s, background .2s;
+    position:relative; overflow:hidden;
+  }
+  .lesson-card::before {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg,rgba(126,200,227,.07) 0%,transparent 60%);
+    opacity:0; transition:opacity .2s;
+  }
+  .lesson-card:hover { border-color:rgba(126,200,227,.38); transform:translateY(-4px); }
+  .lesson-card:hover::before { opacity:1; }
+  .lesson-card.active { border-color:var(--ice-blue); background:rgba(126,200,227,.07); }
+  .card-num { font-family:'Syne',sans-serif; font-size:.62rem; letter-spacing:.1em; color:var(--text-dim); margin-bottom:.7rem; }
+  .card-icon { font-size:1.7rem; margin-bottom:.7rem; display:block; }
+  .card-title { font-family:'Syne',sans-serif; font-weight:700; font-size:.92rem; margin-bottom:.45rem; line-height:1.3; }
+  .card-desc { font-size:.83rem; color:var(--text-dim); line-height:1.6; }
+  .card-btn {
+    margin-top:.9rem; display:inline-flex; align-items:center; gap:.35rem;
+    font-family:'Syne',sans-serif; font-size:.68rem; letter-spacing:.07em; text-transform:uppercase;
+    color:var(--ice-blue); background:none; border:none; cursor:pointer; padding:0;
+    transition:gap .2s;
+  }
+  .card-btn:hover { gap:.6rem; }
 
-@keyframes eyeblink {
-0%,90%,100%{transform:scaleY(1);} 93%{transform:scaleY(.06);}
-}
-.eblink { animation:eyeblink 4.5s ease-in-out infinite; transform-origin:center; }
+  @keyframes eyeblink {
+    0%,90%,100%{transform:scaleY(1);} 93%{transform:scaleY(.06);}
+  }
+  .eblink { animation:eyeblink 4.5s ease-in-out infinite; transform-origin:center; }
 
-footer {
-position:relative; z-index:10;
-border-top:1px solid rgba(126,200,227,.08);
-padding:1.4rem 3rem;
-display:flex; justify-content:space-between; align-items:center;
-font-size:.72rem; color:var(–text-dim);
-font-family:‘Syne’,sans-serif; letter-spacing:.05em;
-}
+  footer {
+    position:relative; z-index:10;
+    border-top:1px solid rgba(126,200,227,.08);
+    padding:1.4rem 3rem;
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:.72rem; color:var(--text-dim);
+    font-family:'Syne',sans-serif; letter-spacing:.05em;
+  }
 
-@media(max-width:768px){
-.hero{ grid-template-columns:1fr; gap:2rem; padding:2rem 1.5rem; }
-.hero-text{ order:2; } .character-stage{ order:1; }
-.scene{ width:280px; height:360px; }
-.lessons-grid{ grid-template-columns:1fr; }
-.lesson-panel{ padding:1.5rem 1.5rem 3rem; }
-header{ padding:1.2rem 1.5rem; } nav{ display:none; }
-footer{ flex-direction:column; gap:.5rem; text-align:center; }
-}
+  @media(max-width:768px){
+    .hero{ grid-template-columns:1fr; gap:2rem; padding:2rem 1.5rem; }
+    .hero-text{ order:2; } .character-stage{ order:1; }
+    .scene{ width:280px; height:360px; }
+    .lessons-grid{ grid-template-columns:1fr; }
+    .lesson-panel{ padding:1.5rem 1.5rem 3rem; }
+    header{ padding:1.2rem 1.5rem; } nav{ display:none; }
+    footer{ flex-direction:column; gap:.5rem; text-align:center; }
+  }
 </style>
-
 </head>
 <body>
 
@@ -297,198 +295,195 @@ footer{ flex-direction:column; gap:.5rem; text-align:center; }
     <div class="scene">
       <div class="scene-glow"></div>
 
-```
-  <div class="particle" style="width:6px;height:6px;background:#7ec8e3;top:50%;left:50%;--st:0deg;--r:115px;--od:7s;--odel:0s;"></div>
-  <div class="particle" style="width:4px;height:4px;background:#f5c842;top:50%;left:50%;--st:130deg;--r:100px;--od:10s;--odel:-4s;"></div>
-  <div class="particle" style="width:5px;height:5px;background:#4fc3a1;top:50%;left:50%;--st:250deg;--r:90px;--od:6.5s;--odel:-6s;"></div>
-  <div class="particle" style="width:3px;height:3px;background:white;top:50%;left:50%;--st:55deg;--r:125px;--od:12s;--odel:-2s;"></div>
+      <div class="particle" style="width:6px;height:6px;background:#7ec8e3;top:50%;left:50%;--st:0deg;--r:115px;--od:7s;--odel:0s;"></div>
+      <div class="particle" style="width:4px;height:4px;background:#f5c842;top:50%;left:50%;--st:130deg;--r:100px;--od:10s;--odel:-4s;"></div>
+      <div class="particle" style="width:5px;height:5px;background:#4fc3a1;top:50%;left:50%;--st:250deg;--r:90px;--od:6.5s;--odel:-6s;"></div>
+      <div class="particle" style="width:3px;height:3px;background:white;top:50%;left:50%;--st:55deg;--r:125px;--od:12s;--odel:-2s;"></div>
 
-  <div class="lflash" id="lflash">⚡</div>
+      <div class="lflash" id="lflash">⚡</div>
 
-  <div class="speech-bubble">
-    <span id="btext"></span><span class="bcursor" id="bcursor"></span>
-  </div>
+      <div class="speech-bubble">
+        <span id="btext"></span><span class="bcursor" id="bcursor"></span>
+      </div>
 
-  <!-- ══ DR. NIMBUS — Kalam-inspired SVG character ══ -->
-  <svg class="kalam-char" id="kalamChar" viewBox="0 0 210 315" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- ══ DR. NIMBUS — Kalam-inspired SVG character ══ -->
+      <svg class="kalam-char" id="kalamChar" viewBox="0 0 210 315" fill="none" xmlns="http://www.w3.org/2000/svg">
 
-    <!-- BODY: formal jacket / sherwani-style collar -->
-    <path d="M 43 155 Q 40 215 38 280 L 172 280 Q 170 215 167 155 Q 142 143 105 141 Q 68 143 43 155 Z" fill="#eaeff4"/>
-    <path d="M 43 155 Q 40 215 38 280 L 70 280 L 68 155 Z" fill="#d6dde7"/>
-    <path d="M 167 155 Q 170 215 172 280 L 140 280 L 142 155 Z" fill="#d6dde7"/>
-    <!-- White kurta beneath jacket -->
-    <path d="M 105 141 L 82 168 L 80 215 L 68 215 L 68 155 Q 84 143 105 141 Z" fill="white"/>
-    <path d="M 105 141 L 128 168 L 130 215 L 142 215 L 142 155 Q 126 143 105 141 Z" fill="white"/>
-    <path d="M 82 163 L 98 176 L 105 142" fill="white" stroke="#ccd5df" stroke-width=".5"/>
-    <path d="M 128 163 L 112 176 L 105 142" fill="white" stroke="#ccd5df" stroke-width=".5"/>
-    <!-- Indian flag lapel pin -->
-    <circle cx="76" cy="172" r="5.5" fill="white" stroke="#ccd5df" stroke-width=".8"/>
-    <rect x="73" y="168.2" width="6.5" height="2.2" fill="#FF9933"/>
-    <rect x="73" y="170.4" width="6.5" height="2.2" fill="white"/>
-    <rect x="73" y="172.6" width="6.5" height="2.2" fill="#138808"/>
-    <circle cx="76.3" cy="171.4" r="1.6" fill="#000080" opacity=".7"/>
-    <!-- Jacket pocket -->
-    <rect x="50" y="190" width="22" height="17" rx="2" fill="#d6dde7"/>
-    <!-- Buttons -->
-    <circle cx="105" cy="210" r="2.5" fill="#bcc7d3"/>
-    <circle cx="105" cy="228" r="2.5" fill="#bcc7d3"/>
-    <circle cx="105" cy="246" r="2.5" fill="#bcc7d3"/>
+        <!-- BODY: formal jacket / sherwani-style collar -->
+        <path d="M 43 155 Q 40 215 38 280 L 172 280 Q 170 215 167 155 Q 142 143 105 141 Q 68 143 43 155 Z" fill="#eaeff4"/>
+        <path d="M 43 155 Q 40 215 38 280 L 70 280 L 68 155 Z" fill="#d6dde7"/>
+        <path d="M 167 155 Q 170 215 172 280 L 140 280 L 142 155 Z" fill="#d6dde7"/>
+        <!-- White kurta beneath jacket -->
+        <path d="M 105 141 L 82 168 L 80 215 L 68 215 L 68 155 Q 84 143 105 141 Z" fill="white"/>
+        <path d="M 105 141 L 128 168 L 130 215 L 142 215 L 142 155 Q 126 143 105 141 Z" fill="white"/>
+        <path d="M 82 163 L 98 176 L 105 142" fill="white" stroke="#ccd5df" stroke-width=".5"/>
+        <path d="M 128 163 L 112 176 L 105 142" fill="white" stroke="#ccd5df" stroke-width=".5"/>
+        <!-- Indian flag lapel pin -->
+        <circle cx="76" cy="172" r="5.5" fill="white" stroke="#ccd5df" stroke-width=".8"/>
+        <rect x="73" y="168.2" width="6.5" height="2.2" fill="#FF9933"/>
+        <rect x="73" y="170.4" width="6.5" height="2.2" fill="white"/>
+        <rect x="73" y="172.6" width="6.5" height="2.2" fill="#138808"/>
+        <circle cx="76.3" cy="171.4" r="1.6" fill="#000080" opacity=".7"/>
+        <!-- Jacket pocket -->
+        <rect x="50" y="190" width="22" height="17" rx="2" fill="#d6dde7"/>
+        <!-- Buttons -->
+        <circle cx="105" cy="210" r="2.5" fill="#bcc7d3"/>
+        <circle cx="105" cy="228" r="2.5" fill="#bcc7d3"/>
+        <circle cx="105" cy="246" r="2.5" fill="#bcc7d3"/>
 
-    <!-- ARMS -->
-    <path d="M 43 155 Q 22 163 14 186 Q 10 198 17 203 Q 25 208 32 196 Q 39 178 55 168 Z" fill="#eaeff4"/>
-    <path d="M 43 155 Q 32 160 29 172 Q 36 167 55 168 Z" fill="#d6dde7"/>
-    <!-- Left hand - dark Indian skin -->
-    <ellipse cx="15" cy="205" rx="12" ry="9" fill="#7a4e22" transform="rotate(-15 15 205)"/>
-    <path d="M 7 199 Q 3 193 6 188" stroke="#6a3e18" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-    <path d="M 10 195 Q 7 188 11 184" stroke="#6a3e18" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-    <path d="M 14 193 Q 12 186 16 182" stroke="#6a3e18" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <!-- ARMS -->
+        <path d="M 43 155 Q 22 163 14 186 Q 10 198 17 203 Q 25 208 32 196 Q 39 178 55 168 Z" fill="#eaeff4"/>
+        <path d="M 43 155 Q 32 160 29 172 Q 36 167 55 168 Z" fill="#d6dde7"/>
+        <!-- Left hand - dark Indian skin -->
+        <ellipse cx="15" cy="205" rx="12" ry="9" fill="#7a4e22" transform="rotate(-15 15 205)"/>
+        <path d="M 7 199 Q 3 193 6 188" stroke="#6a3e18" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <path d="M 10 195 Q 7 188 11 184" stroke="#6a3e18" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <path d="M 14 193 Q 12 186 16 182" stroke="#6a3e18" stroke-width="2.2" stroke-linecap="round" fill="none"/>
 
-    <!-- Right arm -->
-    <path d="M 167 155 Q 188 163 196 181 Q 200 193 193 198 Q 185 203 179 193 Q 172 175 155 168 Z" fill="#eaeff4"/>
-    <path d="M 167 155 Q 178 160 181 172 Q 174 167 155 168 Z" fill="#d6dde7"/>
-    <!-- Right hand -->
-    <ellipse cx="194" cy="200" rx="12" ry="9" fill="#7a4e22" transform="rotate(18 194 200)"/>
-    <!-- Book "Wings of Fire" -->
-    <rect x="184" y="168" width="23" height="30" rx="2" fill="#1a3a6e"/>
-    <rect x="184" y="168" width="4" height="30" rx="1" fill="#0d2244"/>
-    <line x1="190" y1="174" x2="205" y2="174" stroke="#7ec8e3" stroke-width="1" opacity=".6"/>
-    <line x1="190" y1="178" x2="205" y2="178" stroke="#7ec8e3" stroke-width="1" opacity=".4"/>
-    <line x1="190" y1="182" x2="205" y2="182" stroke="#7ec8e3" stroke-width="1" opacity=".4"/>
-    <text x="196" y="192" text-anchor="middle" font-family="serif" font-size="4.8" fill="#f5c842" opacity=".9">Wings</text>
-    <text x="196" y="198" text-anchor="middle" font-family="serif" font-size="4.3" fill="#f5c842" opacity=".8">of Fire</text>
+        <!-- Right arm -->
+        <path d="M 167 155 Q 188 163 196 181 Q 200 193 193 198 Q 185 203 179 193 Q 172 175 155 168 Z" fill="#eaeff4"/>
+        <path d="M 167 155 Q 178 160 181 172 Q 174 167 155 168 Z" fill="#d6dde7"/>
+        <!-- Right hand -->
+        <ellipse cx="194" cy="200" rx="12" ry="9" fill="#7a4e22" transform="rotate(18 194 200)"/>
+        <!-- Book "Wings of Fire" -->
+        <rect x="184" y="168" width="23" height="30" rx="2" fill="#1a3a6e"/>
+        <rect x="184" y="168" width="4" height="30" rx="1" fill="#0d2244"/>
+        <line x1="190" y1="174" x2="205" y2="174" stroke="#7ec8e3" stroke-width="1" opacity=".6"/>
+        <line x1="190" y1="178" x2="205" y2="178" stroke="#7ec8e3" stroke-width="1" opacity=".4"/>
+        <line x1="190" y1="182" x2="205" y2="182" stroke="#7ec8e3" stroke-width="1" opacity=".4"/>
+        <text x="196" y="192" text-anchor="middle" font-family="serif" font-size="4.8" fill="#f5c842" opacity=".9">Wings</text>
+        <text x="196" y="198" text-anchor="middle" font-family="serif" font-size="4.3" fill="#f5c842" opacity=".8">of Fire</text>
 
-    <!-- NECK -->
-    <path d="M 90 134 Q 90 121 105 119 Q 120 121 120 134 L 120 151 Q 113 155 105 155 Q 97 155 90 151 Z" fill="#7a4e22"/>
-    <path d="M 90 143 Q 97 151 105 152 Q 113 151 120 143 L 120 151 Q 113 155 105 155 Q 97 155 90 151 Z" fill="#6a3e18" opacity=".35"/>
+        <!-- NECK -->
+        <path d="M 90 134 Q 90 121 105 119 Q 120 121 120 134 L 120 151 Q 113 155 105 155 Q 97 155 90 151 Z" fill="#7a4e22"/>
+        <path d="M 90 143 Q 97 151 105 152 Q 113 151 120 143 L 120 151 Q 113 155 105 155 Q 97 155 90 151 Z" fill="#6a3e18" opacity=".35"/>
 
-    <!-- HEAD — wide, full, rounded South-Indian face -->
-    <ellipse cx="107" cy="78" rx="42" ry="46" fill="#5c3510" opacity=".22"/>
-    <ellipse cx="105" cy="76" rx="42" ry="46" fill="#7a4e22"/>
-    <!-- Face light/volume -->
-    <ellipse cx="100" cy="63" rx="26" ry="30" fill="#8d5e30" opacity=".42"/>
+        <!-- HEAD — wide, full, rounded South-Indian face -->
+        <ellipse cx="107" cy="78" rx="42" ry="46" fill="#5c3510" opacity=".22"/>
+        <ellipse cx="105" cy="76" rx="42" ry="46" fill="#7a4e22"/>
+        <!-- Face light/volume -->
+        <ellipse cx="100" cy="63" rx="26" ry="30" fill="#8d5e30" opacity=".42"/>
 
-    <!-- ══ ICONIC WHITE FLOWING HAIR ══ -->
-    <!-- Back volume -->
-    <ellipse cx="105" cy="48" rx="42" ry="20" fill="#cccccc"/>
-    <!-- Main hair sweep down both sides -->
-    <path d="M 64 72 Q 57 50 105 38 Q 153 50 146 72 Q 140 52 105 48 Q 70 52 64 72 Z" fill="#c2c2c2"/>
-    <!-- Long flowing hair left — signature Kalam look -->
-    <path d="M 64 72 Q 55 92 57 120 Q 59 138 66 148 Q 61 128 63 105 Q 64 88 70 80 Z" fill="#cacaca"/>
-    <!-- Long flowing right -->
-    <path d="M 146 72 Q 155 92 153 120 Q 151 138 144 148 Q 149 128 147 105 Q 146 88 140 80 Z" fill="#cacaca"/>
-    <!-- Hair wave strands -->
-    <path d="M 66 74 Q 62 90 64 108" stroke="#afafaf" stroke-width="1.6" fill="none" opacity=".7"/>
-    <path d="M 70 70 Q 67 85 69 100" stroke="#afafaf" stroke-width="1.2" fill="none" opacity=".6"/>
-    <path d="M 76 58 Q 73 72 75 87" stroke="#b8b8b8" stroke-width="1.2" fill="none" opacity=".55"/>
-    <path d="M 90 42 Q 88 56 89 70" stroke="#b5b5b5" stroke-width="1.2" fill="none" opacity=".5"/>
-    <path d="M 105 38 Q 103 54 104 68" stroke="#b8b8b8" stroke-width="1.5" fill="none" opacity=".5"/>
-    <path d="M 120 42 Q 122 56 121 70" stroke="#b5b5b5" stroke-width="1.2" fill="none" opacity=".5"/>
-    <path d="M 134 58 Q 137 72 135 87" stroke="#b8b8b8" stroke-width="1.2" fill="none" opacity=".55"/>
-    <path d="M 140 70 Q 143 85 141 100" stroke="#afafaf" stroke-width="1.2" fill="none" opacity=".6"/>
-    <path d="M 144 74 Q 148 90 146 108" stroke="#afafaf" stroke-width="1.6" fill="none" opacity=".7"/>
-    <!-- Slight wave at hairline -->
-    <path d="M 75 58 Q 90 50 105 48 Q 120 50 135 58" stroke="#d5d5d5" stroke-width="2" fill="none" opacity=".55"/>
-    <!-- Forehead recession -->
-    <ellipse cx="105" cy="60" rx="34" ry="15" fill="#8d5e30" opacity=".18"/>
+        <!-- ══ ICONIC WHITE FLOWING HAIR ══ -->
+        <!-- Back volume -->
+        <ellipse cx="105" cy="48" rx="42" ry="20" fill="#cccccc"/>
+        <!-- Main hair sweep down both sides -->
+        <path d="M 64 72 Q 57 50 105 38 Q 153 50 146 72 Q 140 52 105 48 Q 70 52 64 72 Z" fill="#c2c2c2"/>
+        <!-- Long flowing hair left — signature Kalam look -->
+        <path d="M 64 72 Q 55 92 57 120 Q 59 138 66 148 Q 61 128 63 105 Q 64 88 70 80 Z" fill="#cacaca"/>
+        <!-- Long flowing right -->
+        <path d="M 146 72 Q 155 92 153 120 Q 151 138 144 148 Q 149 128 147 105 Q 146 88 140 80 Z" fill="#cacaca"/>
+        <!-- Hair wave strands -->
+        <path d="M 66 74 Q 62 90 64 108" stroke="#afafaf" stroke-width="1.6" fill="none" opacity=".7"/>
+        <path d="M 70 70 Q 67 85 69 100" stroke="#afafaf" stroke-width="1.2" fill="none" opacity=".6"/>
+        <path d="M 76 58 Q 73 72 75 87" stroke="#b8b8b8" stroke-width="1.2" fill="none" opacity=".55"/>
+        <path d="M 90 42 Q 88 56 89 70" stroke="#b5b5b5" stroke-width="1.2" fill="none" opacity=".5"/>
+        <path d="M 105 38 Q 103 54 104 68" stroke="#b8b8b8" stroke-width="1.5" fill="none" opacity=".5"/>
+        <path d="M 120 42 Q 122 56 121 70" stroke="#b5b5b5" stroke-width="1.2" fill="none" opacity=".5"/>
+        <path d="M 134 58 Q 137 72 135 87" stroke="#b8b8b8" stroke-width="1.2" fill="none" opacity=".55"/>
+        <path d="M 140 70 Q 143 85 141 100" stroke="#afafaf" stroke-width="1.2" fill="none" opacity=".6"/>
+        <path d="M 144 74 Q 148 90 146 108" stroke="#afafaf" stroke-width="1.6" fill="none" opacity=".7"/>
+        <!-- Slight wave at hairline -->
+        <path d="M 75 58 Q 90 50 105 48 Q 120 50 135 58" stroke="#d5d5d5" stroke-width="2" fill="none" opacity=".55"/>
+        <!-- Forehead recession -->
+        <ellipse cx="105" cy="60" rx="34" ry="15" fill="#8d5e30" opacity=".18"/>
 
-    <!-- EARS -->
-    <path d="M 64 76 Q 55 80 54 93 Q 55 106 64 108 Q 68 98 67 86 Z" fill="#7a4e22"/>
-    <path d="M 64 80 Q 58 84 58 93 Q 59 102 64 104" stroke="#6a3e18" stroke-width="1.2" fill="none"/>
-    <path d="M 146 76 Q 155 80 156 93 Q 155 106 146 108 Q 142 98 143 86 Z" fill="#7a4e22"/>
-    <path d="M 146 80 Q 152 84 152 93 Q 151 102 146 104" stroke="#6a3e18" stroke-width="1.2" fill="none"/>
+        <!-- EARS -->
+        <path d="M 64 76 Q 55 80 54 93 Q 55 106 64 108 Q 68 98 67 86 Z" fill="#7a4e22"/>
+        <path d="M 64 80 Q 58 84 58 93 Q 59 102 64 104" stroke="#6a3e18" stroke-width="1.2" fill="none"/>
+        <path d="M 146 76 Q 155 80 156 93 Q 155 106 146 108 Q 142 98 143 86 Z" fill="#7a4e22"/>
+        <path d="M 146 80 Q 152 84 152 93 Q 151 102 146 104" stroke="#6a3e18" stroke-width="1.2" fill="none"/>
 
-    <!-- GLASSES — Kalam's signature large, round, thin-framed glasses -->
-    <circle cx="84" cy="85" r="17" fill="rgba(180,220,255,.1)" stroke="#181818" stroke-width="1.9"/>
-    <circle cx="126" cy="85" r="17" fill="rgba(180,220,255,.1)" stroke="#181818" stroke-width="1.9"/>
-    <path d="M 101 84 Q 105 82 109 84" stroke="#181818" stroke-width="1.9" fill="none"/>
-    <line x1="67" y1="83" x2="61" y2="81" stroke="#181818" stroke-width="1.9" stroke-linecap="round"/>
-    <line x1="143" y1="83" x2="149" y2="81" stroke="#181818" stroke-width="1.9" stroke-linecap="round"/>
-    <!-- Lens shine -->
-    <path d="M 73 78 Q 77 76 81 79" stroke="white" stroke-width="1.1" fill="none" opacity=".5"/>
-    <path d="M 115 78 Q 119 76 123 79" stroke="white" stroke-width="1.1" fill="none" opacity=".5"/>
+        <!-- GLASSES — Kalam's signature large, round, thin-framed glasses -->
+        <circle cx="84" cy="85" r="17" fill="rgba(180,220,255,.1)" stroke="#181818" stroke-width="1.9"/>
+        <circle cx="126" cy="85" r="17" fill="rgba(180,220,255,.1)" stroke="#181818" stroke-width="1.9"/>
+        <path d="M 101 84 Q 105 82 109 84" stroke="#181818" stroke-width="1.9" fill="none"/>
+        <line x1="67" y1="83" x2="61" y2="81" stroke="#181818" stroke-width="1.9" stroke-linecap="round"/>
+        <line x1="143" y1="83" x2="149" y2="81" stroke="#181818" stroke-width="1.9" stroke-linecap="round"/>
+        <!-- Lens shine -->
+        <path d="M 73 78 Q 77 76 81 79" stroke="white" stroke-width="1.1" fill="none" opacity=".5"/>
+        <path d="M 115 78 Q 119 76 123 79" stroke="white" stroke-width="1.1" fill="none" opacity=".5"/>
 
-    <!-- EYES — warm, deep, intelligent -->
-    <g class="eblink">
-      <ellipse cx="84" cy="85" rx="9" ry="7.5" fill="white"/>
-      <circle cx="84" cy="85" r="5.5" fill="#1e0e00"/>
-      <circle cx="84" cy="85" r="3" fill="#080300"/>
-      <circle cx="81.5" cy="83" r="1.9" fill="white"/>
-      <circle cx="86.5" cy="87" r=".9" fill="white" opacity=".5"/>
-      <path d="M 75 82 Q 84 77 93 82" stroke="#2a1200" stroke-width="1.7" fill="none"/>
-      <path d="M 76 88 Q 84 93 92 88" stroke="#6a3e18" stroke-width=".9" fill="none" opacity=".6"/>
-    </g>
-    <g class="eblink">
-      <ellipse cx="126" cy="85" rx="9" ry="7.5" fill="white"/>
-      <circle cx="126" cy="85" r="5.5" fill="#1e0e00"/>
-      <circle cx="126" cy="85" r="3" fill="#080300"/>
-      <circle cx="123.5" cy="83" r="1.9" fill="white"/>
-      <circle cx="128.5" cy="87" r=".9" fill="white" opacity=".5"/>
-      <path d="M 117 82 Q 126 77 135 82" stroke="#2a1200" stroke-width="1.7" fill="none"/>
-      <path d="M 118 88 Q 126 93 134 88" stroke="#6a3e18" stroke-width=".9" fill="none" opacity=".6"/>
-    </g>
+        <!-- EYES — warm, deep, intelligent -->
+        <g class="eblink">
+          <ellipse cx="84" cy="85" rx="9" ry="7.5" fill="white"/>
+          <circle cx="84" cy="85" r="5.5" fill="#1e0e00"/>
+          <circle cx="84" cy="85" r="3" fill="#080300"/>
+          <circle cx="81.5" cy="83" r="1.9" fill="white"/>
+          <circle cx="86.5" cy="87" r=".9" fill="white" opacity=".5"/>
+          <path d="M 75 82 Q 84 77 93 82" stroke="#2a1200" stroke-width="1.7" fill="none"/>
+          <path d="M 76 88 Q 84 93 92 88" stroke="#6a3e18" stroke-width=".9" fill="none" opacity=".6"/>
+        </g>
+        <g class="eblink">
+          <ellipse cx="126" cy="85" rx="9" ry="7.5" fill="white"/>
+          <circle cx="126" cy="85" r="5.5" fill="#1e0e00"/>
+          <circle cx="126" cy="85" r="3" fill="#080300"/>
+          <circle cx="123.5" cy="83" r="1.9" fill="white"/>
+          <circle cx="128.5" cy="87" r=".9" fill="white" opacity=".5"/>
+          <path d="M 117 82 Q 126 77 135 82" stroke="#2a1200" stroke-width="1.7" fill="none"/>
+          <path d="M 118 88 Q 126 93 134 88" stroke="#6a3e18" stroke-width=".9" fill="none" opacity=".6"/>
+        </g>
 
-    <!-- EYEBROWS — thick, wise, slightly greying -->
-    <path id="lbrow" d="M 70 73 Q 83 67 97 70" stroke="#1a0c04" stroke-width="3.8" stroke-linecap="round" fill="none"/>
-    <path d="M 70 73 Q 83 67 97 70" stroke="#aaa" stroke-width="1.3" stroke-linecap="round" fill="none" opacity=".35"/>
-    <path id="rbrow" d="M 113 70 Q 127 67 140 73" stroke="#1a0c04" stroke-width="3.8" stroke-linecap="round" fill="none"/>
-    <path d="M 113 70 Q 127 67 140 73" stroke="#aaa" stroke-width="1.3" stroke-linecap="round" fill="none" opacity=".35"/>
+        <!-- EYEBROWS — thick, wise, slightly greying -->
+        <path id="lbrow" d="M 70 73 Q 83 67 97 70" stroke="#1a0c04" stroke-width="3.8" stroke-linecap="round" fill="none"/>
+        <path d="M 70 73 Q 83 67 97 70" stroke="#aaa" stroke-width="1.3" stroke-linecap="round" fill="none" opacity=".35"/>
+        <path id="rbrow" d="M 113 70 Q 127 67 140 73" stroke="#1a0c04" stroke-width="3.8" stroke-linecap="round" fill="none"/>
+        <path d="M 113 70 Q 127 67 140 73" stroke="#aaa" stroke-width="1.3" stroke-linecap="round" fill="none" opacity=".35"/>
 
-    <!-- NOSE — broad, prominent, full -->
-    <path d="M 105 92 Q 101 103 96 110 Q 99 117 105 117 Q 111 117 114 110 Q 109 103 105 92 Z" fill="#6a3e18" opacity=".5"/>
-    <ellipse cx="98" cy="113" rx="5.5" ry="3" fill="#5a3210" opacity=".65"/>
-    <ellipse cx="112" cy="113" rx="5.5" ry="3" fill="#5a3210" opacity=".65"/>
-    <path d="M 105 92 Q 106 103 106 115" stroke="#8d5e30" stroke-width="1.1" fill="none" opacity=".38"/>
+        <!-- NOSE — broad, prominent, full -->
+        <path d="M 105 92 Q 101 103 96 110 Q 99 117 105 117 Q 111 117 114 110 Q 109 103 105 92 Z" fill="#6a3e18" opacity=".5"/>
+        <ellipse cx="98" cy="113" rx="5.5" ry="3" fill="#5a3210" opacity=".65"/>
+        <ellipse cx="112" cy="113" rx="5.5" ry="3" fill="#5a3210" opacity=".65"/>
+        <path d="M 105 92 Q 106 103 106 115" stroke="#8d5e30" stroke-width="1.1" fill="none" opacity=".38"/>
 
-    <!-- CHEEKS — warm rounded -->
-    <ellipse cx="73" cy="102" rx="11" ry="7" fill="#c05030" opacity=".1"/>
-    <ellipse cx="137" cy="102" rx="11" ry="7" fill="#c05030" opacity=".1"/>
-    <!-- Nasolabial lines — character and age -->
-    <path d="M 88 108 Q 84 117 86 125" stroke="#6a3e18" stroke-width=".9" fill="none" opacity=".28"/>
-    <path d="M 122 108 Q 126 117 124 125" stroke="#6a3e18" stroke-width=".9" fill="none" opacity=".28"/>
+        <!-- CHEEKS — warm rounded -->
+        <ellipse cx="73" cy="102" rx="11" ry="7" fill="#c05030" opacity=".1"/>
+        <ellipse cx="137" cy="102" rx="11" ry="7" fill="#c05030" opacity=".1"/>
+        <!-- Nasolabial lines — character and age -->
+        <path d="M 88 108 Q 84 117 86 125" stroke="#6a3e18" stroke-width=".9" fill="none" opacity=".28"/>
+        <path d="M 122 108 Q 126 117 124 125" stroke="#6a3e18" stroke-width=".9" fill="none" opacity=".28"/>
 
-    <!-- MOUTH — full lips, warm generous smile -->
-    <path id="ulip" d="M 87 124 Q 95 120 105 121 Q 115 120 123 124 Q 115 126 105 125 Q 95 126 87 124 Z" fill="#5a3010"/>
-    <path id="llip" d="M 87 124 Q 95 133 105 134 Q 115 133 123 124 Q 115 131 105 131 Q 95 131 87 124 Z" fill="#6a3a14"/>
-    <path id="mpath" d="M 89 124 Q 105 127 121 124" stroke="#4a2808" stroke-width="1" fill="none"/>
-    <path d="M 96 130 Q 105 133 114 130" stroke="#8d5e30" stroke-width=".8" fill="none" opacity=".33"/>
+        <!-- MOUTH — full lips, warm generous smile -->
+        <path id="ulip" d="M 87 124 Q 95 120 105 121 Q 115 120 123 124 Q 115 126 105 125 Q 95 126 87 124 Z" fill="#5a3010"/>
+        <path id="llip" d="M 87 124 Q 95 133 105 134 Q 115 133 123 124 Q 115 131 105 131 Q 95 131 87 124 Z" fill="#6a3a14"/>
+        <path id="mpath" d="M 89 124 Q 105 127 121 124" stroke="#4a2808" stroke-width="1" fill="none"/>
+        <path d="M 96 130 Q 105 133 114 130" stroke="#8d5e30" stroke-width=".8" fill="none" opacity=".33"/>
 
-    <!-- CHIN + FOREHEAD definition -->
-    <ellipse cx="105" cy="136" rx="17" ry="7" fill="#7a4e22" opacity=".28"/>
-    <path d="M 77 66 Q 75 72 77 77" stroke="#6a3e18" stroke-width=".8" fill="none" opacity=".28"/>
-    <path d="M 133 66 Q 135 72 133 77" stroke="#6a3e18" stroke-width=".8" fill="none" opacity=".28"/>
+        <!-- CHIN + FOREHEAD definition -->
+        <ellipse cx="105" cy="136" rx="17" ry="7" fill="#7a4e22" opacity=".28"/>
+        <path d="M 77 66 Q 75 72 77 77" stroke="#6a3e18" stroke-width=".8" fill="none" opacity=".28"/>
+        <path d="M 133 66 Q 135 72 133 77" stroke="#6a3e18" stroke-width=".8" fill="none" opacity=".28"/>
 
-    <!-- NAME TAG -->
-    <rect x="112" y="202" width="54" height="32" rx="3" fill="white" opacity=".97"/>
-    <rect x="112" y="202" width="54" height="8" rx="3" fill="#1a3a6e"/>
-    <text x="139" y="209" text-anchor="middle" font-family="Syne,sans-serif" font-size="5.2" fill="white" font-weight="700">DR. NIMBUS</text>
-    <text x="139" y="217" text-anchor="middle" font-family="Crimson Pro,serif" font-size="4.4" fill="#1a3a6e">Cloud Physicist</text>
-    <text x="139" y="223" text-anchor="middle" font-family="Crimson Pro,serif" font-size="3.9" fill="#7a9bbf">KIT, Germany</text>
-    <text x="139" y="230" text-anchor="middle" font-family="Crimson Pro,serif" font-size="3.7" fill="#f5c842" opacity=".9">"Dream. Discover. Teach."</text>
+        <!-- NAME TAG -->
+        <rect x="112" y="202" width="54" height="32" rx="3" fill="white" opacity=".97"/>
+        <rect x="112" y="202" width="54" height="8" rx="3" fill="#1a3a6e"/>
+        <text x="139" y="209" text-anchor="middle" font-family="Syne,sans-serif" font-size="5.2" fill="white" font-weight="700">DR. NIMBUS</text>
+        <text x="139" y="217" text-anchor="middle" font-family="Crimson Pro,serif" font-size="4.4" fill="#1a3a6e">Cloud Physicist</text>
+        <text x="139" y="223" text-anchor="middle" font-family="Crimson Pro,serif" font-size="3.9" fill="#7a9bbf">KIT, Germany</text>
+        <text x="139" y="230" text-anchor="middle" font-family="Crimson Pro,serif" font-size="3.7" fill="#f5c842" opacity=".9">"Dream. Discover. Teach."</text>
 
-    <!-- SHOES -->
-    <path d="M 60 272 Q 46 276 44 282 L 82 282 L 82 272 Z" fill="#151520"/>
-    <path d="M 150 272 Q 164 276 166 282 L 128 282 L 128 272 Z" fill="#151520"/>
-    <path d="M 44 280 Q 46 284 82 284 L 82 282 L 44 282 Z" fill="#25253a"/>
-    <path d="M 166 280 Q 164 284 128 284 L 128 282 L 166 282 Z" fill="#25253a"/>
+        <!-- SHOES -->
+        <path d="M 60 272 Q 46 276 44 282 L 82 282 L 82 272 Z" fill="#151520"/>
+        <path d="M 150 272 Q 164 276 166 282 L 128 282 L 128 272 Z" fill="#151520"/>
+        <path d="M 44 280 Q 46 284 82 284 L 82 282 L 44 282 Z" fill="#25253a"/>
+        <path d="M 166 280 Q 164 284 128 284 L 128 282 L 166 282 Z" fill="#25253a"/>
 
-  </svg>
-</div>
+      </svg>
+    </div>
 
-<div class="controls">
-  <button class="btn-listen" onclick="speakCurrent()">
-    <svg width="11" height="11" viewBox="0 0 11 11"><polygon points="1,0.5 10.5,5.5 1,10.5" fill="currentColor"/></svg>
-    Listen
-  </button>
-  <button class="btn-stop" onclick="stopSpeaking()">■ Stop</button>
-  <select class="voice-select" id="voiceSel" onchange="onVoiceChange()">
-    <option value="auto">Auto voice</option>
-  </select>
-  <div class="speak-bar" id="sbar">
-    <span></span><span></span><span></span><span></span><span></span>
-  </div>
-</div>
-```
-
+    <div class="controls">
+      <button class="btn-listen" onclick="speakCurrent()">
+        <svg width="11" height="11" viewBox="0 0 11 11"><polygon points="1,0.5 10.5,5.5 1,10.5" fill="currentColor"/></svg>
+        Listen
+      </button>
+      <button class="btn-stop" onclick="stopSpeaking()">■ Stop</button>
+      <select class="voice-select" id="voiceSel" onchange="onVoiceChange()">
+        <option value="auto">Auto voice</option>
+      </select>
+      <div class="speak-bar" id="sbar">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -549,8 +544,8 @@ footer{ flex-direction:column; gap:.5rem; text-align:center; }
 <script>
 const lessons = [
   {
-    bubble: "Dear friends — imagine one single ice crystal high inside a thundercloud. Through secondary ice production, that one crystal can multiply into tens of thousands! Nature is truly extraordinary, is it not?",
-    speak: "Let me ask you something. If I told you that a single ice crystal, floating at minus five degrees inside a deep cloud, could multiply into tens of thousands of crystals in just a few minutes — would you believe me? This is not science fiction. This is secondary ice production, and it is one of the most beautiful puzzles in all of atmospheric science. Here is what happens. When a supercooled water droplet — still liquid, far below the freezing point — collides with an ice crystal, it freezes onto its surface. We call this riming. And here is the remarkable part. The rapid, violent freezing ejects tiny splinters and fragments of ice. Each splinter becomes a new ice nucleus. Each nucleus grows into a new crystal. Each new crystal causes more riming, more splinters — a cascade of ice multiplication. The Hallett and Mossop mechanism, identified in 1974, shows this process is most efficient between minus three and minus eight degrees Celsius. This explains why deep convective clouds over India, over Germany, over the tropics — why they contain vastly more ice than ice-nucleating particles alone could ever account for. One crystal. Tens of thousands of descendants. My friends, nature is truly extraordinary."
+    bubble: "My dear friends — imagine one single ice crystal high inside a thundercloud. Through secondary ice production, that one crystal can multiply into tens of thousands! Nature is truly extraordinary, is it not?",
+    speak: "My dear young friends, let me ask you something. If I told you that a single ice crystal, floating at minus five degrees inside a deep cloud, could multiply into tens of thousands of crystals in just a few minutes — would you believe me? This is not science fiction. This is secondary ice production, and it is one of the most beautiful puzzles in all of atmospheric science. Here is what happens. When a supercooled water droplet — still liquid, far below the freezing point — collides with an ice crystal, it freezes onto its surface. We call this riming. And here is the remarkable part. The rapid, violent freezing ejects tiny splinters and fragments of ice. Each splinter becomes a new ice nucleus. Each nucleus grows into a new crystal. Each new crystal causes more riming, more splinters — a cascade of ice multiplication. The Hallett and Mossop mechanism, identified in 1974, shows this process is most efficient between minus three and minus eight degrees Celsius. This explains why deep convective clouds over India, over Germany, over the tropics — why they contain vastly more ice than ice-nucleating particles alone could ever account for. One crystal. Tens of thousands of descendants. My friends, nature is truly extraordinary."
   },
   {
     bubble: "You know, every raindrop that has ever fallen on this Earth began its journey on a tiny, invisible aerosol particle. Köhler theory tells us exactly why — and it is a piece of physics I find deeply beautiful!",
@@ -694,6 +689,5 @@ function setTalking(on) {
 
 typeText(lessons[0].bubble);
 </script>
-
 </body>
 </html>
