@@ -1,227 +1,234 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dr Nimbus — Human Voice Demo</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07131f">
+<title>Cloud Physics Lab — Dr. Deepak Waman</title>
+<meta name="description" content="Interactive, open-access lessons in atmospheric science and cloud microphysics with Dr. Nimbus.">
 <style>
-body {
-  background:#0b1320;
-  color:#e6eef7;
-  font-family:system-ui;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  height:100vh;
-  margin:0;
+:root{
+  --bg:#06111c;--bg2:#0a1b2b;--panel:rgba(13,31,47,.78);--line:rgba(163,211,255,.16);
+  --text:#edf7ff;--muted:#9eb4c7;--cyan:#6ee7f2;--blue:#73a7ff;--gold:#ffd580;--green:#8ff0c0;
+  --shadow:0 22px 70px rgba(0,0,0,.35);--radius:24px;
 }
-
-.container {
-  text-align:center;
-}
-
-.kalam-char {
-  width:220px;
-  margin-bottom:20px;
-  animation:breathe 5s ease-in-out infinite;
-  transform-origin:center bottom;
-}
-
-@keyframes breathe {
-  0%,100% { transform:scale(1,1); }
-  50% { transform:scale(1.01,0.99); }
-}
-
-button {
-  padding:12px 18px;
-  margin:6px;
-  border:none;
-  background:#7ec8e3;
-  color:#000;
-  font-weight:600;
-  cursor:pointer;
-}
-
-select {
-  padding:8px;
-  margin-top:10px;
-}
-
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ background:
+ radial-gradient(circle at 12% 8%,rgba(64,146,255,.16),transparent 26rem),
+ radial-gradient(circle at 82% 20%,rgba(110,231,242,.10),transparent 24rem),
+ linear-gradient(180deg,#050d16 0%,#081725 55%,#06111c 100%);min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:
+ radial-gradient(#fff 0.65px,transparent .7px),radial-gradient(#fff .55px,transparent .6px);
+ background-size:61px 61px,97px 97px;background-position:0 0,31px 21px}
+button,select,input{font:inherit} button{cursor:pointer}
+a{color:inherit}.shell{width:min(1220px,calc(100% - 32px));margin:auto}
+nav{position:sticky;top:0;z-index:20;background:rgba(5,13,22,.72);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.navin{height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.02em;text-decoration:none}
+.logo{width:38px;height:38px;border-radius:14px;background:linear-gradient(145deg,var(--cyan),var(--blue));display:grid;place-items:center;box-shadow:0 8px 24px rgba(74,162,255,.25)}
+.navlinks{display:flex;gap:24px;color:var(--muted);font-size:14px}.navlinks a{text-decoration:none}.navlinks a:hover{color:#fff}
+.hero{min-height:720px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:54px;padding:70px 0 54px}
+.kicker{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);background:rgba(255,255,255,.035);padding:8px 12px;border-radius:999px;color:#c7deef;font-size:13px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 16px var(--green)}
+h1{font-size:clamp(52px,7vw,88px);line-height:.94;letter-spacing:-.065em;margin:24px 0 22px;max-width:820px}
+.grad{background:linear-gradient(90deg,#fff 10%,var(--cyan) 55%,#9ab9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(18px,2vw,22px);line-height:1.65;color:#b9cad8;max-width:700px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{border:1px solid var(--line);border-radius:14px;padding:13px 17px;background:rgba(255,255,255,.045);color:#fff;font-weight:700}
+.btn.primary{background:linear-gradient(135deg,#54dbe9,#7199ff);color:#04121d;border:0}.btn:hover{transform:translateY(-1px)}
+.microstats{display:flex;gap:24px;flex-wrap:wrap;margin-top:38px;color:var(--muted);font-size:13px}.microstats b{color:#fff;font-size:18px;display:block}
+.character-wrap{position:relative;min-height:580px;display:grid;place-items:center}
+.aura{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(91,209,240,.18),rgba(86,124,255,.05) 48%,transparent 68%);filter:blur(2px)}
+.character-card{position:relative;width:min(480px,100%);border:1px solid var(--line);border-radius:34px;background:linear-gradient(160deg,rgba(17,43,63,.78),rgba(8,20,32,.8));box-shadow:var(--shadow);overflow:hidden}
+.character-card:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.06),transparent 28%);pointer-events:none}
+.nimbus{display:block;width:100%;height:auto}.float{animation:float 4.8s ease-in-out infinite}@keyframes float{50%{transform:translateY(-8px)}}
+.eye{transform-box:fill-box;transform-origin:center;animation:blink 5.2s infinite}@keyframes blink{0%,46%,49%,100%{transform:scaleY(1)}47.5%{transform:scaleY(.08)}}
+.mouth{transform-box:fill-box;transform-origin:center}.talking .mouth{animation:talk .16s infinite alternate}@keyframes talk{to{transform:scaleY(1.7) scaleX(.9)}}
+.particle{animation:drift 5s ease-in-out infinite;transform-origin:center}.p2{animation-delay:-1.7s}.p3{animation-delay:-3.2s}@keyframes drift{50%{transform:translate(8px,-15px) scale(1.15)}}
+.speech{position:absolute;left:22px;right:22px;bottom:20px;padding:15px 16px;border-radius:16px;background:rgba(5,15,24,.84);border:1px solid var(--line);font-size:14px;line-height:1.5;color:#d9e7f2;backdrop-filter:blur(12px)}
+.speech b{color:var(--cyan)} section{padding:84px 0}.section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:28px}
+.eyebrow{color:var(--cyan);font-weight:800;text-transform:uppercase;letter-spacing:.13em;font-size:12px}
+h2{font-size:clamp(34px,5vw,54px);letter-spacing:-.045em;margin:8px 0}.section-head p{color:var(--muted);max-width:560px;line-height:1.6}
+.lesson-layout{display:grid;grid-template-columns:310px 1fr;gap:20px}.lesson-menu,.lesson-panel,.lab-card,.about-card{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(18px);border-radius:var(--radius);box-shadow:var(--shadow)}
+.lesson-menu{padding:10px;height:max-content;position:sticky;top:90px}.lesson-tab{width:100%;text-align:left;border:0;background:transparent;color:#adc0d0;border-radius:15px;padding:16px;display:flex;gap:13px;align-items:flex-start}
+.lesson-tab:hover,.lesson-tab.active{background:rgba(110,231,242,.08);color:#fff}.num{display:grid;place-items:center;min-width:30px;height:30px;border-radius:10px;background:rgba(255,255,255,.06);font-size:12px;font-weight:800}
+.lesson-tab.active .num{background:var(--cyan);color:#06202b}.lesson-tab strong{display:block;font-size:14px}.lesson-tab small{display:block;margin-top:4px;color:#7890a4;line-height:1.35}
+.lesson-panel{padding:30px;min-height:560px}.lesson-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.lesson-top h3{font-size:30px;letter-spacing:-.03em;margin:4px 0 8px}
+.lesson-top p,.lesson-body p{color:#b5c6d4;line-height:1.72}.voicebar{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.iconbtn{border:1px solid var(--line);background:rgba(255,255,255,.045);color:#fff;border-radius:12px;padding:10px 12px;font-weight:700}
+.lesson-body{display:grid;grid-template-columns:1.08fr .92fr;gap:24px;margin-top:26px}.concepts{display:grid;gap:12px}.concept{border:1px solid var(--line);background:rgba(255,255,255,.025);padding:17px;border-radius:16px}
+.concept b{display:block;margin-bottom:6px}.concept span{color:#9fb2c2;font-size:14px;line-height:1.55}.viz{min-height:330px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,rgba(71,147,205,.12),rgba(6,17,28,.1));padding:18px;overflow:hidden}
+.viz-title{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#91aabd;font-weight:800;margin-bottom:10px}.mini-sky{position:relative;height:270px;border-radius:15px;overflow:hidden;background:linear-gradient(#163852,#315c70 55%,#15283a)}
+.cloud{position:absolute;filter:drop-shadow(0 10px 15px rgba(0,0,0,.18));opacity:.94}.cloud span{position:absolute;background:#dfeaf1;border-radius:50%}.cloud.c1{left:24%;top:38%;width:180px;height:80px}.cloud.c1 span:nth-child(1){width:95px;height:64px;left:20px;top:18px}.cloud.c1 span:nth-child(2){width:84px;height:84px;left:65px;top:0}.cloud.c1 span:nth-child(3){width:85px;height:55px;left:95px;top:28px}
+.rain{position:absolute;left:35%;top:63%;width:120px;height:90px;background:repeating-linear-gradient(105deg,transparent 0 11px,rgba(128,205,255,.7) 12px 14px,transparent 15px 24px);animation:rain .8s linear infinite}@keyframes rain{to{background-position:0 24px}}
+.labs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.lab-card{padding:24px}.lab-card h3{margin:7px 0 8px}.lab-card p{color:var(--muted);line-height:1.55;font-size:14px}.lab-card canvas{width:100%;height:180px;background:rgba(0,0,0,.13);border-radius:15px;margin:14px 0}
+.control{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;color:#b7c8d5;font-size:13px}.control input{width:100%}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:20px}.about-card{padding:30px}.about-card p{color:#adbfcd;line-height:1.7}.tagrow{display:flex;gap:8px;flex-wrap:wrap}.tag{border:1px solid var(--line);border-radius:999px;padding:7px 10px;color:#bcd0df;font-size:12px}
+footer{border-top:1px solid var(--line);padding:34px 0 50px;color:#7f96a8;font-size:13px}.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.toast{position:fixed;right:20px;bottom:20px;background:#0c2232;border:1px solid var(--line);padding:12px 15px;border-radius:13px;box-shadow:var(--shadow);opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s;z-index:40}.toast.show{opacity:1;transform:none}
+@media(max-width:900px){.navlinks{display:none}.hero{grid-template-columns:1fr;padding-top:50px}.character-wrap{min-height:auto}.lesson-layout{grid-template-columns:1fr}.lesson-menu{position:static;display:grid;grid-template-columns:1fr 1fr}.lesson-body,.about{grid-template-columns:1fr}.labs{grid-template-columns:1fr}.lesson-top{display:block}.voicebar{justify-content:flex-start;margin-top:14px}}
+@media(max-width:560px){.shell{width:min(100% - 20px,1220px)}.hero{gap:24px}h1{font-size:50px}.lesson-menu{grid-template-columns:1fr}.lesson-panel{padding:20px}.character-card{border-radius:24px}.microstats{gap:15px}}
 </style>
 </head>
-
 <body>
+<nav>
+ <div class="shell navin">
+  <a class="brand" href="#home"><span class="logo">☁</span><span>Cloud Physics Lab</span></a>
+  <div class="navlinks"><a href="#lessons">Lessons</a><a href="#lab">Interactive Lab</a><a href="#about">About</a></div>
+ </div>
+</nav>
 
-<div class="container">
+<main id="home">
+<section class="shell hero">
+ <div>
+  <span class="kicker"><span class="dot"></span> Open-access atmospheric science education</span>
+  <h1>Understand the <span class="grad">physics inside clouds.</span></h1>
+  <p class="lead">Explore atmospheric science and cloud microphysics with Dr. Nimbus — animated explanations, spoken lessons, and interactive physics you can manipulate.</p>
+  <div class="actions">
+   <button class="btn primary" onclick="document.querySelector('#lessons').scrollIntoView()">Start learning →</button>
+   <button class="btn" onclick="speakIntro()">▶ Meet Dr. Nimbus</button>
+  </div>
+  <div class="microstats"><span><b>4</b>starter lessons</span><span><b>3</b>interactive labs</span><span><b>Free</b>open access</span></div>
+ </div>
+ <div class="character-wrap">
+  <div class="aura"></div>
+  <div class="character-card float" id="character">
+   <svg class="nimbus" viewBox="0 0 520 600" role="img" aria-label="Dr. Nimbus, animated cloud physics scientist">
+    <defs>
+     <linearGradient id="coat" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7fbff"/><stop offset="1" stop-color="#c8d8e4"/></linearGradient>
+     <linearGradient id="shirt" x1="0" x2="1"><stop stop-color="#173d5b"/><stop offset="1" stop-color="#225f79"/></linearGradient>
+    </defs>
+    <circle cx="260" cy="250" r="185" fill="#15384d" opacity=".42"/>
+    <g class="particle"><circle cx="92" cy="165" r="9" fill="#6ee7f2" opacity=".8"/><circle cx="104" cy="138" r="4" fill="#fff" opacity=".65"/></g>
+    <g class="particle p2"><circle cx="427" cy="215" r="11" fill="#9db8ff" opacity=".75"/><circle cx="446" cy="186" r="5" fill="#fff" opacity=".55"/></g>
+    <g class="particle p3"><circle cx="405" cy="92" r="6" fill="#ffd580" opacity=".8"/></g>
+    <!-- body -->
+    <path d="M105 600c12-122 69-184 155-184s145 61 156 184z" fill="url(#coat)"/>
+    <path d="M197 430l63 73 64-73-17-20h-96z" fill="url(#shirt)"/>
+    <path d="M222 473l38 30-25 97h-44zM298 473l-38 30 25 97h44z" fill="#eef5fa"/>
+    <!-- neck and face -->
+    <path d="M218 385v58c21 26 63 27 84 0v-58z" fill="#a96d49"/>
+    <ellipse cx="260" cy="286" rx="105" ry="128" fill="#b97851"/>
+    <ellipse cx="158" cy="294" rx="18" ry="30" fill="#a96d49"/><ellipse cx="362" cy="294" rx="18" ry="30" fill="#a96d49"/>
+    <!-- hair -->
+    <path d="M164 257c-8-91 35-141 96-141 73 0 116 55 98 146-10-52-32-84-68-96-47 27-91 27-126 91z" fill="#182028"/>
+    <path d="M184 197c32-54 107-71 156-20-52-28-112-10-156 20z" fill="#27313a"/>
+    <!-- brows -->
+    <path d="M190 259q31-19 57-2" stroke="#35251f" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path d="M275 257q29-17 55 2" stroke="#35251f" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <!-- eyes -->
+    <g class="eye"><ellipse cx="220" cy="282" rx="12" ry="8" fill="#1b1715"/><circle cx="224" cy="279" r="2.5" fill="#fff"/></g>
+    <g class="eye"><ellipse cx="303" cy="282" rx="12" ry="8" fill="#1b1715"/><circle cx="307" cy="279" r="2.5" fill="#fff"/></g>
+    <!-- glasses -->
+    <g fill="none" stroke="#16202a" stroke-width="7"><rect x="176" y="255" width="78" height="58" rx="25"/><rect x="267" y="255" width="78" height="58" rx="25"/><path d="M254 277h14M176 273l-25-7M345 273l24-7"/></g>
+    <!-- nose -->
+    <path d="M257 282c-2 21-9 39 6 43" fill="none" stroke="#92583b" stroke-width="5" stroke-linecap="round"/>
+    <!-- moustache subtle -->
+    <path d="M232 344q27-14 55 0" fill="none" stroke="#4b332b" stroke-width="6" stroke-linecap="round" opacity=".65"/>
+    <!-- smile / talking mouth -->
+    <path class="mouth" d="M225 354q35 34 70 0q-34 48-70 0z" fill="#5d2526"/><path d="M239 360q22 12 43 0" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    <!-- arms + book -->
+    <path d="M140 500q-38 35-56 100h78l45-82z" fill="#dce9f2"/><path d="M380 500q38 35 56 100h-78l-45-82z" fill="#dce9f2"/>
+    <g transform="rotate(-5 265 530)"><rect x="184" y="490" width="164" height="104" rx="9" fill="#173c58" stroke="#6ee7f2" stroke-width="3"/><text x="266" y="530" fill="#eaf8ff" font-size="17" text-anchor="middle" font-weight="700">CLOUD</text><text x="266" y="553" fill="#eaf8ff" font-size="17" text-anchor="middle" font-weight="700">PHYSICS</text><path d="M266 492v100" stroke="#6ee7f2" opacity=".35"/></g>
+   </svg>
+   <div class="speech"><b>Dr. Nimbus:</b> <span id="bubbleText">“A cloud is a laboratory in the sky. Let’s investigate it.”</span></div>
+  </div>
+ </div>
+</section>
 
-<!-- ===== HUMAN SCIENTIST SVG ===== -->
-<svg class="kalam-char" id="char" viewBox="0 0 260 420">
+<section id="lessons">
+ <div class="shell">
+  <div class="section-head"><div><div class="eyebrow">Guided learning</div><h2>Lessons with Dr. Nimbus</h2></div><p>Each lesson combines concise theory, physical intuition, and narration. Start with the atmosphere, then move progressively into cloud microphysics.</p></div>
+  <div class="lesson-layout">
+   <aside class="lesson-menu" id="lessonMenu"></aside>
+   <article class="lesson-panel">
+    <div class="lesson-top">
+     <div><div class="eyebrow" id="lessonKicker">Lesson 01</div><h3 id="lessonTitle"></h3><p id="lessonIntro"></p></div>
+     <div class="voicebar"><button class="iconbtn" id="playBtn" onclick="toggleSpeech()">▶ Narrate</button><button class="iconbtn" onclick="stopSpeech()">■ Stop</button></div>
+    </div>
+    <div class="lesson-body"><div class="concepts" id="concepts"></div><div class="viz" id="lessonViz"></div></div>
+   </article>
+  </div>
+ </div>
+</section>
 
-  <ellipse cx="130" cy="395" rx="60" ry="12" fill="rgba(0,0,0,0.4)" />
+<section id="lab">
+ <div class="shell">
+  <div class="section-head"><div><div class="eyebrow">Interactive physics</div><h2>Cloud Lab</h2></div><p>Manipulate simplified physical parameters and see how the system responds. These visualizers are educational models, not forecast tools.</p></div>
+  <div class="labs">
+   <div class="lab-card"><div class="eyebrow">Köhler theory</div><h3>Activation curve</h3><p>Change dry aerosol radius and relative solute strength. The peak approximates the critical supersaturation.</p><canvas id="kohler" width="420" height="220"></canvas><div class="control"><input id="rd" type="range" min="20" max="120" value="55"><span id="rdv">55 nm</span><input id="solute" type="range" min="5" max="20" value="12"><span id="sv">1.2×</span></div></div>
+   <div class="lab-card"><div class="eyebrow">Collision–coalescence</div><h3>Collector drop</h3><p>Increase collector-drop size and explore the strong rise in idealized collection efficiency.</p><canvas id="collision" width="420" height="220"></canvas><div class="control"><input id="drop" type="range" min="20" max="500" value="160"><span id="dropv">160 μm</span></div></div>
+   <div class="lab-card"><div class="eyebrow">Atmospheric stability</div><h3>Rising parcel</h3><p>Compare a parcel temperature with an idealized environmental lapse rate as it rises.</p><canvas id="parcel" width="420" height="220"></canvas><div class="control"><input id="lapse" type="range" min="40" max="100" value="65"><span id="lapsev">6.5 K/km</span></div></div>
+  </div>
+ </div>
+</section>
 
-  <!-- Legs -->
-  <path d="M100 250 L90 360 L120 360 L125 250 Z" fill="#0b0f18"/>
-  <path d="M160 250 L165 360 L195 360 L180 250 Z" fill="#0b0f18"/>
+<section id="about">
+ <div class="shell">
+  <div class="section-head"><div><div class="eyebrow">About the project</div><h2>Science first. Open by design.</h2></div></div>
+  <div class="about">
+   <div class="about-card"><h3>Cloud Physics Lab</h3><p>An evolving educational platform for students, early-career researchers, and anyone curious about the physics of clouds. Future modules can connect foundational concepts to published research, atmospheric observations, and numerical modelling.</p><div class="tagrow"><span class="tag">Cloud microphysics</span><span class="tag">Atmospheric thermodynamics</span><span class="tag">Interactive learning</span><span class="tag">Open access</span></div></div>
+   <div class="about-card"><h3>Created by Dr. Deepak Waman</h3><p>Postdoctoral researcher in cloud microphysics at KIT, Germany. The long-term roadmap includes advanced microphysics lessons, research tools, Marathi-language science content, and visualizers for particle size distributions, CAPE/CIN, and cloud processes.</p><button class="btn" onclick="showToast('Research and Marathi sections are ready to be added next.')">Roadmap preview →</button></div>
+  </div>
+ </div>
+</section>
+</main>
 
-  <rect x="85" y="360" width="40" height="10" rx="3" fill="#111"/>
-  <rect x="165" y="360" width="40" height="10" rx="3" fill="#111"/>
-
-  <!-- Shirt -->
-  <rect x="105" y="150" width="50" height="110" fill="#fff"/>
-
-  <!-- Tie -->
-  <polygon points="130,150 120,200 140,200" fill="#1a3a6e"/>
-  <rect x="126" y="200" width="8" height="40" fill="#1a3a6e"/>
-
-  <!-- Lab coat -->
-  <path d="M80 150 L60 300 L90 300 L110 170 L150 170 L170 300 L200 300 L180 150 Z"
-        fill="#f5f8fb" stroke="#d6dde7"/>
-
-  <!-- Arms -->
-  <path d="M80 160 Q50 190 70 230 Q90 220 105 180 Z" fill="#f5f8fb"/>
-  <path d="M180 160 Q210 190 190 230 Q170 220 155 180 Z" fill="#f5f8fb"/>
-
-  <ellipse cx="70" cy="235" rx="10" ry="8" fill="#8b5a2b"/>
-  <ellipse cx="190" cy="235" rx="10" ry="8" fill="#8b5a2b"/>
-
-  <!-- Neck -->
-  <rect x="118" y="135" width="24" height="20" rx="6" fill="#8b5a2b"/>
-
-  <!-- Head -->
-  <ellipse cx="130" cy="100" rx="42" ry="50" fill="#8b5a2b"/>
-
-  <!-- Hair -->
-  <path d="M90 90 Q130 40 170 90 Q150 70 130 70 Q110 70 90 90 Z"
-        fill="#d0d0d0"/>
-
-  <!-- Glasses -->
-  <circle cx="115" cy="105" r="16" stroke="#111" stroke-width="2" fill="transparent"/>
-  <circle cx="145" cy="105" r="16" stroke="#111" stroke-width="2" fill="transparent"/>
-
-  <!-- Eyes -->
-  <circle cx="115" cy="105" r="5" fill="#000"/>
-  <circle cx="145" cy="105" r="5" fill="#000"/>
-
-  <!-- Nose -->
-  <path d="M130 110 Q128 120 130 125 Q132 120 130 110 Z" fill="#6e4420"/>
-
-  <!-- Mouth -->
-  <path id="mouth" d="M115 135 Q130 145 145 135" stroke="#5a3010" stroke-width="2"/>
-
-</svg>
-
-<button onclick="speak()">🎙 Speak</button>
-<button onclick="stop()">■ Stop</button>
-
-<br>
-
-<select id="voices"></select>
-
-</div>
+<footer><div class="shell foot"><span>© <span id="year"></span> Cloud Physics Lab · Dr. Deepak Waman</span><span>Built for open science education · GitHub Pages ready</span></div></footer>
+<div class="toast" id="toast"></div>
 
 <script>
+const lessons=[
+ {title:"Basics of Atmospheric Science",short:"Atmosphere, pressure & clouds",intro:"Build the physical picture first: what the atmosphere is made of, why pressure decreases with height, how temperature varies, and where clouds fit into the Earth system.",
+  concepts:[
+   ["The atmosphere","A compressible mixture dominated by nitrogen and oxygen, with variable water vapour and trace constituents that strongly influence weather and climate."],
+   ["Pressure & hydrostatic balance","Air pressure falls with height because progressively less atmospheric mass lies above you. Hydrostatic balance links the vertical pressure gradient to air density and gravity."],
+   ["Weather, climate & clouds","Weather describes evolving atmospheric states; climate describes their statistics. Clouds couple dynamics, radiation, water, and aerosols across both."]
+  ],viz:"sky"},
+ {title:"Atmospheric Thermodynamics",short:"Parcels, saturation & stability",intro:"Follow an air parcel as it rises, expands, cools, reaches saturation, and potentially forms a cloud. Thermodynamics provides the bridge between motion and phase changes.",
+  concepts:[
+   ["Air parcels & adiabatic change","A conceptual parcel exchanges little heat with its surroundings over short times. Rising parcels expand and cool; sinking parcels compress and warm."],
+   ["Saturation & condensation","Saturation occurs when water vapour is in equilibrium with a liquid-water surface. Cooling can raise relative humidity until condensation becomes favourable."],
+   ["Potential & virtual temperature","Potential temperature removes pressure effects from temperature; virtual temperature represents how moisture changes air density. Both are central to stability and buoyancy."]
+  ],viz:"parcel"},
+ {title:"CCN & Köhler Theory",short:"How droplets activate",intro:"Cloud droplets do not usually form from pure water vapour alone. Aerosol particles act as cloud condensation nuclei, while curvature and dissolved solute compete to control activation.",
+  concepts:[
+   ["Cloud condensation nuclei","CCN are aerosol particles able to activate into cloud droplets at a given water-vapour supersaturation."],
+   ["Kelvin effect","Curvature raises the equilibrium vapour pressure over a small droplet, making tiny pure-water droplets harder to sustain."],
+   ["Raoult / solute effect","Dissolved material lowers water activity and equilibrium vapour pressure. Köhler theory combines this with curvature to define a critical radius and supersaturation."]
+  ],viz:"kohler"},
+ {title:"Collision–Coalescence",short:"From droplets to warm rain",intro:"Condensational growth becomes inefficient for producing raindrops quickly. In warm clouds, larger droplets fall faster, collide with smaller droplets, and may coalesce.",
+  concepts:[
+   ["Differential fall speed","Different droplet sizes have different terminal velocities. A faster large drop can overtake smaller droplets below it."],
+   ["Collision efficiency","Aerodynamic deflection means not every droplet in the geometric path actually collides. Efficiency depends strongly on drop sizes."],
+   ["Coalescence & runaway growth","If colliding droplets merge, the collector grows, falls faster, and sweeps out more droplets — a positive feedback toward drizzle and rain."]
+  ],viz:"collision"}
+];
+let active=0, speaking=false, utterance=null;
+const menu=document.getElementById("lessonMenu");
+function renderMenu(){menu.innerHTML=lessons.map((l,i)=>`<button class="lesson-tab ${i===active?'active':''}" onclick="setLesson(${i})"><span class="num">0${i+1}</span><span><strong>${l.title}</strong><small>${l.short}</small></span></button>`).join("")}
+function setLesson(i){stopSpeech();active=i;renderMenu();const l=lessons[i];document.getElementById("lessonKicker").textContent=`Lesson 0${i+1}`;document.getElementById("lessonTitle").textContent=l.title;document.getElementById("lessonIntro").textContent=l.intro;document.getElementById("concepts").innerHTML=l.concepts.map(c=>`<div class="concept"><b>${c[0]}</b><span>${c[1]}</span></div>`).join("");renderViz(l.viz)}
+function renderViz(type){const v=document.getElementById("lessonViz");if(type==="sky")v.innerHTML=`<div class="viz-title">Clouds in the atmosphere</div><div class="mini-sky"><div class="cloud c1"><span></span><span></span><span></span></div><div class="rain"></div></div>`;
+if(type==="parcel")v.innerHTML=`<div class="viz-title">Rising air parcel</div><svg viewBox="0 0 400 300" width="100%"><defs><linearGradient id="vsky" x2="0" y2="1"><stop stop-color="#173b56"/><stop offset="1" stop-color="#0c1e2e"/></linearGradient></defs><rect width="400" height="300" rx="14" fill="url(#vsky)"/><path d="M200 260 C150 210 155 165 200 135 C242 107 245 65 207 32" fill="none" stroke="#6ee7f2" stroke-width="4" stroke-dasharray="7 8"/><circle cx="200" cy="220" r="38" fill="#ffd580" opacity=".9"><animate attributeName="cy" values="220;75;220" dur="6s" repeatCount="indefinite"/></circle><text x="20" y="280" fill="#9eb4c7" font-size="14">expansion → cooling → saturation</text></svg>`;
+if(type==="kohler")v.innerHTML=`<div class="viz-title">Conceptual Köhler curve</div><svg viewBox="0 0 400 300" width="100%"><rect width="400" height="300" rx="14" fill="#0b2030"/><path d="M45 245H370M45 245V30" stroke="#71899a"/><path d="M50 210 C85 65 125 58 165 105 S245 183 365 184" fill="none" stroke="#6ee7f2" stroke-width="4"/><circle cx="118" cy="75" r="7" fill="#ffd580"/><path d="M118 75V245" stroke="#ffd580" stroke-dasharray="5 6" opacity=".65"/><text x="128" y="64" fill="#ffd580" font-size="13">critical point</text><text x="160" y="282" fill="#9eb4c7" font-size="13">droplet radius →</text><text x="16" y="125" fill="#9eb4c7" font-size="13" transform="rotate(-90 16 125)">supersaturation</text></svg>`;
+if(type==="collision")v.innerHTML=`<div class="viz-title">Differential sedimentation</div><svg viewBox="0 0 400 300" width="100%"><rect width="400" height="300" rx="14" fill="#0b2030"/><g fill="#79cfff" opacity=".8"><circle cx="120" cy="80" r="8"/><circle cx="175" cy="120" r="6"/><circle cx="260" cy="70" r="9"/><circle cx="305" cy="145" r="7"/><circle cx="92" cy="170" r="6"/></g><circle cx="205" cy="65" r="28" fill="#a9ddff"><animate attributeName="cy" values="65;245;65" dur="4s" repeatCount="indefinite"/></circle><path d="M205 95V245" stroke="#6ee7f2" stroke-width="3" stroke-dasharray="7 8"/><text x="113" y="275" fill="#9eb4c7" font-size="13">larger drop → faster fall speed</text></svg>`}
+function chooseVoice(){const vs=speechSynthesis.getVoices();return vs.find(v=>/en-GB/i.test(v.lang)&&/male|daniel|ryan|oliver|arthur/i.test(v.name))||vs.find(v=>/en-IN/i.test(v.lang))||vs.find(v=>/en-GB/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||vs[0]}
+function lessonText(){const l=lessons[active];return `${l.title}. ${l.intro} `+l.concepts.map(c=>`${c[0]}. ${c[1]}`).join(" ")}
+function speak(text){if(!("speechSynthesis" in window)){showToast("Speech synthesis is not supported in this browser.");return}speechSynthesis.cancel();utterance=new SpeechSynthesisUtterance(text);const voice=chooseVoice();if(voice)utterance.voice=voice;utterance.lang=voice?.lang||"en-GB";utterance.rate=.92;utterance.pitch=.98;utterance.onstart=()=>{speaking=true;document.getElementById("character").classList.add("talking");document.getElementById("playBtn").textContent="❚❚ Pause"};utterance.onend=()=>stopSpeech(false);speechSynthesis.speak(utterance)}
+function toggleSpeech(){if(speaking&&!speechSynthesis.paused){speechSynthesis.pause();document.getElementById("playBtn").textContent="▶ Resume";document.getElementById("character").classList.remove("talking")}else if(speechSynthesis.paused){speechSynthesis.resume();document.getElementById("playBtn").textContent="❚❚ Pause";document.getElementById("character").classList.add("talking")}else speak(lessonText())}
+function stopSpeech(cancel=true){if(cancel&&"speechSynthesis" in window)speechSynthesis.cancel();speaking=false;document.getElementById("character").classList.remove("talking");document.getElementById("playBtn").textContent="▶ Narrate"}
+function speakIntro(){document.getElementById("bubbleText").textContent="“Hello! I’m Dr. Nimbus. We’ll use physical intuition, equations, and interactive experiments to understand how clouds work.”";speak("Hello! I’m Dr. Nimbus. We’ll use physical intuition, equations, and interactive experiments to understand how clouds work. Welcome to Cloud Physics Lab.")}
+function showToast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2800)}
+speechSynthesis?.addEventListener?.("voiceschanged",()=>{});
+document.getElementById("year").textContent=new Date().getFullYear();
+renderMenu();setLesson(0);
 
-let voices = [];
-let speaking = false;
-let mouthTimer = null;
-
-const text = `My dear friends. Science is not just knowledge. It is curiosity. 
-It is imagination. And above all, it is the courage to ask questions.`;
-
-// Load voices
-function loadVoices() {
-  voices = speechSynthesis.getVoices();
-  const sel = document.getElementById('voices');
-  sel.innerHTML = '';
-
-  voices.forEach((v,i)=>{
-    if(v.lang.startsWith('en')){
-      const opt = document.createElement('option');
-      opt.value = i;
-      opt.textContent = v.name;
-      sel.appendChild(opt);
-    }
-  });
-}
-
-speechSynthesis.onvoiceschanged = loadVoices;
-setTimeout(loadVoices, 500);
-
-// Pick best voice
-function pickVoice(){
-  const sel = document.getElementById('voices');
-  if(sel.value) return voices[sel.value];
-
-  return voices.find(v=>v.name.includes('Natural')) ||
-         voices.find(v=>v.lang==='en-IN') ||
-         voices.find(v=>v.lang==='en-GB') ||
-         voices[0];
-}
-
-// Human-like speaking
-function speak(){
-
-  stop();
-
-  const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-
-  let i=0;
-
-  function next(){
-
-    if(i>=sentences.length){
-      stopMouth();
-      return;
-    }
-
-    const u = new SpeechSynthesisUtterance(sentences[i]);
-
-    const v = pickVoice();
-    if(v) u.voice = v;
-
-    u.rate = 0.9 + Math.random()*0.1;
-    u.pitch = 1.05;
-
-    u.onstart = startMouth;
-
-    u.onend = ()=>{
-      i++;
-      setTimeout(next, 250 + Math.random()*200);
-    };
-
-    speechSynthesis.speak(u);
-  }
-
-  next();
-}
-
-// Stop
-function stop(){
-  speechSynthesis.cancel();
-  stopMouth();
-}
-
-// ===== Mouth animation =====
-function startMouth(){
-  const m = document.getElementById('mouth');
-  mouthTimer = setInterval(()=>{
-    m.setAttribute('d',
-      Math.random()>0.5
-      ? "M115 135 Q130 155 145 135"
-      : "M115 135 Q130 145 145 135"
-    );
-  },120);
-}
-
-function stopMouth(){
-  clearInterval(mouthTimer);
-  document.getElementById('mouth')
-    .setAttribute('d',"M115 135 Q130 145 145 135");
-}
-
+// Canvas utilities
+function setupCanvas(id){const c=document.getElementById(id),dpr=window.devicePixelRatio||1,cssW=c.clientWidth,cssH=180;c.width=cssW*dpr;c.height=cssH*dpr;const x=c.getContext("2d");x.scale(dpr,dpr);return {c,x,w:cssW,h:cssH}}
+function axes(x,w,h){x.strokeStyle="rgba(190,220,240,.35)";x.lineWidth=1;x.beginPath();x.moveTo(32,15);x.lineTo(32,h-25);x.lineTo(w-10,h-25);x.stroke()}
+function drawK(){const {x,w,h}=setupCanvas("kohler");axes(x,w,h);const rd=+document.getElementById("rd").value,s=+document.getElementById("solute").value/10;x.strokeStyle="#6ee7f2";x.lineWidth=3;x.beginPath();for(let i=1;i<350;i++){let r=i/40+.15;let y=(1.5/r)-(s*(rd/55))/(r*r*r);let px=32+i*(w-48)/350,py=h-52-y*28;if(i===1)x.moveTo(px,py);else x.lineTo(px,py)}x.stroke();document.getElementById("rdv").textContent=rd+" nm";document.getElementById("sv").textContent=s.toFixed(1)+"×"}
+function drawCollision(){const {x,w,h}=setupCanvas("collision");axes(x,w,h);const d=+document.getElementById("drop").value;let e=1-Math.exp(-Math.max(0,d-30)/150);x.fillStyle="rgba(110,231,242,.18)";x.beginPath();x.arc(w*.52,h*.47,18+d/22,0,Math.PI*2);x.fill();x.strokeStyle="#6ee7f2";x.lineWidth=3;x.stroke();for(let i=0;i<9;i++){x.fillStyle="rgba(150,215,255,.72)";x.beginPath();x.arc(38+i*(w-70)/8,h-34-(i%3)*18,4+(i%2),0,Math.PI*2);x.fill()}x.fillStyle="#dceaf4";x.font="13px system-ui";x.fillText("idealized collection efficiency ≈ "+Math.round(e*100)+"%",42,24);document.getElementById("dropv").textContent=d+" μm"}
+function drawParcel(){const {x,w,h}=setupCanvas("parcel");axes(x,w,h);const lr=+document.getElementById("lapse").value/10;function line(rate,stroke){x.strokeStyle=stroke;x.lineWidth=3;x.beginPath();for(let z=0;z<=10;z+=.2){let T=20-rate*z,px=32+(T+50)*(w-55)/80,py=h-25-z*(h-45)/10;if(z===0)x.moveTo(px,py);else x.lineTo(px,py)}x.stroke()}line(lr,"#73a7ff");line(9.8,"#ffd580");x.fillStyle="#dceaf4";x.font="12px system-ui";x.fillText("environment",45,22);x.fillText("dry parcel",w-100,22);document.getElementById("lapsev").textContent=lr.toFixed(1)+" K/km"}
+["rd","solute"].forEach(id=>document.getElementById(id).addEventListener("input",drawK));document.getElementById("drop").addEventListener("input",drawCollision);document.getElementById("lapse").addEventListener("input",drawParcel);
+function redraw(){drawK();drawCollision();drawParcel()}window.addEventListener("resize",redraw);setTimeout(redraw,80);
 </script>
-
-</body>
-</html>
