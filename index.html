@@ -74,6 +74,35 @@ footer{padding:35px 0;color:#a9bfd1}.footer{display:grid;grid-template-columns:1
 
 
 
+
+.eqblock{margin:18px 0;padding:16px 18px;border:1px solid rgba(109,201,255,.18);border-radius:13px;background:#041321}
+.eq{font-family:Cambria,Georgia,"Times New Roman",serif;font-size:1.12rem;text-align:center;color:#f4fbff;line-height:1.75;overflow-x:auto}
+.eqmeaning{margin-top:10px;padding-top:10px;border-top:1px solid rgba(109,201,255,.12);font-size:.86rem!important;color:#a9c2d5!important}
+.termgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0}
+.term{padding:11px 13px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid rgba(109,201,255,.12);font-size:.86rem;color:#bfd1df}
+.atmos{margin:16px 0;padding:14px 16px;border-left:3px solid #70e59a;background:rgba(112,229,154,.055);border-radius:0 11px 11px 0}
+.atmos strong{color:#8cf0ae}
+.derivation{margin:15px 0;padding:14px 16px;border-left:3px solid #ffbf75;background:rgba(255,191,117,.05);border-radius:0 11px 11px 0}
+.derivation strong{color:#ffd09a}
+.lesson article h4{margin:21px 0 8px;color:#d8efff;font-size:1rem}
+.lesson article ul{padding-left:22px}
+@media(max-width:600px){.termgrid{grid-template-columns:1fr}.eq{font-size:1rem}}
+
+
+.collision-modal .panel{width:min(1140px,97vw)}
+.collision-app{padding:24px;display:grid;grid-template-columns:310px 1fr;gap:22px}
+.collision-controls{border:1px solid var(--line);border-radius:17px;background:#06192d;padding:18px;height:max-content}
+.collision-controls h3{margin:0 0 14px;color:#8cddff}
+.c-control{margin:14px 0}.c-control label{display:flex;justify-content:space-between;gap:10px;color:#dceaf5;font-size:.88rem;margin-bottom:7px}.c-control output{color:#68d1ff;font-weight:800}
+.c-control input[type=range]{width:100%;accent-color:#45bfff}
+.c-readouts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px}.c-readout{background:#041321;border:1px solid rgba(109,201,255,.14);border-radius:11px;padding:10px}.c-readout small{display:block;color:#91a9bc;font-size:.7rem}.c-readout strong{display:block;color:white;margin-top:3px;font-size:.9rem}
+.collision-view{min-width:0}
+#collisionSvg{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:17px;background:linear-gradient(#061424,#0a3453)}
+.c-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}
+.c-note{color:#a9bfd1;font-size:.79rem;line-height:1.45;margin-top:12px}
+.c-status{margin-top:12px;padding:12px;border-radius:10px;background:rgba(75,195,255,.06);border:1px solid rgba(109,201,255,.14);font-size:.84rem;line-height:1.45;color:#c7d9e6}
+@media(max-width:820px){.collision-app{grid-template-columns:1fr}.collision-controls{order:2}.collision-view{order:1}}
+
 .kohler-modal .panel{width:min(1140px,97vw)}
 .kohler-app{padding:24px;display:grid;grid-template-columns:310px 1fr;gap:22px}
 .kohler-controls{border:1px solid var(--line);border-radius:17px;background:#06192d;padding:18px;height:max-content}
@@ -141,7 +170,7 @@ footer{padding:35px 0;color:#a9bfd1}.footer{display:grid;grid-template-columns:1
   <div class="sectionhead"><div><h2 style="--cyan:#70e59a">Interactive Visualizers</h2><p>Play with the physics. Change parameters and see what happens.</p></div><span class="btn">Open all tools →</span></div>
   <div class="visualizers">
     <div class="viz"><span class="ico">📈</span><div><h3>Köhler Curve Explorer</h3><p>Change dry aerosol size, hygroscopicity, temperature, and ambient supersaturation; inspect critical activation conditions.</p><button class="btn" id="openKohler">Launch Explorer →</button></div></div>
-    <div class="viz"><span class="ico">💧</span><div><h3>Collision–Coalescence Lab</h3><p>Experiment with droplet sizes, fall speeds, and collection efficiency.</p><button class="btn" onclick="alert('Collision–coalescence visualizer is ready for the next development step.')">Interactive →</button></div></div>
+    <div class="viz"><span class="ico">💧</span><div><h3>Collision–Coalescence Lab</h3><p>Experiment with collector-drop size, cloud-droplet size, liquid water content, fall speeds, and collection efficiency.</p><button class="btn" id="openCollision">Launch Lab →</button></div></div>
     <div class="viz"><span class="ico">☁️</span><div><h3>Rising Parcel Simulator</h3><p>Lift an air parcel, watch it cool, locate the LCL/LFC, and estimate CAPE/CIN.</p><button class="btn" id="openParcel">Launch Simulator →</button></div></div>
   </div>
 </div></section>
@@ -156,6 +185,45 @@ footer{padding:35px 0;color:#a9bfd1}.footer{display:grid;grid-template-columns:1
 </main>
 
 
+
+
+<div class="modal collision-modal" id="collisionModal"><div class="panel">
+  <div class="panelbar"><strong>💧 Collision–Coalescence Lab</strong><button id="closeCollision">✕ Close</button></div>
+  <div class="collision-app">
+    <aside class="collision-controls">
+      <h3>Cloud & droplet properties</h3>
+      <div class="c-control"><label for="cR">Collector-drop radius <output id="cROut">200 µm</output></label><input id="cR" type="range" min="40" max="1000" step="10" value="200"></div>
+      <div class="c-control"><label for="cr">Small-droplet radius <output id="crOut">15 µm</output></label><input id="cr" type="range" min="5" max="40" step="1" value="15"></div>
+      <div class="c-control"><label for="cLWC">Liquid water content <output id="cLWCOut">0.50 g m⁻³</output></label><input id="cLWC" type="range" min=".05" max="2" step=".05" value=".50"></div>
+      <div class="c-control"><label for="cEc">Collection efficiency E<sub>c</sub> <output id="cEcOut">0.70</output></label><input id="cEc" type="range" min=".05" max="1" step=".05" value=".70"></div>
+      <div class="c-readouts">
+        <div class="c-readout"><small>V(R)</small><strong id="cVR">—</strong></div>
+        <div class="c-readout"><small>V(r)</small><strong id="cVr">—</strong></div>
+        <div class="c-readout"><small>ΔV</small><strong id="cDV">—</strong></div>
+        <div class="c-readout"><small>Kernel K</small><strong id="cKernel">—</strong></div>
+        <div class="c-readout"><small>Mass growth</small><strong id="cGrowth">—</strong></div>
+        <div class="c-readout"><small>Approx. dR/dt</small><strong id="cDR">—</strong></div>
+      </div>
+      <div class="c-actions"><button class="btn primary" id="runCollision">▶ Run encounter</button><button class="btn" id="resetCollision">↺ Reset</button></div>
+      <div class="c-status" id="cStatus">Adjust the controls, then run the encounter. The large drop falls faster and sweeps a collection cylinder through the cloud.</div>
+      <p class="c-note">Educational gravitational-collection model. Terminal speeds use a compact size-dependent approximation; real collection efficiencies depend on hydrodynamic interactions, turbulence, drop deformation and breakup.</p>
+    </aside>
+    <div class="collision-view">
+      <svg id="collisionSvg" viewBox="0 0 780 590" role="img" aria-label="Animated collector drop falling through smaller cloud droplets">
+        <defs><linearGradient id="cSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#061424"/><stop offset="1" stop-color="#0b3857"/></linearGradient></defs>
+        <rect width="780" height="590" fill="url(#cSky)"/>
+        <g id="smallDrops"></g>
+        <g id="sweepCone"></g>
+        <g id="collector"><circle id="collectorDrop" cx="390" cy="95" r="24" fill="#63d6ff" fill-opacity=".88" stroke="#e8fbff" stroke-width="2"/><ellipse cx="382" cy="86" rx="7" ry="5" fill="white" fill-opacity=".55"/></g>
+        <text x="28" y="35" fill="#d9efff" font-size="15" font-weight="700">Gravitational collection</text>
+        <text id="cAnimLabel" x="28" y="58" fill="#9fc2d8" font-size="12">Collector drop above a cloud-droplet population</text>
+        <line x1="690" y1="90" x2="690" y2="500" stroke="#b9d7e9" stroke-opacity=".35" stroke-width="2"/>
+        <path d="M682 485 L690 505 L698 485" fill="none" stroke="#b9d7e9" stroke-opacity=".6" stroke-width="2"/>
+        <text x="710" y="300" fill="#a8bfd1" font-size="13" transform="rotate(90 710 300)">fall direction</text>
+      </svg>
+    </div>
+  </div>
+</div></div>
 
 <div class="modal kohler-modal" id="kohlerModal"><div class="panel">
   <div class="panelbar"><strong>💧 Köhler Curve Explorer</strong><button id="closeKohler">✕ Close</button></div>
@@ -248,6 +316,65 @@ footer{padding:35px 0;color:#a9bfd1}.footer{display:grid;grid-template-columns:1
 </div></div>
 
 <script>
+
+
+
+const collisionModal=document.getElementById("collisionModal");
+let cRAF=null,cStart=null;
+function terminalVelocity(radiusUm){
+  const d=2*radiusUm*1e-6;
+  // Compact educational approximation spanning cloud droplets to ~2-mm drops.
+  if(d<80e-6) return 1.19e8*d*d;       // Stokes-like
+  if(d<1.2e-3) return 8e3*d;           // intermediate empirical scaling
+  return Math.min(9.0,4.0+2500*(d-1.2e-3));
+}
+function collisionModel(){
+  let R=+document.getElementById("cR").value, r=+document.getElementById("cr").value;
+  if(r>=R){r=Math.max(5,R-5);document.getElementById("cr").value=r}
+  const L=+document.getElementById("cLWC").value, Ec=+document.getElementById("cEc").value;
+  const VR=terminalVelocity(R), Vr=terminalVelocity(r), dv=Math.max(0,VR-Vr);
+  const Rm=R*1e-6,rm=r*1e-6,rhoW=1000,Lkg=L*1e-3;
+  const K=Math.PI*(Rm+rm)**2*dv*Ec;
+  const dmdt=Ec*Math.PI*Rm**2*dv*Lkg;
+  const dRdt=dmdt/(4*Math.PI*rhoW*Rm**2);
+  return {R,r,L,Ec,VR,Vr,dv,K,dmdt,dRdt};
+}
+function populateDrops(){
+  const g=document.getElementById("smallDrops");g.innerHTML="";
+  const pts=[[90,120],[170,180],[255,130],[330,215],[455,155],[550,220],[640,130],[110,310],[210,275],[300,355],[475,320],[585,365],[665,290],[150,455],[270,470],[510,465],[625,490],[355,430],[710,410],[70,390]];
+  pts.forEach((p,i)=>{const c=document.createElementNS("http://www.w3.org/2000/svg","circle");c.setAttribute("cx",p[0]);c.setAttribute("cy",p[1]);c.setAttribute("r",5+(i%3));c.setAttribute("fill","#bcecff");c.setAttribute("fill-opacity",".72");c.setAttribute("stroke","#effcff");c.setAttribute("stroke-opacity",".6");g.appendChild(c)});
+}
+function renderCollision(progress=0){
+  const m=collisionModel();
+  document.getElementById("cROut").textContent=m.R+" µm";document.getElementById("crOut").textContent=m.r+" µm";
+  document.getElementById("cLWCOut").textContent=m.L.toFixed(2)+" g m⁻³";document.getElementById("cEcOut").textContent=m.Ec.toFixed(2);
+  document.getElementById("cVR").textContent=m.VR.toFixed(2)+" m s⁻¹";document.getElementById("cVr").textContent=m.Vr.toFixed(3)+" m s⁻¹";
+  document.getElementById("cDV").textContent=m.dv.toFixed(2)+" m s⁻¹";document.getElementById("cKernel").textContent=m.K.toExponential(2)+" m³ s⁻¹";
+  document.getElementById("cGrowth").textContent=m.dmdt.toExponential(2)+" kg s⁻¹";document.getElementById("cDR").textContent=(m.dRdt*1e6).toFixed(3)+" µm s⁻¹";
+  const rr=Math.max(12,Math.min(48,12+(m.R-40)/960*36)), y=95+progress*390;
+  const drop=document.getElementById("collectorDrop");drop.setAttribute("r",rr);document.getElementById("collector").setAttribute("transform",`translate(0 ${y-95})`);
+  const cone=document.getElementById("sweepCone");cone.innerHTML="";
+  if(progress>0){
+    const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+    path.setAttribute("d",`M${390-rr},95 L${390-rr},${y} M${390+rr},95 L${390+rr},${y}`);
+    path.setAttribute("stroke","#69d8ff");path.setAttribute("stroke-opacity",".18");path.setAttribute("stroke-width","2");cone.appendChild(path);
+  }
+  document.getElementById("cAnimLabel").textContent=`ΔV = ${m.dv.toFixed(2)} m s⁻¹ • K = ${m.K.toExponential(2)} m³ s⁻¹`;
+}
+function stopCollision(){if(cRAF){cancelAnimationFrame(cRAF);cRAF=null}}
+function animateCollision(){
+  stopCollision();cStart=performance.now();const duration=4800;
+  document.getElementById("cStatus").textContent="The collector is falling through the droplet field. Its collection cylinder is set by geometric cross-section, differential fall speed and collection efficiency.";
+  function step(now){let p=Math.min(1,(now-cStart)/duration);renderCollision(p);if(p<1)cRAF=requestAnimationFrame(step);else{cRAF=null;document.getElementById("cStatus").textContent="Encounter complete. Increase collector size or collection efficiency and compare how the collision kernel and growth rate change."}}
+  cRAF=requestAnimationFrame(step)
+}
+document.getElementById("openCollision").addEventListener("click",()=>{stopSpeech();collisionModal.classList.add("open");document.body.style.overflow="hidden";populateDrops();renderCollision(0)});
+document.getElementById("closeCollision").addEventListener("click",()=>{stopCollision();collisionModal.classList.remove("open");document.body.style.overflow=""});
+collisionModal.addEventListener("click",e=>{if(e.target===collisionModal){stopCollision();collisionModal.classList.remove("open");document.body.style.overflow=""}});
+["cR","cr","cLWC","cEc"].forEach(id=>document.getElementById(id).addEventListener("input",()=>{stopCollision();renderCollision(0)}));
+document.getElementById("runCollision").addEventListener("click",animateCollision);
+document.getElementById("resetCollision").addEventListener("click",()=>{stopCollision();document.getElementById("cStatus").textContent="Adjust the controls, then run the encounter. The large drop falls faster and sweeps a collection cylinder through the cloud.";renderCollision(0)});
+populateDrops();renderCollision(0);
 
 
 const kohlerModal=document.getElementById("kohlerModal");
@@ -429,11 +556,186 @@ drawGrid();updateControlLabels();renderParcel(0);
 
 
 const lessons=[
-{title:"Basics of Atmospheric Science",desc:"Explore the structure of the atmosphere, energy balance, weather vs climate, and why clouds matter.",icon:"earth",tip:"Think of atmospheric science as a coupled system: radiation supplies energy, dynamics transports it, and microphysics determines how water changes phase.",html:`<h2>Basics of Atmospheric Science</h2><p>Atmospheric science studies the physical and chemical processes that determine weather, climate, and the behaviour of Earth's atmosphere. Cloud physics sits at the intersection of thermodynamics, fluid dynamics, radiation, aerosols and precipitation.</p><h3>1. The atmosphere</h3><p>Most weather occurs in the troposphere. Pressure and density decrease strongly with altitude because the atmosphere is held by gravity.</p><div class="formula">dp/dz = −ρg</div><h3>2. Weather and climate</h3><p><strong>Weather</strong> describes the evolving atmospheric state over hours to days. <strong>Climate</strong> describes statistical behaviour over much longer periods.</p><h3>3. Why clouds matter</h3><p>Clouds redistribute water, produce precipitation, modify solar and terrestrial radiation, and couple aerosols to weather and climate.</p>`},
-{title:"Atmospheric Thermodynamics",desc:"Understand air parcels, temperature, moisture, stability, CAPE, and the thermodynamic foundation of cloud formation.",icon:"parcel",tip:"For parcel problems, keep environmental properties separate from parcel properties. That single distinction prevents many conceptual errors.",html:`<h2>Atmospheric Thermodynamics</h2><p>Thermodynamics connects pressure, temperature, density, water phase changes and energy. An <strong>air parcel</strong> is an idealized small volume that moves while approximately retaining its identity.</p><h3>Equation of state</h3><div class="formula">p = ρ R<sub>d</sub> T</div><p>Moist air is less dense than dry air at the same pressure and temperature because water vapour has a lower molar mass than the principal constituents of dry air.</p><h3>Adiabatic motion and saturation</h3><p>An unsaturated rising parcel expands and cools. Once saturation is reached, condensation releases latent heat and the cooling rate becomes smaller in magnitude.</p><div class="concept"><strong>LCL:</strong> the lifting condensation level is approximately where a lifted parcel first becomes saturated.</div><h3>Potential temperature</h3><div class="formula">θ = T (p₀/p)<sup>R<sub>d</sub>/c<sub>p</sub></sup></div><p>Potential temperature is conserved for dry adiabatic motion and is therefore useful for diagnosing stability and mixing.</p>`},
-{title:"Cloud Condensation Nuclei and Köhler Theory",desc:"Learn how aerosol particles become cloud droplets using Köhler theory and explore factors affecting cloud activation.",icon:"drop",tip:"Köhler theory is a competition: curvature raises equilibrium vapour pressure, while dissolved solute lowers it.",html:`<h2>Cloud Condensation Nuclei & Köhler Theory</h2><p>Cloud droplets usually form by condensation of water vapour onto aerosol particles called <strong>cloud condensation nuclei (CCN)</strong>. Activation depends on particle size, composition and ambient supersaturation.</p><h3>Curvature effect</h3><p>A small curved droplet has a higher equilibrium vapour pressure than a flat water surface. This Kelvin effect makes very small pure-water droplets difficult to grow.</p><h3>Solute effect</h3><p>Dissolved material lowers water activity and therefore reduces equilibrium vapour pressure.</p><div class="concept"><strong>Köhler curve:</strong> the competition between curvature and solute effects produces a maximum defining the critical radius and critical supersaturation.</div><div class="formula">S<sub>eq</sub>(r) ≈ a<sub>w</sub> exp(A/r)</div>`},
-{title:"Droplet Growth via Collision–Coalescence",desc:"See how cloud droplets collide, coalesce, and grow into raindrops, and learn what controls this process in clouds.",icon:"merge",tip:"The key is differential fall speed: droplets of different sizes do not fall at the same velocity.",html:`<h2>Droplet Growth via Collision–Coalescence</h2><p>Condensation grows newly activated droplets efficiently at first, but becomes too slow to explain rapid raindrop formation. Warm-rain development therefore relies strongly on collisions and coalescence.</p><h3>Differential sedimentation</h3><p>Larger droplets generally fall faster than smaller ones, allowing a collector drop to overtake smaller droplets.</p><h3>Collection kernel</h3><div class="formula">K(R,r) = π(R+r)² |V(R)−V(r)| E<sub>c</sub></div><p>The collection kernel quantifies how efficiently droplets of radii R and r are brought together and collected.</p><div class="concept"><strong>Spectral broadening matters:</strong> size differences create differential fall speeds and can accelerate runaway growth of a small subset of drops.</div>`}
-];
+{title:"Basics of Atmospheric Science",desc:"Build the mathematical foundation: hydrostatic balance, atmospheric thickness, radiation, continuity, motion, and the role of clouds.",icon:"earth",tip:"Do not treat these equations as isolated formulae. Together they describe how mass, momentum and energy are stored and transported through the atmosphere.",html:`
+<h2>Basics of Atmospheric Science</h2>
+<p>Atmospheric science asks how pressure, temperature, water, radiation and motion interact across scales. Cloud physics is embedded in that system: clouds respond to the thermodynamic and dynamical environment, but also modify precipitation, radiation and latent heating.</p>
+
+<h3>1. Pressure, density and hydrostatic balance</h3>
+<p>Atmospheric pressure at a level is produced by the weight of air above it. For a thin layer of thickness <em>dz</em>, vertical force balance gives</p>
+<div class="derivation"><strong>Derivation.</strong> Upward pressure force is <em>p(z)A</em>; downward pressure force is <em>p(z+dz)A</em>; weight is <em>ρgA dz</em>. Setting the net vertical force to zero and taking the differential limit gives:</div>
+<div class="eqblock"><div class="eq">dp/dz = −ρg</div><div class="eqmeaning"><strong>p</strong>: pressure [Pa] · <strong>z</strong>: height [m] · <strong>ρ</strong>: air density [kg m⁻³] · <strong>g</strong>: gravitational acceleration [m s⁻²].</div></div>
+<div class="atmos"><strong>Atmospheric relevance.</strong> Pressure decreases upward because each higher level supports less overlying air. Hydrostatic balance underlies pressure-altitude conversion, geopotential height analyses, weather maps and atmospheric model initialization.</div>
+
+<h3>2. Ideal-gas law and atmospheric thickness</h3>
+<div class="eqblock"><div class="eq">p = ρ R<sub>d</sub>T</div><div class="eqmeaning"><strong>R<sub>d</sub></strong> ≈ 287 J kg⁻¹ K⁻¹ is the gas constant for dry air; <strong>T</strong> is absolute temperature.</div></div>
+<p>Substituting the ideal-gas equation into hydrostatic balance and integrating between pressure levels produces the hypsometric equation:</p>
+<div class="eqblock"><div class="eq">z₂ − z₁ = (R<sub>d</sub> T̄<sub>v</sub>/g) ln(p₁/p₂)</div><div class="eqmeaning"><strong>T̄<sub>v</sub></strong> is layer-mean virtual temperature. Warmer air has greater thickness between two pressure surfaces.</div></div>
+<div class="atmos"><strong>Atmospheric relevance.</strong> This is why warm atmospheric columns expand and pressure surfaces rise, while cold columns contract. Horizontal thickness gradients are therefore closely related to horizontal temperature gradients.</div>
+
+<h3>3. Conservation of mass</h3>
+<div class="eqblock"><div class="eq">∂ρ/∂t + ∇·(ρu) = 0</div><div class="eqmeaning"><strong>u</strong> is the three-dimensional wind vector. Local density change plus divergence of mass flux must vanish.</div></div>
+<p>For nearly incompressible flow, this approaches ∇·u ≈ 0. In the atmosphere, convergence near the surface commonly promotes ascent, while divergence promotes compensating subsidence.</p>
+
+<h3>4. Momentum: why air moves</h3>
+<div class="eqblock"><div class="eq">Du/Dt = −(1/ρ)∇p − 2Ω×u + g + F</div><div class="eqmeaning">The terms represent acceleration, pressure-gradient force, Coriolis acceleration, gravity and friction/sub-grid forces.</div></div>
+<div class="atmos"><strong>Atmospheric relevance.</strong> Pressure gradients accelerate air; Earth's rotation deflects large-scale flow; friction matters near the surface. Vertical pressure-gradient and gravitational forces nearly cancel in hydrostatic conditions, but small imbalances help produce vertical acceleration.</div>
+
+<h3>5. Planetary radiation balance</h3>
+<p>At the simplest global-mean level, absorbed solar radiation balances emitted terrestrial radiation:</p>
+<div class="eqblock"><div class="eq">S₀(1−α)/4 = σT<sub>e</sub><sup>4</sup></div><div class="eqmeaning"><strong>S₀</strong>: solar constant · <strong>α</strong>: planetary albedo · <strong>σ</strong>: Stefan–Boltzmann constant · <strong>T<sub>e</sub></strong>: effective emission temperature.</div></div>
+<p>The factor 1/4 converts intercepted disk area to Earth's spherical area. The real atmosphere is not a single blackbody: gases and clouds absorb and emit infrared radiation, while clouds and aerosols also reflect sunlight.</p>
+<div class="atmos"><strong>Cloud relevance.</strong> Optically thick low clouds generally produce strong shortwave reflection; high cold clouds can exert a strong longwave greenhouse effect. Net cloud radiative effect depends on cloud altitude, optical depth, particle size, phase, coverage and surface properties.</div>
+
+<h3>6. Water and phase changes</h3>
+<p>Atmospheric water continuously moves among vapour, liquid and ice. Phase changes exchange latent heat with the air, so microphysics directly feeds back onto dynamics.</p>
+<div class="eqblock"><div class="eq">Q̇<sub>latent</sub> ≈ L<sub>v</sub> C + L<sub>s</sub> D − L<sub>f</sub> M + …</div><div class="eqmeaning">Here <strong>C</strong> represents condensation rate, <strong>D</strong> deposition rate and <strong>M</strong> melting rate, with the corresponding latent heats.</div></div>
+<div class="atmos"><strong>Direct relevance.</strong> Condensation and freezing can strengthen buoyancy and convection; evaporation and melting cool air and can contribute to downdrafts and cold pools.</div>
+`},
+
+{title:"Atmospheric Thermodynamics",desc:"Derive moist-air thermodynamics, saturation, Clausius–Clapeyron, parcel ascent, stability, buoyancy, CAPE and CIN.",icon:"parcel",tip:"The central thermodynamic story is energy conversion: expansion cools a rising parcel, phase changes exchange latent heat, and density differences create buoyancy.",html:`
+<h2>Atmospheric Thermodynamics</h2>
+<p>Atmospheric thermodynamics connects molecular properties to cloud formation and convective motion. The useful variables are not merely definitions: they diagnose whether air is saturated, stable, buoyant, and capable of producing cloud or precipitation.</p>
+
+<h3>1. First law of thermodynamics</h3>
+<div class="eqblock"><div class="eq">δq = du + p dα</div><div class="eqmeaning"><strong>δq</strong>: heat added per unit mass · <strong>u</strong>: internal energy · <strong>α=1/ρ</strong>: specific volume · <strong>p dα</strong>: expansion work.</div></div>
+<p>For an ideal gas, <em>du=c<sub>v</sub>dT</em>. Defining enthalpy <em>h=u+pα</em> gives <em>dh=c<sub>p</sub>dT</em> for dry ideal air.</p>
+<div class="eqblock"><div class="eq">δq = c<sub>p</sub>dT − α dp</div></div>
+<div class="atmos"><strong>Atmospheric relevance.</strong> A rising parcel expands as pressure falls and therefore cools even without exchanging heat with its surroundings.</div>
+
+<h3>2. Entropy, Gibbs free energy and phase equilibrium</h3>
+<div class="eqblock"><div class="eq">ds = δq<sub>rev</sub>/T</div><div class="eqmeaning"><strong>s</strong> is specific entropy. For a reversible adiabatic process, ds = 0.</div></div>
+<div class="eqblock"><div class="eq">G = H − TS &nbsp;&nbsp; and &nbsp;&nbsp; μ = (∂G/∂n)<sub>T,p</sub></div><div class="eqmeaning"><strong>G</strong>: Gibbs free energy · <strong>H</strong>: enthalpy · <strong>μ</strong>: chemical potential.</div></div>
+<p>At equilibrium between water phases, their chemical potentials are equal. This provides the rigorous thermodynamic basis for saturation vapour pressure and the Kelvin and Köhler relations used later.</p>
+
+<h3>3. Moist air and virtual temperature</h3>
+<div class="eqblock"><div class="eq">p = p<sub>d</sub> + e = ρ<sub>d</sub>R<sub>d</sub>T + ρ<sub>v</sub>R<sub>v</sub>T</div></div>
+<p>Because water vapour has lower molar mass than dry air, replacing dry-air molecules with water vapour lowers density at fixed pressure and temperature. We represent this using virtual temperature:</p>
+<div class="eqblock"><div class="eq">p = ρR<sub>d</sub>T<sub>v</sub>, &nbsp;&nbsp; T<sub>v</sub> = T(1+r/ε)/(1+r) ≈ T(1+0.61q<sub>v</sub>)</div><div class="eqmeaning"><strong>r</strong>: vapour mixing ratio · <strong>q<sub>v</sub></strong>: specific humidity · <strong>ε=R<sub>d</sub>/R<sub>v</sub>≈0.622</strong>.</div></div>
+<div class="atmos"><strong>Direct relevance.</strong> Moisture changes density and therefore buoyancy. Two parcels at the same T and p can have different buoyancy because they contain different amounts of water vapour or condensate.</div>
+
+<h3>4. Humidity variables and saturation</h3>
+<div class="eqblock"><div class="eq">r = ε e/(p−e), &nbsp;&nbsp; RH = 100 e/e<sub>s</sub>(T)</div><div class="eqmeaning"><strong>e</strong>: vapour pressure · <strong>e<sub>s</sub></strong>: saturation vapour pressure.</div></div>
+<p>Relative humidity is therefore controlled by both water-vapour amount and temperature. Cooling alone can bring unsaturated air to saturation.</p>
+
+<h3>5. Clausius–Clapeyron equation</h3>
+<p>Equating chemical potentials of vapour and liquid and using the latent heat of vaporization gives, approximately:</p>
+<div class="eqblock"><div class="eq">d ln e<sub>s</sub>/dT = L<sub>v</sub>/(R<sub>v</sub>T²)</div></div>
+<p>If <em>L<sub>v</sub></em> is treated as constant, integration yields</p>
+<div class="eqblock"><div class="eq">e<sub>s</sub>(T₂) = e<sub>s</sub>(T₁) exp[(L<sub>v</sub>/R<sub>v</sub>)(1/T₁ − 1/T₂)]</div></div>
+<div class="atmos"><strong>Atmospheric relevance.</strong> Saturation vapour pressure rises rapidly with temperature. This controls humidity, condensation, cloud base, precipitation thermodynamics and the amount of water vapour a warming atmosphere can contain.</div>
+
+<h3>6. Dry adiabatic ascent and potential temperature</h3>
+<p>Set δq=0 in the first law and combine it with the ideal-gas equation:</p>
+<div class="eqblock"><div class="eq">c<sub>p</sub>dT − R<sub>d</sub>T dp/p = 0</div><div class="eq">⇒ θ = T(p₀/p)<sup>R<sub>d</sub>/c<sub>p</sub></sup></div><div class="eqmeaning"><strong>θ</strong> is potential temperature: the temperature a parcel would have if brought dry adiabatically to reference pressure p₀.</div></div>
+<p>Combining with hydrostatic balance gives the dry adiabatic lapse rate:</p>
+<div class="eqblock"><div class="eq">Γ<sub>d</sub> = −dT/dz = g/c<sub>p</sub> ≈ 9.8 K km⁻¹</div></div>
+
+<h3>7. Saturated ascent and moist adiabatic lapse rate</h3>
+<p>After saturation, condensation releases latent heat, reducing the magnitude of parcel cooling:</p>
+<div class="eqblock"><div class="eq">Γ<sub>m</sub> ≈ g(1 + L<sub>v</sub>r<sub>s</sub>/(R<sub>d</sub>T)) / [c<sub>p</sub> + L<sub>v</sub>²r<sub>s</sub>ε/(R<sub>d</sub>T²)]</div><div class="eqmeaning"><strong>r<sub>s</sub></strong>: saturation mixing ratio. Γ<sub>m</sub> is not constant; it varies strongly with temperature and moisture.</div></div>
+
+<h3>8. LCL and cloud formation</h3>
+<p>The lifting condensation level is the height at which a rising unsaturated parcel first reaches saturation. A useful approximation is</p>
+<div class="eqblock"><div class="eq">z<sub>LCL</sub> ≈ 125(T − T<sub>d</sub>) metres</div><div class="eqmeaning">T and dew-point T<sub>d</sub> are in °C. This is an approximation, not a fundamental law.</div></div>
+
+<h3>9. Buoyancy</h3>
+<div class="derivation"><strong>From force to acceleration.</strong> The net Archimedean force on a parcel of volume V is approximately (ρ<sub>e</sub>−ρ<sub>p</sub>)Vg. Divide by parcel mass and use the equation of state.</div>
+<div class="eqblock"><div class="eq">B ≈ g(T<sub>v,p</sub> − T<sub>v,e</sub>)/T<sub>v,e</sub></div><div class="eqmeaning"><strong>B &gt; 0</strong>: positive buoyancy; <strong>B &lt; 0</strong>: negative buoyancy.</div></div>
+
+<h3>10. CAPE, CIN, LFC and EL</h3>
+<div class="eqblock"><div class="eq">CAPE = ∫<sub>LFC</sub><sup>EL</sup> B dz</div><div class="eq">CIN = −∫ B dz &nbsp; over negatively buoyant layers below free convection</div><div class="eqmeaning">Both have units J kg⁻¹. LFC is the level of free convection; EL is the equilibrium level.</div></div>
+<div class="atmos"><strong>Atmospheric relevance.</strong> CAPE measures idealized positive-buoyancy energy available to an ascending parcel. A commonly quoted upper-bound scaling is w<sub>max</sub>≈√(2·CAPE), but real updrafts are affected by entrainment, condensate loading, pressure perturbations, mixing and precipitation.</div>
+
+<h3>11. Equivalent potential temperature</h3>
+<p>Equivalent potential temperature, θ<sub>e</sub>, combines sensible and latent energy into a variable that is approximately conserved for moist reversible or pseudoadiabatic processes under appropriate assumptions.</p>
+<div class="eqblock"><div class="eq">θ<sub>e</sub> ≈ θ exp[L<sub>v</sub>r<sub>v</sub>/(c<sub>p</sub>T)]</div><div class="eqmeaning">This compact form is approximate; operational formulations include additional moisture and temperature corrections.</div></div>
+<div class="atmos"><strong>Direct relevance.</strong> θ<sub>e</sub> helps identify warm/moist air masses, convective instability and boundaries where thermodynamic properties change sharply.</div>
+`},
+
+{title:"Cloud Condensation Nuclei and Köhler Theory",desc:"Develop Kelvin and solute effects, κ-Köhler theory, critical activation, CCN spectra and aerosol–cloud connections.",icon:"drop",tip:"Activation is a threshold problem: an aerosol becomes a freely growing cloud droplet only when environmental supersaturation exceeds its critical supersaturation.",html:`
+<h2>Cloud Condensation Nuclei & Köhler Theory</h2>
+<p>Aerosol particles provide surfaces on which atmospheric water vapour can condense. Their ability to activate as cloud droplets depends on size, composition and the supersaturation generated by cloud-scale cooling.</p>
+
+<h3>1. Supersaturation</h3>
+<div class="eqblock"><div class="eq">S = e/e<sub>s</sub>(T), &nbsp;&nbsp; s = S−1</div><div class="eqmeaning"><strong>S</strong> is saturation ratio; <strong>s</strong> is fractional supersaturation. Cloud literature often reports 100s in percent.</div></div>
+
+<h3>2. Kelvin curvature effect</h3>
+<p>A curved droplet surface has a larger equilibrium vapour pressure than a flat surface. Thermodynamic equilibrium of chemical potential gives the Kelvin relation:</p>
+<div class="eqblock"><div class="eq">ln[e<sub>s</sub>(r)/e<sub>s</sub>(∞)] = 2σ<sub>w</sub>M<sub>w</sub>/(ρ<sub>w</sub>RTr)</div><div class="eqmeaning"><strong>σ<sub>w</sub></strong>: surface tension · <strong>M<sub>w</sub></strong>: molar mass of water · <strong>ρ<sub>w</sub></strong>: liquid-water density · <strong>r</strong>: droplet radius.</div></div>
+<div class="atmos"><strong>Physical meaning.</strong> Strong curvature makes very small droplets thermodynamically harder to maintain. The Kelvin term therefore opposes activation most strongly at small size.</div>
+
+<h3>3. Solute / water-activity effect</h3>
+<p>Dissolved solute reduces the chemical potential of liquid water and lowers equilibrium vapour pressure:</p>
+<div class="eqblock"><div class="eq">e = a<sub>w</sub> e<sub>s</sub><sup>0</sup></div><div class="eqmeaning"><strong>a<sub>w</sub></strong> is water activity. For an ideal dilute solution this connects to Raoult's law.</div></div>
+<div class="atmos"><strong>Physical meaning.</strong> Hygroscopic material attracts water and allows a solution droplet to remain stable at lower ambient humidity than an equally sized pure-water droplet.</div>
+
+<h3>4. Köhler equation</h3>
+<p>Combining water activity with curvature gives</p>
+<div class="eqblock"><div class="eq">S<sub>eq</sub>(r) = a<sub>w</sub> exp[2σ<sub>w</sub>M<sub>w</sub>/(ρ<sub>w</sub>RTr)]</div></div>
+<p>At small wet radius, solute and curvature effects compete. At large radius, both weaken and the curve approaches saturation.</p>
+
+<h3>5. κ-Köhler formulation</h3>
+<p>A convenient representation compresses composition into a hygroscopicity parameter κ. In diameter form:</p>
+<div class="eqblock"><div class="eq">S(D) = [(D³−D<sub>d</sub>³)/(D³−D<sub>d</sub>³(1−κ))] exp(A/D)</div><div class="eq">A = 4σ<sub>w</sub>M<sub>w</sub>/(RTρ<sub>w</sub>)</div><div class="eqmeaning"><strong>D</strong>: wet diameter · <strong>D<sub>d</sub></strong>: dry diameter · <strong>κ</strong>: hygroscopicity.</div></div>
+
+<h3>6. Critical diameter and supersaturation</h3>
+<p>For the common dilute approximation, the maximum of the Köhler curve is found from dS/dD=0:</p>
+<div class="eqblock"><div class="eq">D<sub>c</sub> = [3κD<sub>d</sub>³/A]<sup>1/2</sup></div><div class="eq">s<sub>c</sub> = [4A³/(27κD<sub>d</sub>³)]<sup>1/2</sup></div></div>
+<div class="atmos"><strong>Direct relevance.</strong> Larger and more hygroscopic aerosol particles have lower critical supersaturation and therefore activate more readily. Use the Köhler Curve Explorer below the lessons to manipulate D<sub>d</sub>, κ, T and ambient supersaturation directly.</div>
+
+<h3>7. CCN spectrum</h3>
+<p>Measurements often approximate the number of particles activated at supersaturation s using a power law:</p>
+<div class="eqblock"><div class="eq">N<sub>CCN</sub>(s) = C s<sup>k</sup></div><div class="eqmeaning"><strong>C</strong> and <strong>k</strong> are empirical parameters describing the aerosol population; this is often called a Twomey-type CCN spectrum.</div></div>
+
+<h3>8. Supersaturation in a rising cloud parcel</h3>
+<p>Supersaturation is dynamically produced because adiabatic cooling increases saturation demand, while condensation onto droplets removes excess vapour. Schematically:</p>
+<div class="eqblock"><div class="eq">ds/dt = αw − γ(dq<sub>l</sub>/dt)</div><div class="eqmeaning">The first term represents supersaturation production by ascent; the second represents depletion by condensation. α and γ collect thermodynamic factors.</div></div>
+<div class="atmos"><strong>Aerosol–cloud connection.</strong> More CCN can create more, smaller droplets for a given liquid-water amount. That modifies cloud optical properties and can alter collision–coalescence, precipitation development and cloud lifetime, although responses depend strongly on meteorology and cloud regime.</div>
+`},
+
+{title:"Droplet Growth via Collision–Coalescence",desc:"Derive terminal velocity, collision kernels, collection efficiency, stochastic collection and warm-rain growth.",icon:"merge",tip:"Condensation narrows relative size differences; collision–coalescence needs differential fall speeds and a sufficiently broad droplet spectrum to accelerate rain formation.",html:`
+<h2>Droplet Growth via Collision–Coalescence</h2>
+<p>Condensational growth is essential for forming cloud droplets but becomes progressively inefficient at producing raindrop sizes. Warm-rain formation therefore requires droplets to collide and merge.</p>
+
+<h3>1. Why condensation alone slows down</h3>
+<p>For diffusion-limited condensational growth, a useful schematic form is</p>
+<div class="eqblock"><div class="eq">r dr/dt = G s &nbsp;&nbsp; ⇒ &nbsp;&nbsp; d(r²)/dt = 2Gs</div><div class="eqmeaning"><strong>r</strong>: droplet radius · <strong>s</strong>: supersaturation · <strong>G</strong>: combined vapour-diffusion and heat-conduction coefficient.</div></div>
+<div class="atmos"><strong>Physical meaning.</strong> Radius-squared grows approximately linearly under fixed supersaturation. As droplets become larger, adding the same condensational mass produces progressively smaller fractional radius growth.</div>
+
+<h3>2. Terminal fall velocity</h3>
+<p>A falling drop approaches terminal speed when gravitational force minus buoyancy is balanced by aerodynamic drag:</p>
+<div class="eqblock"><div class="eq">(4/3)πr³(ρ<sub>w</sub>−ρ<sub>a</sub>)g = (1/2)C<sub>D</sub>ρ<sub>a</sub>πr²V<sub>t</sub>²</div></div>
+<p>For very small droplets in the Stokes regime,</p>
+<div class="eqblock"><div class="eq">V<sub>t</sub> = 2(ρ<sub>w</sub>−ρ<sub>a</sub>)gr²/(9μ)</div><div class="eqmeaning"><strong>μ</strong>: dynamic viscosity of air. The r² dependence creates increasing differential fall speed as the spectrum broadens.</div></div>
+
+<h3>3. Geometric collision sweep</h3>
+<p>A collector drop of radius R overtaking a droplet of radius r sweeps a geometric cross-sectional area π(R+r)². Multiplying by relative fall speed gives a collision volume per unit time.</p>
+<div class="eqblock"><div class="eq">K(R,r) = π(R+r)² |V<sub>t</sub>(R)−V<sub>t</sub>(r)| E<sub>c</sub></div><div class="eqmeaning"><strong>K</strong>: collection kernel [m³ s⁻¹] · <strong>E<sub>c</sub></strong>: collection efficiency, accounting for aerodynamic collision and successful coalescence.</div></div>
+<div class="atmos"><strong>Direct relevance.</strong> Equal-size droplets have little differential sedimentation, while a larger collector can overtake many smaller droplets. Hydrodynamic deflection can cause tiny droplets to flow around a collector rather than collide.</div>
+
+<h3>4. Collision and coalescence efficiencies</h3>
+<div class="eqblock"><div class="eq">E<sub>c</sub> = E<sub>collision</sub> E<sub>coal</sub></div><div class="eqmeaning">Collision efficiency describes whether trajectories intersect; coalescence efficiency describes whether colliding droplets actually merge rather than bounce or separate.</div></div>
+
+<h3>5. Continuous collection approximation</h3>
+<p>If a collector drop falls through cloud liquid water content L, its approximate mass-growth rate is</p>
+<div class="eqblock"><div class="eq">dm/dt = E<sub>c</sub> πR² V<sub>t</sub> L</div></div>
+<p>Since m=(4/3)πρ<sub>w</sub>R³,</p>
+<div class="eqblock"><div class="eq">dR/dt = E<sub>c</sub> V<sub>t</sub> L /(4ρ<sub>w</sub>R)</div></div>
+<div class="atmos"><strong>Physical meaning.</strong> Growth accelerates when liquid water content, fall speed or collection efficiency increases. The approximation treats the background droplets as a continuous water field.</div>
+
+<h3>6. Stochastic collection equation</h3>
+<p>A realistic droplet population contains many sizes. If n(m,t) is the number distribution in mass space, binary collisions produce both gain and loss terms:</p>
+<div class="eqblock"><div class="eq">∂n(m)/∂t = ½∫₀ᵐ K(m′,m−m′)n(m′)n(m−m′)dm′ − n(m)∫₀∞K(m,m′)n(m′)dm′</div><div class="eqmeaning">The first integral creates drops of mass m from smaller pairs; the second removes drops of mass m when they collide with other drops.</div></div>
+
+<h3>7. Autoconversion and accretion</h3>
+<p>Bulk cloud schemes often separate warm-rain growth into <strong>autoconversion</strong>, where cloud droplets generate initial rain drops, and <strong>accretion</strong>, where existing rain collects cloud water.</p>
+<div class="atmos"><strong>Atmospheric relevance.</strong> Collision–coalescence controls warm-rain onset in marine stratocumulus and shallow cumulus and also operates below the freezing level in deep convection. Aerosol-induced changes in droplet number and size can therefore modify precipitation efficiency.</div>
+
+<h3>8. Why spectral broadening matters</h3>
+<p>A perfectly narrow spectrum has weak differential fall speeds. Variability from entrainment–mixing, turbulence, giant CCN, stochastic condensation and collision itself can broaden the spectrum, allowing a small population of collector drops to enter rapid runaway growth.</p>
+<div class="atmos"><strong>Try it.</strong> Open the Collision–Coalescence Lab and vary collector radius, small-droplet radius, liquid-water content and collection efficiency. Watch how the kernel and growth rate respond.</div>
+`}
+]
 
 function art(t){
  if(t==="earth") return `<svg viewBox="0 0 300 160"><defs><radialGradient id="e"><stop stop-color="#59c8ff"/><stop offset="1" stop-color="#0a4f91"/></radialGradient></defs><circle cx="150" cy="92" r="62" fill="url(#e)"/><path d="M94 82q38-35 70-16 23-17 52 3-22 23-55 18-27 26-62 10z" fill="#74d0a5"/><path d="M30 30L270 130" stroke="#fff" opacity=".16"/><circle cx="67" cy="42" r="15" fill="#ffd26f"/></svg>`;
