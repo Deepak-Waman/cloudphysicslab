@@ -289,7 +289,7 @@ main#home{margin-left:0!important}
 </button><div class="sidebar-scrim" id="sidebarScrim"></div>
 
 <aside class="lab-sidebar"><h4>Lessons</h4>
-<a href="#lessons"><span class="n">1</span>Atmospheric foundations</a><a href="#lessons"><span class="n">2</span>Thermodynamics</a><a href="#lessons"><span class="n">3</span>Cloud microphysics</a><a href="#lessons"><span class="n">4</span>Aerosols & activation</a><a href="#lessons"><span class="n">5</span>Radiation</a><a href="#lessons"><span class="n">6</span>Radar meteorology</a><a href="#lessons"><span class="n">7</span>Satellite meteorology</a><a href="#lessons"><span class="n">8</span>Aircraft observations</a><a href="#lessons"><span class="n">9</span>Cloud seeding</a><a href="#lessons"><span class="n">10</span>Cloud modelling</a><hr><h4>Interactive labs</h4><a href="#visualizers"><span class="d"></span>Köhler Curve Explorer</a><a href="#visualizers"><span class="d"></span>Collision–Coalescence</a><a href="#visualizers"><span class="d"></span>Rising Parcel Simulator</a><hr><h4>Resources</h4><a href="#resources"><span class="d"></span>Data & tools</a><a href="#about"><span class="d"></span>About this Lab</a></aside>
+<a href="#" data-lesson="0"><span class="n">1</span>Atmospheric foundations</a><a href="#" data-lesson="1"><span class="n">2</span>Thermodynamics</a><a href="#" data-lesson="2"><span class="n">3</span>Cloud microphysics</a><a href="#" data-lesson="3"><span class="n">4</span>Aerosols & activation</a><a href="#" data-lesson="4"><span class="n">5</span>Radiation</a><a href="#" data-lesson="5"><span class="n">6</span>Radar meteorology</a><a href="#" data-lesson="6"><span class="n">7</span>Satellite meteorology</a><a href="#" data-lesson="7"><span class="n">8</span>Aircraft observations</a><a href="#" data-lesson="8"><span class="n">9</span>Cloud seeding</a><a href="#" data-lesson="9"><span class="n">10</span>Cloud modelling</a><hr><h4>Interactive labs</h4><a href="#visualizers"><span class="d"></span>Köhler Curve Explorer</a><a href="#visualizers"><span class="d"></span>Collision–Coalescence</a><a href="#visualizers"><span class="d"></span>Rising Parcel Simulator</a><hr><h4>Resources</h4><a href="#resources"><span class="d"></span>Data & tools</a><a href="#about"><span class="d"></span>About this Lab</a></aside>
 <main id="home">
 <section class="hero-shell">
   <div class="wrap hero" id="heroStage">
@@ -2967,6 +2967,19 @@ function nimbusMaleVoice(){
 }
 // Override both legacy and presenter selectors after all scripts have loaded.
 bestVoice=nimbusMaleVoice;
+</script>
+
+
+<script id="sidebar-lesson-open-fix">
+document.addEventListener("click",function(e){
+ const a=e.target.closest(".lab-sidebar a[data-lesson]");
+ if(!a)return;
+ e.preventDefault();
+ const i=Number(a.dataset.lesson);
+ if(Number.isInteger(i)&&typeof openLesson==="function"){
+   openLesson(i);
+ }
+});
 </script>
 
 </body>
