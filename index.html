@@ -154,6 +154,55 @@ section{padding:68px 0}.sectionbox{border-top:1px solid var(--line);padding-top:
 .stepflow{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:0!important}.stepbox{position:relative;background:#0a1925!important;border:1px solid #2a4355!important;border-radius:0!important;min-height:82px;padding:15px!important;color:#aebdca!important}.stepbox b{display:block;color:#eef5f8;margin-bottom:5px}.stepbox:not(:last-child):after{content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);z-index:2;width:20px;height:20px;display:grid;place-items:center;background:#07121c;color:#61bde8}.term{background:#0a1722!important;border:1px solid #263d4e!important;border-radius:6px!important}.eqblock,.mathstep{background:#07121c!important;border:1px solid #2a4355!important;border-left:3px solid #5ebbe8!important;border-radius:5px!important}.warningbox{background:#211b12!important;border-color:#66532e!important}.atmos{background:#0a1b24!important;border-color:#28536a!important}.lesson article h2{letter-spacing:-.03em;border-bottom:1px solid var(--line);padding-bottom:15px}.lesson article h3{margin-top:34px;color:#edf4f7}.lesson article p{color:#b5c3cc;line-height:1.72}.panel{background:#07111b!important;border:1px solid #2a4355!important;border-radius:9px!important}.panelbar{background:#0b1823!important;border-bottom:1px solid #2a4355!important}.side,.collision-controls,.kohler-controls,.parcel-controls{background:#091722!important;border-color:#2a4355!important}.collision-view,.kohler-view,.parcel-view{background:#050d15!important}.c-readout,.k-readout,.readout{background:#07121c!important;border:1px solid #263e50!important;border-radius:5px!important}#collisionSvg,#kohlerSvg,#parcelSvg{border:1px solid #2a4355;border-radius:6px}input[type=range]{accent-color:#5dbce7}
 @media(max-width:1180px){main#home{margin-left:0}.lab-sidebar{display:none}}
 </style>
+
+<style id="layout-fix-v2">
+/* Full-width laboratory shell: navigation no longer consumes the panorama */
+main#home{margin-left:0!important}
+.lab-sidebar{
+ width:292px!important;left:-292px!important;top:64px!important;
+ transition:left .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease!important;
+ box-shadow:none!important;z-index:70!important
+}
+.lab-sidebar.open,.lab-sidebar:hover{left:0!important;box-shadow:18px 0 55px rgba(0,0,0,.42)!important}
+.lesson-rail-trigger{
+ position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:71;
+ width:42px;height:112px;border:1px solid #2b4b60;border-left:0;border-radius:0 9px 9px 0;
+ background:rgba(7,18,28,.96);color:#8fcfee;display:flex;flex-direction:column;
+ align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:8px 0 25px rgba(0,0,0,.18)
+}
+.lesson-rail-trigger span:last-child{writing-mode:vertical-rl;transform:rotate(180deg);font-size:.62rem;font-weight:800;letter-spacing:.15em}
+.lesson-rail-trigger:hover,.lesson-rail-trigger.active{background:#0c2231;color:#fff;border-color:#4a7894}
+.lesson-rail-trigger svg{width:18px;height:18px}
+.sidebar-scrim{position:fixed;inset:64px 0 0 0;background:rgba(2,7,11,.38);z-index:69;opacity:0;pointer-events:none;transition:.2s}
+.sidebar-scrim.show{opacity:1;pointer-events:auto}
+
+/* Hero: always fit inside the viewport, no horizontal crop */
+.hero-shell{overflow:hidden!important}
+.hero{min-height:calc(100vh - 64px)!important;height:auto!important;max-width:1440px!important;
+ margin:0 auto!important;padding:clamp(36px,5vw,76px) clamp(24px,5vw,76px)!important;
+ grid-template-columns:minmax(360px,.88fr) minmax(430px,1.12fr)!important;
+ gap:clamp(34px,5vw,78px)!important;align-items:center!important}
+.character{min-height:0!important;height:min(68vh,650px)!important;width:100%!important;
+ background-size:contain!important;background-position:center!important;background-repeat:no-repeat!important}
+.hero-copy{min-width:0!important;padding:0!important}
+.hero-copy h1{font-size:clamp(3.2rem,6.2vw,6.6rem)!important;line-height:.88!important;max-width:760px}
+.tagline{font-size:clamp(1.08rem,1.55vw,1.55rem)!important;max-width:760px}
+.script{font-size:clamp(1.05rem,1.35vw,1.35rem)!important;max-width:720px}
+.hero-actions{display:flex!important;flex-wrap:wrap!important;gap:12px!important}
+.feature-strip{position:relative!important;z-index:5}
+@media(max-width:1050px){
+ .hero{grid-template-columns:1fr!important;min-height:auto!important;padding-top:40px!important}
+ .character{height:min(58vw,520px)!important;max-width:760px;margin:auto}
+ .hero-copy{text-align:center}.hero-copy h1,.tagline,.script{margin-left:auto!important;margin-right:auto!important}
+ .hero-actions{justify-content:center!important}
+}
+@media(max-width:700px){
+ .lesson-rail-trigger{width:38px;height:92px}
+ .hero{padding:30px 18px 54px!important}.character{height:62vw!important;min-height:300px!important}
+ .hero-copy h1{font-size:clamp(2.8rem,15vw,4.6rem)!important}
+}
+</style>
+
 </head>
 <body>
 <header class="topbar"><div class="wrap nav">
@@ -161,6 +210,12 @@ section{padding:68px 0}.sectionbox{border-top:1px solid var(--line);padding-top:
   <nav class="links"><a href="#home">Home</a><a href="#lessons">Lessons</a><a href="#visualizers">Visualizers</a><a href="#about">About</a><a href="#resources">Resources</a></nav>
   <div class="navtools"><button id="voiceBtn" title="Test narration">🔊</button><span class="lang">EN &nbsp;|&nbsp; मराठी</span></div>
 </div></header>
+
+
+<button class="lesson-rail-trigger" id="lessonRailTrigger" aria-label="Open lesson navigator" aria-expanded="false">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5.5h16M4 12h16M4 18.5h16"/><circle cx="7" cy="5.5" r="1.4" fill="#07121c"/><circle cx="7" cy="12" r="1.4" fill="#07121c"/><circle cx="7" cy="18.5" r="1.4" fill="#07121c"/></svg>
+<span>LESSONS</span>
+</button><div class="sidebar-scrim" id="sidebarScrim"></div>
 
 <aside class="lab-sidebar"><h4>Lessons</h4>
 <a href="#lessons"><span class="n">1</span>Atmospheric foundations</a><a href="#lessons"><span class="n">2</span>Thermodynamics</a><a href="#lessons"><span class="n">3</span>Cloud microphysics</a><a href="#lessons"><span class="n">4</span>Aerosols & activation</a><a href="#lessons"><span class="n">5</span>Radiation</a><a href="#lessons"><span class="n">6</span>Radar meteorology</a><a href="#lessons"><span class="n">7</span>Satellite meteorology</a><a href="#lessons"><span class="n">8</span>Aircraft observations</a><a href="#lessons"><span class="n">9</span>Cloud seeding</a><a href="#lessons"><span class="n">10</span>Cloud modelling</a><hr><h4>Interactive labs</h4><a href="#visualizers"><span class="d"></span>Köhler Curve Explorer</a><a href="#visualizers"><span class="d"></span>Collision–Coalescence</a><a href="#visualizers"><span class="d"></span>Rising Parcel Simulator</a><hr><h4>Resources</h4><a href="#resources"><span class="d"></span>Data & tools</a><a href="#about"><span class="d"></span>About this Lab</a></aside>
@@ -2689,5 +2744,22 @@ document.addEventListener("DOMContentLoaded",()=>{
  document.querySelectorAll("#cards .card").forEach((c,i)=>{const h=c.querySelector("h3");if(h&&!c.querySelector(".lesson-index")){const x=document.createElement("div");x.className="lesson-index";x.textContent=`LESSON ${String(i+1).padStart(2,"0")}`;x.style.cssText="font-size:.6rem;letter-spacing:.13em;color:#71899b;font-weight:800;margin:3px 0 7px";h.before(x)}});
 });
 </script>
+
+<script id="drawer-navigation-v2">
+document.addEventListener("DOMContentLoaded",()=>{
+ const side=document.querySelector(".lab-sidebar"),tr=document.getElementById("lessonRailTrigger"),scrim=document.getElementById("sidebarScrim");
+ let timer=null;
+ const open=()=>{clearTimeout(timer);side.classList.add("open");tr.classList.add("active");scrim.classList.add("show");tr.setAttribute("aria-expanded","true")};
+ const close=()=>{side.classList.remove("open");tr.classList.remove("active");scrim.classList.remove("show");tr.setAttribute("aria-expanded","false")};
+ const delayedClose=()=>{clearTimeout(timer);timer=setTimeout(close,220)};
+ tr.addEventListener("mouseenter",open);side.addEventListener("mouseenter",open);
+ tr.addEventListener("mouseleave",delayedClose);side.addEventListener("mouseleave",delayedClose);
+ tr.addEventListener("click",()=>side.classList.contains("open")?close():open());
+ scrim.addEventListener("click",close);
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
+ side.querySelectorAll("a").forEach(a=>a.addEventListener("click",close));
+});
+</script>
+
 </body>
 </html>
