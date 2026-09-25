@@ -143,6 +143,17 @@ footer{padding:35px 0;color:#a9bfd1}.footer{display:grid;grid-template-columns:1
 @media(max-width:900px){.links{display:none}.hero{grid-template-columns:1fr;min-height:auto}.character{min-height:480px;background-position:center bottom;background-size:auto 100%}.hero-copy{padding:0 0 65px}.feature-strip{grid-template-columns:repeat(2,1fr)}.feature:nth-child(2){border-right:0}.cards{grid-template-columns:repeat(2,1fr)}.visualizers{grid-template-columns:1fr}.lesson{grid-template-columns:1fr}.side{position:static}.footer{grid-template-columns:1fr}}
 @media(max-width:560px){.navtools .lang{display:none}.brand{font-size:1.1rem}.hero-copy h1{font-size:3.7rem}.character{min-height:365px;background-size:auto 100%}.feature-strip,.cards{grid-template-columns:1fr}.feature{border-right:0;border-bottom:1px solid var(--line)}.feature:last-child{border-bottom:0}.sectionhead{align-items:flex-start;flex-direction:column}.modal{padding:7px}.lesson{padding:20px}}
 </style>
+
+<style id="visual-overhaul">
+:root{--bg:#050b12;--bg2:#08131e;--panel:#0a1722;--panel2:#07121c;--line:rgba(150,181,203,.20);--text:#f2f6f9;--muted:#9bafbd;--cyan:#5dbce7;--blue:#348fe5;--green:#69d1ac;--shadow:0 18px 50px rgba(0,0,0,.25)}
+body{background:#050b12}.topbar{background:rgba(5,11,18,.96);border-bottom:1px solid rgba(150,181,203,.28)}.wrap{width:min(1320px,95vw)}.nav{height:64px}.links{gap:24px}.cloud{box-shadow:none}
+main#home{margin-left:238px}.lab-sidebar{position:fixed;left:0;top:64px;bottom:0;width:238px;z-index:25;overflow:auto;background:#07111b;border-right:1px solid rgba(150,181,203,.25);padding:20px 14px}.lab-sidebar h4{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#71899b;margin:20px 10px 7px}.lab-sidebar h4:first-child{margin-top:0}.lab-sidebar a{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:6px;color:#b8c7d1;font-size:.82rem;border:1px solid transparent}.lab-sidebar a:hover{background:#0c1b27;border-color:var(--line);color:white}.lab-sidebar .n{width:21px;height:21px;border:1px solid #31516a;border-radius:50%;display:grid;place-items:center;font-size:.65rem;color:#86c8e9;flex:none}.lab-sidebar .d{width:7px;height:7px;border-radius:50%;background:#62bee8;flex:none}.lab-sidebar hr{border:0;border-top:1px solid var(--line);margin:13px 8px}
+.hero-shell{background:linear-gradient(180deg,#07121c,#071522);border-bottom:1px solid var(--line)}.hero-shell:after{background:linear-gradient(transparent,#050b12)}.hero{min-height:520px}.character{min-height:510px;filter:saturate(.82) contrast(1.03)}.feature-strip{margin-top:-20px;border-radius:9px;background:#0a1722;border:1px solid rgba(150,181,203,.26);box-shadow:var(--shadow)}.feature{padding:18px 20px}.feature .ico{font-size:0;width:32px;height:32px;border:1px solid #31516a;border-radius:7px;position:relative}.feature .ico:after{content:"";position:absolute;inset:9px;border:2px solid #65bfe8;border-radius:50%}.feature b{color:#edf5f9}.feature small{color:#879baa}
+section{padding:68px 0}.sectionbox{border-top:1px solid var(--line);padding-top:25px}.cards,.visualizers{gap:13px}.card,.viz{background:#0a1722!important;border:1px solid var(--line)!important;border-radius:8px!important;box-shadow:none!important}.card:hover{transform:translateY(-2px)!important;border-color:#416984!important}.card .art{background:#07121c!important;border:1px solid rgba(150,181,203,.14);border-radius:6px!important}.card p,.viz p{color:#9dafbc!important;line-height:1.55}.viz .ico{font-size:0;width:40px;height:40px;border:1px solid #31516a;border-radius:7px;position:relative}.viz .ico:after{content:"";position:absolute;left:10px;right:10px;top:19px;height:2px;background:#65bfe8;box-shadow:0 -7px 0 #65bfe8,0 7px 0 #65bfe8}.btn{border-radius:6px!important;box-shadow:none!important}.quote{background:#07121c;border-block:1px solid var(--line)}
+.concept-visual{position:relative;margin:27px 0;padding:34px 15px 15px;background:#07121c!important;border:1px solid #293f50!important;border-radius:7px!important;box-shadow:0 10px 25px rgba(0,0,0,.17);overflow:hidden}.concept-visual:before{content:"SCIENTIFIC SCHEMATIC  •  NOT TO SCALE";position:absolute;inset:0 0 auto 0;height:25px;display:flex;align-items:center;padding:0 11px;background:#0c1a26;border-bottom:1px solid #293f50;color:#7890a1;font-size:.6rem;letter-spacing:.12em;font-weight:800}.concept-visual svg{display:block;width:100%;background:#07121c!important;border-radius:3px}.concept-visual svg>rect:first-child{fill:#07121c!important}.concept-visual svg text{font-family:Inter,system-ui,sans-serif}.visual-caption{font-size:.78rem!important;line-height:1.55!important;color:#8fa3b1!important;border-top:1px solid rgba(150,181,203,.13);padding-top:11px;margin-top:10px}
+.stepflow{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:0!important}.stepbox{position:relative;background:#0a1925!important;border:1px solid #2a4355!important;border-radius:0!important;min-height:82px;padding:15px!important;color:#aebdca!important}.stepbox b{display:block;color:#eef5f8;margin-bottom:5px}.stepbox:not(:last-child):after{content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);z-index:2;width:20px;height:20px;display:grid;place-items:center;background:#07121c;color:#61bde8}.term{background:#0a1722!important;border:1px solid #263d4e!important;border-radius:6px!important}.eqblock,.mathstep{background:#07121c!important;border:1px solid #2a4355!important;border-left:3px solid #5ebbe8!important;border-radius:5px!important}.warningbox{background:#211b12!important;border-color:#66532e!important}.atmos{background:#0a1b24!important;border-color:#28536a!important}.lesson article h2{letter-spacing:-.03em;border-bottom:1px solid var(--line);padding-bottom:15px}.lesson article h3{margin-top:34px;color:#edf4f7}.lesson article p{color:#b5c3cc;line-height:1.72}.panel{background:#07111b!important;border:1px solid #2a4355!important;border-radius:9px!important}.panelbar{background:#0b1823!important;border-bottom:1px solid #2a4355!important}.side,.collision-controls,.kohler-controls,.parcel-controls{background:#091722!important;border-color:#2a4355!important}.collision-view,.kohler-view,.parcel-view{background:#050d15!important}.c-readout,.k-readout,.readout{background:#07121c!important;border:1px solid #263e50!important;border-radius:5px!important}#collisionSvg,#kohlerSvg,#parcelSvg{border:1px solid #2a4355;border-radius:6px}input[type=range]{accent-color:#5dbce7}
+@media(max-width:1180px){main#home{margin-left:0}.lab-sidebar{display:none}}
+</style>
 </head>
 <body>
 <header class="topbar"><div class="wrap nav">
@@ -151,6 +162,8 @@ footer{padding:35px 0;color:#a9bfd1}.footer{display:grid;grid-template-columns:1
   <div class="navtools"><button id="voiceBtn" title="Test narration">🔊</button><span class="lang">EN &nbsp;|&nbsp; मराठी</span></div>
 </div></header>
 
+<aside class="lab-sidebar"><h4>Lessons</h4>
+<a href="#lessons"><span class="n">1</span>Atmospheric foundations</a><a href="#lessons"><span class="n">2</span>Thermodynamics</a><a href="#lessons"><span class="n">3</span>Cloud microphysics</a><a href="#lessons"><span class="n">4</span>Aerosols & activation</a><a href="#lessons"><span class="n">5</span>Radiation</a><a href="#lessons"><span class="n">6</span>Radar meteorology</a><a href="#lessons"><span class="n">7</span>Satellite meteorology</a><a href="#lessons"><span class="n">8</span>Aircraft observations</a><a href="#lessons"><span class="n">9</span>Cloud seeding</a><a href="#lessons"><span class="n">10</span>Cloud modelling</a><hr><h4>Interactive labs</h4><a href="#visualizers"><span class="d"></span>Köhler Curve Explorer</a><a href="#visualizers"><span class="d"></span>Collision–Coalescence</a><a href="#visualizers"><span class="d"></span>Rising Parcel Simulator</a><hr><h4>Resources</h4><a href="#resources"><span class="d"></span>Data & tools</a><a href="#about"><span class="d"></span>About this Lab</a></aside>
 <main id="home">
 <section class="hero-shell">
   <div class="wrap hero" id="heroStage">
@@ -219,7 +232,7 @@ footer{padding:35px 0;color:#a9bfd1}.footer{display:grid;grid-template-columns:1
       </div>
       <div class="c-actions"><button class="btn primary" id="runCollision">▶ Run encounter</button><button class="btn" id="resetCollision">↺ Reset</button></div>
       <div class="c-status" id="cStatus">Adjust the controls, then run the encounter. The large drop falls faster and sweeps a collection cylinder through the cloud.</div>
-      <p class="c-note">Educational gravitational-collection model. Cloud droplets now move continuously with slow stochastic motions to mimic a turbulent cloud volume. Their displayed random motion is illustrative; the calculated gravitational collection kernel uses differential terminal velocity and the selected collection efficiency.</p>
+      <p class="c-note">Educational gravitational-collection model. Cloud droplets now move continuously with slow stochastic motions to mimic a turbulent cloud volume. Their displayed random motion is illustrative; the gravitational kernel uses differential terminal velocity and the selected collection efficiency. During an encounter, a droplet entering the swept collector cross-section is collected probabilistically according to E<sub>c</sub>; successful collisions remove that droplet and conserve liquid volume through R<sub>new</sub><sup>3</sup> = R<sub>old</sub><sup>3</sup> + r<sup>3</sup>.</p>
     </aside>
     <div class="collision-view">
       <svg id="collisionSvg" viewBox="0 0 780 590" role="img" aria-label="Animated collector drop falling through smaller cloud droplets">
@@ -335,6 +348,7 @@ footer{padding:35px 0;color:#a9bfd1}.footer{display:grid;grid-template-columns:1
 const collisionModal=document.getElementById("collisionModal");
 let cRAF=null,cEncounterStart=null,cLastTime=null,cEncounter=false,cProgress=0;
 let cloudDrops=[];
+let cCapturedCount=0,cCollectorPhysicalR=null,cPrevCollectorY=95;
 const cSvg=document.getElementById("collisionSvg");
 const cW=780,cH=590;
 
@@ -368,11 +382,11 @@ function makeDrop(i){
     x:45+Math.random()*625,y:80+Math.random()*440,
     vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed*.55,
     phase:Math.random()*Math.PI*2,seed:Math.random()*10,
-    el:null
+    captured:false,visualR:4,el:null
   };
 }
 function populateDrops(){
-  const g=document.getElementById("smallDrops");g.innerHTML="";cloudDrops=[];
+  const g=document.getElementById("smallDrops");g.innerHTML="";cloudDrops=[];cCapturedCount=0;cCollectorPhysicalR=+document.getElementById("cR").value;cPrevCollectorY=95;
   const n=+document.getElementById("cN").value;
   for(let i=0;i<n;i++){
     const d=makeDrop(i);
@@ -386,13 +400,14 @@ function updateCloudDropAppearance(){
   const r=+document.getElementById("cr").value;
   const visualR=Math.max(3.2,Math.min(11,2.8+r/7));
   cloudDrops.forEach((d,i)=>{
-    d.el.setAttribute("r",visualR*(.78+(i%5)*.055));
+    d.visualR=visualR*(.78+(i%5)*.055);d.el.setAttribute("r",d.visualR);d.el.style.display=d.captured?"none":"";
     d.el.setAttribute("cx",d.x);d.el.setAttribute("cy",d.y);
   });
 }
 function advanceCloud(dt,time){
   const ts=turbSpeed();
   cloudDrops.forEach((d,i)=>{
+    if(d.captured)return;
     if(ts===0){d.vx=0;d.vy=0}
     else{
       // Slowly varying pseudo-turbulent acceleration: random-looking but smooth.
@@ -410,9 +425,23 @@ function advanceCloud(dt,time){
     d.el.setAttribute("cx",d.x);d.el.setAttribute("cy",d.y);
   });
 }
+function captureSweptDroplets(yNow){
+  if(!cEncounter)return;
+  const m=collisionModel(),Rphys=cCollectorPhysicalR??m.R;
+  const rr=Math.max(12,Math.min(48,12+(Rphys-40)/960*36));
+  const lo=Math.min(cPrevCollectorY,yNow),hi=Math.max(cPrevCollectorY,yNow);
+  cloudDrops.forEach(d=>{
+    if(d.captured||d.y<lo-rr-12||d.y>hi+rr+12)return;
+    const cy=Math.max(lo,Math.min(hi,d.y));
+    if(Math.hypot(d.x-390,d.y-cy)<=rr+d.visualR && Math.random()<=m.Ec){
+      d.captured=true;d.el.style.display="none";cCapturedCount++;
+      cCollectorPhysicalR=Math.cbrt(cCollectorPhysicalR**3+m.r**3);
+    }
+  });
+}
 function renderCollision(progress=cProgress){
   const m=collisionModel();
-  document.getElementById("cROut").textContent=m.R+" µm";
+  document.getElementById("cROut").textContent=(cCollectorPhysicalR??m.R).toFixed(1)+" µm";
   document.getElementById("crOut").textContent=m.r+" µm";
   document.getElementById("cLWCOut").textContent=m.L.toFixed(2)+" g m⁻³";
   document.getElementById("cEcOut").textContent=m.Ec.toFixed(2);
@@ -424,7 +453,8 @@ function renderCollision(progress=cProgress){
   document.getElementById("cKernel").textContent=m.K.toExponential(2)+" m³ s⁻¹";
   document.getElementById("cGrowth").textContent=m.dmdt.toExponential(2)+" kg s⁻¹";
   document.getElementById("cDR").textContent=(m.dRdt*1e6).toFixed(3)+" µm s⁻¹";
-  const rr=Math.max(12,Math.min(48,12+(m.R-40)/960*36)), y=95+progress*390;
+  const physicalR=cCollectorPhysicalR??m.R;
+  const rr=Math.max(12,Math.min(48,12+(physicalR-40)/960*36)), y=95+progress*390;
   document.getElementById("collectorDrop").setAttribute("r",rr);
   document.getElementById("collector").setAttribute("transform",`translate(0 ${y-95})`);
   const cone=document.getElementById("sweepCone");cone.innerHTML="";
@@ -433,7 +463,8 @@ function renderCollision(progress=cProgress){
     path.setAttribute("d",`M${390-rr},95 L${390-rr},${y} M${390+rr},95 L${390+rr},${y}`);
     path.setAttribute("stroke","#69d8ff");path.setAttribute("stroke-opacity",".18");path.setAttribute("stroke-width","2");cone.appendChild(path);
   }
-  document.getElementById("cAnimLabel").textContent=`Cloud r = ${m.r} µm • random motion: ${turbLabel()} • ΔV = ${m.dv.toFixed(2)} m s⁻¹`;
+  document.getElementById("cAnimLabel").textContent=`cloud r = ${m.r} µm  •  collected = ${cCapturedCount}  •  collector R = ${(cCollectorPhysicalR??m.R).toFixed(1)} µm  •  ΔV = ${m.dv.toFixed(2)} m s⁻¹`;
+  cPrevCollectorY=y;
   updateCloudDropAppearance();
 }
 function animationLoop(now){
@@ -442,10 +473,11 @@ function animationLoop(now){
   advanceCloud(dt,now);
   if(cEncounter){
     cProgress=Math.min(1,(now-cEncounterStart)/4800);
+    captureSweptDroplets(95+cProgress*390);
     renderCollision(cProgress);
     if(cProgress>=1){
       cEncounter=false;
-      document.getElementById("cStatus").textContent="Encounter complete. The cloud droplets continue their slow random motion. Change their radius and compare the differential fall speed, kernel and growth rate.";
+      document.getElementById("cStatus").textContent=`Encounter complete: ${cCapturedCount} displayed droplets coalesced with the collector. Captured droplets were removed and their liquid volume added to the collector.`;
     }
   }
   cRAF=requestAnimationFrame(animationLoop);
@@ -457,6 +489,8 @@ function stopCollision(){
   if(cRAF){cancelAnimationFrame(cRAF);cRAF=null}cLastTime=null;cEncounter=false;
 }
 function animateCollision(){
+  cCapturedCount=0;cCollectorPhysicalR=+document.getElementById("cR").value;cPrevCollectorY=95;
+  cloudDrops.forEach(d=>{d.captured=false;d.el.style.display=""});
   cEncounter=true;cProgress=0;cEncounterStart=performance.now();
   document.getElementById("cStatus").textContent="The collector is falling through a moving cloud-droplet field. Random motion represents weak turbulent/cloud motions; gravitational differential sedimentation still controls the displayed collection kernel.";
 }
@@ -2648,6 +2682,12 @@ document.getElementById("voiceBtn").onclick=()=>speak("Narration is ready. I wil
 document.getElementById("play").onclick=()=>speak(plain(lessons[current].html));
 document.getElementById("stop").onclick=stopSpeech;
 speechSynthesis.onvoiceschanged=bestVoice;
+</script>
+<script id="visual-numbering">
+document.addEventListener("DOMContentLoaded",()=>{
+ document.querySelectorAll(".concept-visual .visual-caption").forEach((c,i)=>{if(!c.dataset.n){c.innerHTML=`<strong style="color:#cbd9e2">Figure ${i+1}.</strong> `+c.innerHTML;c.dataset.n="1"}});
+ document.querySelectorAll("#cards .card").forEach((c,i)=>{const h=c.querySelector("h3");if(h&&!c.querySelector(".lesson-index")){const x=document.createElement("div");x.className="lesson-index";x.textContent=`LESSON ${String(i+1).padStart(2,"0")}`;x.style.cssText="font-size:.6rem;letter-spacing:.13em;color:#71899b;font-weight:800;margin:3px 0 7px";h.before(x)}});
+});
 </script>
 </body>
 </html>
