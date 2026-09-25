@@ -203,6 +203,64 @@ main#home{margin-left:0!important}
 }
 </style>
 
+
+<style id="nimbus-presenter-v3">
+/* Presenter-stage treatment */
+.character{
+ position:relative!important;background:none!important;overflow:visible!important;
+ display:flex!important;align-items:flex-end!important;justify-content:center!important;
+ isolation:isolate
+}
+.nimbus-presenter{
+ position:relative;width:min(100%,620px);height:100%;min-height:430px;
+ display:flex;align-items:flex-end;justify-content:center;transform-origin:50% 100%;
+ animation:nimbusBreath 5.6s ease-in-out infinite
+}
+.nimbus-portrait{
+ position:absolute;inset:0;background-image:var(--nimbus-img);
+ background-repeat:no-repeat;background-size:auto 100%;background-position:left bottom;
+ /* crop away the original speech-bubble/right side */
+ clip-path:inset(0 31% 0 0 round 22px);
+ filter:drop-shadow(0 28px 32px rgba(0,0,0,.34));
+ transform-origin:47% 84%;will-change:transform
+}
+.nimbus-presenter.speaking .nimbus-portrait{animation:nimbusSpeakBody 3.8s ease-in-out infinite}
+.nimbus-presenter.gesture-left .nimbus-portrait{transform:rotate(-1.2deg) translateX(-3px)}
+.nimbus-presenter.gesture-right .nimbus-portrait{transform:rotate(1.35deg) translateX(4px)}
+.nimbus-presenter.pointing .nimbus-portrait{transform:rotate(1.6deg) translateX(6px) scale(1.006)}
+.nimbus-face-overlay{position:absolute;left:19%;top:17%;width:31%;height:25%;pointer-events:none;z-index:3}
+.nimbus-eye{position:absolute;top:36%;width:18%;height:4px;background:#1d1715;border-radius:100%;opacity:0;transform:scaleY(.1)}
+.nimbus-eye.l{left:17%}.nimbus-eye.r{right:16%}
+.nimbus-presenter.blink .nimbus-eye{opacity:.72;animation:nimbusBlink .17s ease-in-out 1}
+.nimbus-mouth{position:absolute;left:43%;top:69%;width:14%;height:3%;border-radius:0 0 50% 50%;background:rgba(38,17,15,.74);opacity:0;transform-origin:center}
+.nimbus-presenter.speaking .nimbus-mouth{opacity:.62;animation:nimbusMouth .23s ease-in-out infinite alternate}
+.nimbus-gesture-hand{position:absolute;z-index:4;right:8%;top:42%;width:76px;height:118px;opacity:0;transform:rotate(-16deg) translateY(14px);transition:.35s ease;pointer-events:none}
+.nimbus-gesture-hand:before{content:"";position:absolute;left:24px;top:38px;width:22px;height:60px;border-radius:18px;background:linear-gradient(#b97a55,#d59a70);box-shadow:0 0 0 1px rgba(30,20,15,.22)}
+.nimbus-gesture-hand:after{content:"";position:absolute;left:36px;top:3px;width:10px;height:54px;border-radius:9px;background:linear-gradient(#c48660,#dfa77e);transform:rotate(8deg);transform-origin:bottom}
+.nimbus-presenter.pointing .nimbus-gesture-hand{opacity:.96;transform:rotate(-6deg) translateY(0)}
+.presenter-console{
+ position:absolute;z-index:6;left:4%;right:4%;bottom:2%;padding:12px 14px;
+ background:rgba(5,14,22,.88);border:1px solid rgba(105,177,214,.34);border-radius:9px;
+ backdrop-filter:blur(9px);box-shadow:0 16px 35px rgba(0,0,0,.25)
+}
+.presenter-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}
+.presenter-id{display:flex;align-items:center;gap:8px;font-size:.68rem;letter-spacing:.11em;font-weight:800;color:#8ecde9}
+.presenter-live{width:7px;height:7px;border-radius:50%;background:#708696}.nimbus-presenter.speaking~.presenter-console .presenter-live{background:#65d3a9;box-shadow:0 0 0 4px rgba(101,211,169,.1)}
+.presenter-caption{font-size:.86rem;line-height:1.48;color:#dce7ed;min-height:2.7em}
+.presenter-controls{display:flex;align-items:center;gap:7px;margin-top:9px;flex-wrap:wrap}
+.presenter-btn{border:1px solid #31536a;background:#0b1d2a;color:#d8e6ee;border-radius:6px;padding:6px 9px;font:inherit;font-size:.72rem;cursor:pointer}
+.presenter-btn:hover{border-color:#5caed7;background:#102838}.presenter-btn.primary{background:#145f8d;border-color:#2788bb}
+.presenter-mode{margin-left:auto;font-size:.65rem;color:#7790a2}
+.lesson article.presenter-focus{outline:1px solid rgba(91,188,232,.24);outline-offset:10px}
+.presenter-highlight{position:relative;box-shadow:0 0 0 1px rgba(91,188,232,.42),0 0 38px rgba(61,161,207,.10)!important;transition:.4s}
+@keyframes nimbusBreath{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes nimbusSpeakBody{0%,100%{transform:rotate(0)}35%{transform:rotate(.35deg) translateY(-1px)}70%{transform:rotate(-.28deg)}}
+@keyframes nimbusBlink{0%,100%{transform:scaleY(.1)}50%{transform:scaleY(1)}}
+@keyframes nimbusMouth{from{height:3%;transform:scaleX(.88)}to{height:8%;transform:scaleX(1.05)}}
+@media(max-width:1050px){.nimbus-presenter{min-height:390px}.presenter-console{left:8%;right:8%}}
+@media(prefers-reduced-motion:reduce){.nimbus-presenter,.nimbus-presenter *{animation:none!important;transition:none!important}}
+</style>
+
 </head>
 <body>
 <header class="topbar"><div class="wrap nav">
@@ -222,8 +280,24 @@ main#home{margin-left:0!important}
 <main id="home">
 <section class="hero-shell">
   <div class="wrap hero" id="heroStage">
-    <div class="character" role="img" aria-label="Illustrated Dr. Nimbus, a cloud physicist holding a Cloud Physics book"></div>
-    <div class="hero-copy">
+    <div class="character" id="nimbusStage">
+<div class="nimbus-presenter" id="nimbusPresenter" style="--nimbus-img:url()">
+  <div class="nimbus-portrait" aria-label="Dr. Nimbus, Cloud Physics Lab presenter"></div>
+  <div class="nimbus-face-overlay" aria-hidden="true"><i class="nimbus-eye l"></i><i class="nimbus-eye r"></i><i class="nimbus-mouth"></i></div>
+  <div class="nimbus-gesture-hand" aria-hidden="true"></div>
+</div>
+<div class="presenter-console" id="presenterConsole">
+  <div class="presenter-head"><div class="presenter-id"><span class="presenter-live"></span> DR. NIMBUS · PRESENTER</div><span id="presenterState" style="font-size:.66rem;color:#7890a1">READY</span></div>
+  <div class="presenter-caption" id="presenterCaption">Welcome. Choose a lesson and I’ll guide you through the important physical ideas rather than simply reading the page aloud.</div>
+  <div class="presenter-controls">
+    <button class="presenter-btn primary" id="presenterPlay">▶ Present</button>
+    <button class="presenter-btn" id="presenterPause">Ⅱ Pause</button>
+    <button class="presenter-btn" id="presenterStop">■ Stop</button>
+    <span class="presenter-mode">conference pace · adaptive pauses</span>
+  </div>
+</div>
+</div>
+<div class="hero-copy">
       <i class="cloud mini-cloud"></i>
       <h1>Cloud<br>Physics <span>Lab</span></h1>
       <div class="tagline">Interactive Lessons &nbsp;•&nbsp; Visual Explorations &nbsp;•&nbsp; Real Science<br>For students &nbsp;•&nbsp; Researchers &nbsp;•&nbsp; Curious Minds &nbsp;•&nbsp; Everyone</div>
@@ -2759,6 +2833,109 @@ document.addEventListener("DOMContentLoaded",()=>{
  document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
  side.querySelectorAll("a").forEach(a=>a.addEventListener("click",close));
 });
+</script>
+
+
+<script id="nimbus-presenter-engine-v3">
+(()=>{
+const $=s=>document.querySelector(s);
+let presenter,caption,state,play,pause,stop,currentLesson=null,queue=[],idx=0,paused=false,stopped=true,blinkTimer=null,gestureTimer=null;
+
+function initNimbus(){
+ presenter=$("#nimbusPresenter");caption=$("#presenterCaption");state=$("#presenterState");
+ play=$("#presenterPlay");pause=$("#presenterPause");stop=$("#presenterStop");
+ if(!presenter||!window.speechSynthesis)return;
+ scheduleBlink();
+ play.addEventListener("click",startPresentation);
+ pause.addEventListener("click",togglePause);
+ stop.addEventListener("click",stopPresentation);
+ document.addEventListener("click",e=>{
+   const card=e.target.closest("#cards .card");
+   if(card){setTimeout(()=>{const art=document.querySelector(".lesson article");if(art) currentLesson=art},250)}
+ });
+}
+function scheduleBlink(){
+ clearTimeout(blinkTimer);
+ blinkTimer=setTimeout(()=>{presenter.classList.add("blink");setTimeout(()=>presenter.classList.remove("blink"),190);scheduleBlink()},2600+Math.random()*4200)
+}
+function cleanText(el){
+ const c=el.cloneNode(true);
+ c.querySelectorAll("script,style,button,.eqblock,.mathstep,svg").forEach(x=>x.remove());
+ return c.textContent.replace(/\s+/g," ").trim();
+}
+function presenterSegments(){
+ const article=document.querySelector(".lesson article")||document.querySelector(".lesson")||document.querySelector("main");
+ const title=article.querySelector("h2")?.textContent?.trim()||"this lesson";
+ const blocks=[...article.querySelectorAll("h3,p,.atmos,.warningbox")].filter(x=>cleanText(x).length>25);
+ const seg=[{text:`Welcome to ${title}. I’ll focus on the physical reasoning and the important connections.`,pause:700,gesture:"left",target:article.querySelector("h2")}];
+ blocks.slice(0,28).forEach((el,n)=>{
+   let t=cleanText(el);
+   if(t.length>430)t=t.slice(0,427).replace(/\s+\S*$/,"")+"…";
+   if(el.tagName==="H3") t=`Now, ${t}.`;
+   else if(n%5===3) t=`Here is the point to notice. ${t}`;
+   seg.push({text:t,pause:el.tagName==="H3"?650:420+(n%3)*120,gesture:n%6===0?"point":n%4===0?"right":"none",target:el});
+ });
+ return seg;
+}
+function bestVoice(){
+ const vs=speechSynthesis.getVoices();
+ const english=vs.filter(v=>/^en[-_]/i.test(v.lang));
+ const score=v=>{
+   const n=v.name.toLowerCase(),l=v.lang.toLowerCase();let s=0;
+   if(l==="en-in")s+=14;if(l==="en-gb")s+=12;if(l==="en-au")s+=8;if(l==="en-us")s+=5;
+   if(/natural|neural|premium|enhanced|online/.test(n))s+=18;
+   if(/ryan|daniel|arthur|george|ravi|prabhat|microsoft|google/.test(n))s+=5;
+   return s;
+ };
+ return english.sort((a,b)=>score(b)-score(a))[0]||vs[0];
+}
+function setGesture(g,target){
+ presenter.classList.remove("gesture-left","gesture-right","pointing");
+ document.querySelectorAll(".presenter-highlight").forEach(x=>x.classList.remove("presenter-highlight"));
+ if(g==="left")presenter.classList.add("gesture-left");
+ if(g==="right")presenter.classList.add("gesture-right");
+ if(g==="point")presenter.classList.add("pointing");
+ if(target){target.classList.add("presenter-highlight");target.scrollIntoView({behavior:"smooth",block:"center"})}
+ clearTimeout(gestureTimer);gestureTimer=setTimeout(()=>presenter.classList.remove("gesture-left","gesture-right","pointing"),1700);
+}
+function speakNext(){
+ if(stopped||paused)return;
+ if(idx>=queue.length){finish();return}
+ const s=queue[idx++];caption.textContent=s.text;setGesture(s.gesture,s.target);
+ const u=new SpeechSynthesisUtterance(s.text);
+ u.voice=bestVoice();u.lang=u.voice?.lang||"en-GB";
+ // A conference-like pace: close to normal, not the old slow robotic drawl.
+ u.rate=.98;u.pitch=.96;u.volume=1;
+ u.onstart=()=>{presenter.classList.add("speaking");state.textContent="PRESENTING"};
+ u.onboundary=e=>{
+   if(e.name==="sentence"||e.charIndex%45<8){
+     presenter.classList.toggle("gesture-left",Math.random()>.78);
+   }
+ };
+ u.onend=()=>{presenter.classList.remove("speaking");state.textContent="PAUSE";setTimeout(speakNext,s.pause)};
+ u.onerror=()=>{presenter.classList.remove("speaking");setTimeout(speakNext,250)};
+ speechSynthesis.speak(u);
+}
+function startPresentation(){
+ speechSynthesis.cancel();queue=presenterSegments();idx=0;paused=false;stopped=false;
+ pause.textContent="Ⅱ Pause";state.textContent="STARTING";speakNext();
+}
+function togglePause(){
+ if(stopped)return;
+ if(!paused){speechSynthesis.pause();paused=true;presenter.classList.remove("speaking");state.textContent="PAUSED";pause.textContent="▶ Resume"}
+ else{speechSynthesis.resume();paused=false;presenter.classList.add("speaking");state.textContent="PRESENTING";pause.textContent="Ⅱ Pause"}
+}
+function stopPresentation(){
+ stopped=true;paused=false;speechSynthesis.cancel();presenter.classList.remove("speaking","gesture-left","gesture-right","pointing");
+ document.querySelectorAll(".presenter-highlight").forEach(x=>x.classList.remove("presenter-highlight"));
+ state.textContent="READY";pause.textContent="Ⅱ Pause";caption.textContent="Presentation stopped. Choose Present whenever you want Dr. Nimbus to guide the lesson.";
+}
+function finish(){
+ stopped=true;presenter.classList.remove("speaking","gesture-left","gesture-right","pointing");
+ state.textContent="COMPLETE";caption.textContent="That covers the main physical ideas. You can now explore the equations, figures and interactive tools in more detail.";
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initNimbus);else initNimbus();
+})();
 </script>
 
 </body>
